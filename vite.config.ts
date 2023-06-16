@@ -1,9 +1,15 @@
+
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import path from 'path';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-
+	resolve: {
+		alias: {
+			'~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+		}
+	},
 	server: {
 		cors: {
 			"origin": "*",
@@ -12,11 +18,11 @@ export default defineConfig({
 			"optionsSuccessStatus": 204
 		},
 		proxy: {
-			"/api": {
+			'^/api/.*': {
 				target: 'http://localhost:5000',
 				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/api/, ''),
-			},
+				proxyTimeout: 6000 * 60 * 1000,
+			  },
 		},
 	}
 });
