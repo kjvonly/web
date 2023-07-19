@@ -4,7 +4,8 @@ The `kjvonly` web app.
 # hosting
 Clone data repo somewhere on your host
 
-```git clone https://github.com/kjvonly/data.git
+```
+git clone https://github.com/kjvonly/data.git
 ```
 
 ```
