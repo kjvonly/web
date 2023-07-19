@@ -19,8 +19,6 @@ e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/us
 ```
 # global keyboard shortcuts
 ctl+x b # to open the bible buffer
-
-
 ctl+x 3 # split screen vertically
 ctl+x 2 # split screen horizontally
 ctl+x o # move to next buffer
