@@ -30,6 +30,8 @@ shift+n # next line
 shift+p # previous line
 shift+k # next chapter
 shift+i # previous chapter
+shift+v # page down
+alt+v   # page up
 ```
 
 ## Developing
