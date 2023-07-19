@@ -19,7 +19,7 @@ e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/us
 ```
 # global keyboard shortcuts
 ctl+x b # to open the bible buffer
-alt+g   # to open goto popup
+
 
 ctl+x 3 # split screen vertically
 ctl+x 2 # split screen horizontally
@@ -32,6 +32,7 @@ shift+k # next chapter
 shift+i # previous chapter
 shift+v # page down
 alt+v   # page up
+alt+g   # to open goto popup (shortnames e.g mat 1 or rom 1)
 ```
 
 ## Developing
