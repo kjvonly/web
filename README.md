@@ -1,19 +1,17 @@
-# create-svelte
+# web
+The `kjvonly` web app.
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+# hosting
+Clone data repo somewhere on your host
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+```git clone https://github.com/kjvonly/data.git
 ```
 
+```
+docker run --name kjvonly-web -d -v <path-to-json.gz-dir>:/usr/src/kjvdata/json.gz -p 5000:5000 ghcr.io/kjvonly/web:v0.1.0
+
+e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/usr/src/kjvdata/json.gz -p 5000:5000 ghcr.io/kjvonly/web:v0.1.0
+```
 ## Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
