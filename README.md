@@ -1,17 +1,36 @@
-# create-svelte
+# web
+The `kjvonly` web app.
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+# hosting
+Clone data repo somewhere on your host
 
-## Creating a project
+```
+git clone https://github.com/kjvonly/data.git
+```
 
-If you're seeing this, you've probably already done this step. Congrats!
+```
+docker run --name kjvonly-web -d -v <path-to-json.gz-dir>:/usr/src/kjvdata/json.gz -p 5000:5000 ghcr.io/kjvonly/web:v0.1.0
+```
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/usr/src/kjvdata/json.gz -p 5000:5000 ghcr.io/kjvonly/web:v0.1.0
 
-# create a new project in my-app
-npm create svelte@latest my-app
+
+# Get Started
+```
+# global keyboard shortcuts
+ctl+x b # to open the bible buffer
+ctl+x 3 # split screen vertically
+ctl+x 2 # split screen horizontally
+ctl+x o # move to next buffer
+
+# Bible Buffer
+shift+n # next line
+shift+p # previous line
+shift+k # next chapter
+shift+i # previous chapter
+shift+v # page down
+alt+v   # page up
+alt+g   # to open goto popup (shortnames e.g mat 1 or rom 1)
 ```
 
 ## Developing
