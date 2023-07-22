@@ -2,20 +2,20 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 
-	let gotoID: string = uuidv4();
+	let searchID: string = uuidv4();
 
 	let containerHeight: number;
 	let footerHeight: number;
 	const dispatch = createEventDispatcher();
-	$: suggestionHeight = containerHeight - footerHeight;
+	$: popupHeight = containerHeight - footerHeight;
 
-	let bookChapter: string = '';
+	let searchInput: string = '';
 
 	onMount(() => {
-		let el = document.getElementById('goto-popup-' + gotoID);
+		let el = document.getElementById('search-popup-' + searchID);
 		let pel = el?.parentNode as HTMLElement;
 		containerHeight = pel.getBoundingClientRect().height;
-		let input = document.getElementById('goto-input-' + gotoID);
+		let input = document.getElementById('search-input-' + searchID);
 		input?.focus();
 		// Get the input field
 
@@ -23,25 +23,32 @@
 			if (event.key === 'Enter') {
 				event.preventDefault();
 				dispatch('popupHandler', {
-					chapter: bookChapter
+					chapter: searchInput
 				});
 			}
 		});
 	});
 </script>
 
-<div id="goto-popup-{gotoID}" class="flex flex-fill w-100">
+<div id="search-popup-{searchID}" class="flex flex-fill w-100">
+    <div class="suggestion">
+
+    </div>
 	<div class="input w-100" bind:clientHeight={footerHeight}>
 		<div class="d-flex justify-content-start w-100">
-			<p class="m-0 text-center">GOTO:</p>
-			<input id="goto-input-{gotoID}" class="w-100" bind:value={bookChapter} placeholder="mat 1" />
+			<p class="m-0 text-center">Search:</p>
+			<input id="search-input-{searchID}" class="w-100" bind:value={searchInput} placeholder="thy word i have hid" />
 		</div>
 	</div>
 </div>
 
 <style>
-	
-	
+	.suggestion {
+		height: var(--height);
+		overflow: auto;
+        background-color: bisque;
+	}
+
 	.input {
 		background-color: gray;
 		position: absolute;

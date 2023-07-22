@@ -12,6 +12,7 @@
 	import { bibleNavigationService } from '../../services/bible-navigation.service';
 	import Goto from './components/goto.svelte';
 	import { paneService } from '../../services/pane.service';
+	import Search from './components/search.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -49,6 +50,7 @@
 			buffer.keyboardBindings.set('shift+K', _nextChapter);
 			buffer.keyboardBindings.set('shift+I', _previousChapter);
 			buffer.keyboardBindings.set('alt+g', _goto);
+			buffer.keyboardBindings.set('alt+s', _search);
 		}
 	});
 
@@ -120,6 +122,21 @@
 			return;
 		}
 		await updateChapterFromChapterKey(chapterKey);
+	}
+
+	async function searchHandler(event: any) {
+		popup = null;
+
+		let bookChapterStr: string = event.detail.chapter;
+		await updateChapterFromShortName(bookChapterStr);
+	}
+
+
+	function _search(){
+		popup = {
+			component: Search,
+			handler: searchHandler
+		};
 	}
 
 	async function gotoHandler(event: any) {
