@@ -30,7 +30,8 @@
 	$: quadHeightMax = qh + 'px';
 	$: selectedVerse = 0;
 	$: selected = buffer.selected ? 'selected-buffer' : '';
-	$: popupHeight = qh / 2 + 'px';
+	$: popupHeight = qh / 2 ;
+	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
 
 	let loaded = false;
@@ -230,8 +231,8 @@
 		{/if}
 	</div>
 	{#if popup}
-		<div class="popups flex flex-fill w-100" style:--height={popupHeight} style:--top={popuptop}>
-			<svelte:component this={popup.component} on:popupHandler={popup.handler} />
+		<div class="popups flex flex-fill w-100" style:--height={popupHeightStyle} style:--top={popuptop}>
+			<svelte:component this={popup.component} bind:parentHeight={popupHeight} on:popupHandler={popup.handler} />
 		</div>
 	{/if}
 	<div class="footer sticky-bottom {selected}" bind:offsetHeight={footerHeight}>
