@@ -27,15 +27,16 @@ export class BibleDB extends IndexedDb {
             worker.postMessage({})
         }
 
-        let count = 0
+        let retries = 0
+        let retryMax = 10
         
-        while (v === undefined || count == 60) {
+        while (v === undefined || retries == retryMax) {
             await this.delay(1000);
-            v = this.getValue("chapters", "booknames")
-            count = count + 1
+            v = await this.getValue("chapters", "booknames")
+            retries = retries + 1
         }
 
-        if (count === 60){
+        if (retries === retryMax){
             this.resolve(false)
             return
         }
