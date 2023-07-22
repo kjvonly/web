@@ -11,7 +11,7 @@
 	import { currentBuffer } from '../services/current-buffer.service';
 	import { paneService } from '../services/pane.service';
 	import Editor from '../components/editor/editor.svelte';
-	import { BibleDB } from '../db/bible.db';
+	import { bibleDB } from '../db/bible.db';
 
 	let p: Pane;
 
@@ -58,8 +58,7 @@
 	keydownStore.updatePaneKeybindings(paneKeyBindingMap);
 
 	onMount(() => {
-		let db = BibleDB;
-		db.init();
+		bibleDB.init();
 		bufferStore.useLocalstorage();
 		paneStore.useLocalstorage();
 		paneStore.subscribe((pane) => {

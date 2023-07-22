@@ -1,6 +1,6 @@
 import IndexedDb from "./idb.db";
 
-export class bibleDB extends IndexedDb {
+export class BibleDB extends IndexedDb {
     resolve: any
     ready: Promise<boolean | undefined> = new Promise((resolve, reject) => {
         this.resolve = resolve
@@ -29,13 +29,13 @@ export class bibleDB extends IndexedDb {
 
         let count = 0
         
-        while (v === undefined || count === 6) {
+        while (v === undefined || count == 60) {
             await this.delay(1000);
             v = this.getValue("chapters", "booknames")
             count = count + 1
         }
 
-        if (count === 6){
+        if (count === 60){
             this.resolve(false)
             return
         }
@@ -43,4 +43,4 @@ export class bibleDB extends IndexedDb {
     }
 }
 
-export let BibleDB = new bibleDB()
+export let bibleDB = new BibleDB()

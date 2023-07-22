@@ -8,7 +8,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import type { Buffer } from '../../models/buffer.model';
 	import { bufferStore } from '../../stores/buffer.store';
-	import { BibleDB } from '../../db/bible.db';
+	import { bibleDB } from '../../db/bible.db';
 	import { bibleNavigationService } from '../../services/bible-navigation.service';
 	import Goto from './components/goto.svelte';
 	import { paneService } from '../../services/pane.service';
@@ -36,7 +36,7 @@
 	let chapter: any;
 	let verses: string[] = [];
 
-	let db = BibleDB;
+	let db = bibleDB;
 
 	let key: string;
 	afterUpdate(() => {
