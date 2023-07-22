@@ -42,8 +42,6 @@
 
 		suggestion?.addEventListener('keypress', function (event) {
 			if (event.key === 'k') {
-				console.log('ph', parentHeight ,'p', popupHeight, 'c', containerHeight, 'f', footerHeight);
-				console.log('selectedSuggestion', selectedSuggestion);
 				selectedSuggestion = selectedSuggestion + 1;
 				scrolledIntoView(
 					'suggestion-' + searchID + '-',
