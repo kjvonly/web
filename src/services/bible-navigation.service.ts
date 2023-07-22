@@ -1,5 +1,5 @@
 import book from "svelte-awesome/icons/book"
-import { BibleDB, bibleDB } from "../db/bible.db"
+import {  bibleDB } from "../db/bible.db"
 
 var chapters: string[] = [
     "1_1",
@@ -1195,14 +1195,13 @@ var chapters: string[] = [
 
 export class BibleNavigationService {
     chapterList: string[]
-    db: bibleDB = BibleDB
     bookNames: any
     constructor() {
-        this.db.ready.then((val) => {
+        bibleDB.ready.then((val) => {
             if (!val) {
                 return;
             }
-            this.db.getValue("chapters", "booknames").then((data) => {
+            bibleDB.getValue("chapters", "booknames").then((data) => {
                 this.bookNames = data
             })
         });
