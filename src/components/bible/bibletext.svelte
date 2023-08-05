@@ -30,7 +30,7 @@
 	$: quadHeightMax = qh + 'px';
 	$: selectedVerse = 0;
 	$: selected = buffer.selected ? 'selected-buffer' : '';
-	$: popupHeight = qh / 2 ;
+	$: popupHeight = qh / 2;
 	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
 
@@ -41,17 +41,11 @@
 	let db = bibleDB;
 
 	let key: string;
+
 	afterUpdate(() => {
 		if (key !== buffer.key) {
 			key = buffer.key;
-			buffer.keyboardBindings.set('p', _previousLine);
-			buffer.keyboardBindings.set('n', _nextLine);
-			buffer.keyboardBindings.set('v', _pageDown);
-			buffer.keyboardBindings.set('shift+V', _pageUp);
-			buffer.keyboardBindings.set('k', _nextChapter);
-			buffer.keyboardBindings.set('i', _previousChapter);
-			buffer.keyboardBindings.set('g', _goto);
-			buffer.keyboardBindings.set('s', _search);
+			enableKeyBindings();
 		}
 	});
 
@@ -90,6 +84,26 @@
 		qh = br.height;
 		qb = br.bottom;
 	});
+
+	function enableKeyBindings() {
+		buffer.keyboardBindings.set('i', _previousLine);
+		buffer.keyboardBindings.set('k', _nextLine);
+
+		buffer.keyboardBindings.set('p', _pageUp);
+		buffer.keyboardBindings.set('n', _pageDown);
+
+		buffer.keyboardBindings.set('l', _nextChapter);
+		buffer.keyboardBindings.set('j', _previousChapter);
+
+		buffer.keyboardBindings.set('g', _goto);
+		buffer.keyboardBindings.set('s', _search);
+	}
+
+	function disableKeybinding() {
+		for (let [key, _] of buffer.keyboardBindings) {
+			buffer.keyboardBindings.delete(key);	
+		}
+	}
 
 	function updateChapter(c: any) {
 		chapter = c;
@@ -130,10 +144,11 @@
 
 		let bookChapterStr: string = event.detail.chapter;
 		await updateChapterFromShortName(bookChapterStr);
+		enableKeyBindings();
 	}
 
-
-	function _search(){
+	function _search() {
+		disableKeybinding();
 		popup = {
 			component: Search,
 			handler: searchHandler
@@ -145,9 +160,11 @@
 
 		let bookChapterStr: string = event.detail.chapter;
 		await updateChapterFromShortName(bookChapterStr);
+		enableKeyBindings();
 	}
 
 	function _goto() {
+		disableKeybinding();
 		popup = {
 			component: Goto,
 			handler: gotoHandler
@@ -184,9 +201,9 @@
 	}
 
 	function _previousLine() {
-		if (selectedVerse  == 0){
-			_previousChapter()
-			return
+		if (selectedVerse == 0) {
+			_previousChapter();
+			return;
 		}
 		selectedVerse = previousLine(
 			uniqueId,
@@ -197,9 +214,9 @@
 	}
 
 	function _nextLine() {
-		if (selectedVerse + 1 == verses.length){
-			_nextChapter()
-			return
+		if (selectedVerse + 1 == verses.length) {
+			_nextChapter();
+			return;
 		}
 		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-bibletext');
 	}
@@ -231,8 +248,16 @@
 		{/if}
 	</div>
 	{#if popup}
-		<div class="popups flex flex-fill w-100" style:--height={popupHeightStyle} style:--top={popuptop}>
-			<svelte:component this={popup.component} bind:parentHeight={popupHeight} on:popupHandler={popup.handler} />
+		<div
+			class="popups flex flex-fill w-100"
+			style:--height={popupHeightStyle}
+			style:--top={popuptop}
+		>
+			<svelte:component
+				this={popup.component}
+				bind:parentHeight={popupHeight}
+				on:popupHandler={popup.handler}
+			/>
 		</div>
 	{/if}
 	<div class="footer sticky-bottom {selected}" bind:offsetHeight={footerHeight}>
