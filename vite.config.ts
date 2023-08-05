@@ -18,8 +18,8 @@ export default defineConfig({
 			"optionsSuccessStatus": 204
 		},
 		proxy: {
-			'^/api/.*': {
-				target: 'http://localhost:5000',
+			'.*': {
+				target: 'http://localhost:7777',
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000,
 			  },

@@ -102,27 +102,17 @@ class KeyDownEvent {
             return
         }
 
-        if (event.ctrlKey) {
-            cmd += 'ctl+';
-        }
-
-        if (event.altKey) {
-            cmd += 'alt+';
-        }
-
         if (event.shiftKey) {
             cmd += 'shift+';
         }
 
         if (
-            (event.ctrlKey || event.altKey || event.shiftKey) &&
-            event.key !== 'Control' &&
-            event.key !== 'Alt' &&
+            (event.shiftKey) &&
             event.key !== 'Shift'
         ) {
             cmd += event.key;
             e.add(cmd);
-        } else if (!event.ctrlKey && !event.altKey && !event.shiftKey &&e.addends.length === 1) {
+        } else if (!event.shiftKey && e.addends.length === 1) {
             cmd += event.key
             e.add(cmd)
         }
