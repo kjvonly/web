@@ -40,13 +40,8 @@
 </div>
 
 <style>
-	.goto {
-	}
-	.suggestion {
-		height: var(--height);
-		overflow: auto;
-	}
-
+	
+	
 	.input {
 		background-color: gray;
 		position: absolute;

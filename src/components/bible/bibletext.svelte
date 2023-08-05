@@ -12,6 +12,7 @@
 	import { bibleNavigationService } from '../../services/bible-navigation.service';
 	import Goto from './components/goto.svelte';
 	import { paneService } from '../../services/pane.service';
+	import Search from './components/search.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -29,7 +30,8 @@
 	$: quadHeightMax = qh + 'px';
 	$: selectedVerse = 0;
 	$: selected = buffer.selected ? 'selected-buffer' : '';
-	$: popupHeight = qh / 2 + 'px';
+	$: popupHeight = qh / 2 ;
+	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
 
 	let loaded = false;
@@ -49,6 +51,7 @@
 			buffer.keyboardBindings.set('shift+K', _nextChapter);
 			buffer.keyboardBindings.set('shift+I', _previousChapter);
 			buffer.keyboardBindings.set('alt+g', _goto);
+			buffer.keyboardBindings.set('alt+s', _search);
 		}
 	});
 
@@ -120,6 +123,21 @@
 			return;
 		}
 		await updateChapterFromChapterKey(chapterKey);
+	}
+
+	async function searchHandler(event: any) {
+		popup = null;
+
+		let bookChapterStr: string = event.detail.chapter;
+		await updateChapterFromShortName(bookChapterStr);
+	}
+
+
+	function _search(){
+		popup = {
+			component: Search,
+			handler: searchHandler
+		};
 	}
 
 	async function gotoHandler(event: any) {
@@ -213,8 +231,8 @@
 		{/if}
 	</div>
 	{#if popup}
-		<div class="popups flex flex-fill w-100" style:--height={popupHeight} style:--top={popuptop}>
-			<svelte:component this={popup.component} on:popupHandler={popup.handler} />
+		<div class="popups flex flex-fill w-100" style:--height={popupHeightStyle} style:--top={popuptop}>
+			<svelte:component this={popup.component} bind:parentHeight={popupHeight} on:popupHandler={popup.handler} />
 		</div>
 	{/if}
 	<div class="footer sticky-bottom {selected}" bind:offsetHeight={footerHeight}>
