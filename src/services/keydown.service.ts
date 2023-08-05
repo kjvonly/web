@@ -112,11 +112,11 @@ class KeyDownEvent {
         ) {
             cmd += event.key;
             e.add(cmd);
-        } else if (!event.shiftKey && e.addends.length === 1) {
+        } else if (!event.shiftKey) {
             cmd += event.key
             e.add(cmd)
         }
-
+        console.log(e.toString())
         let c = this.getFunc(e.toString())
         if (c !== undefined) {
             e.clear();    

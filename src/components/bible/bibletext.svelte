@@ -44,14 +44,14 @@
 	afterUpdate(() => {
 		if (key !== buffer.key) {
 			key = buffer.key;
-			buffer.keyboardBindings.set('shift+P', _previousLine);
-			buffer.keyboardBindings.set('shift+N', _nextLine);
-			buffer.keyboardBindings.set('shift+V', _pageDown);
-			buffer.keyboardBindings.set('alt+v', _pageUp);
-			buffer.keyboardBindings.set('shift+K', _nextChapter);
-			buffer.keyboardBindings.set('shift+I', _previousChapter);
-			buffer.keyboardBindings.set('alt+g', _goto);
-			buffer.keyboardBindings.set('alt+s', _search);
+			buffer.keyboardBindings.set('p', _previousLine);
+			buffer.keyboardBindings.set('n', _nextLine);
+			buffer.keyboardBindings.set('v', _pageDown);
+			buffer.keyboardBindings.set('shift+V', _pageUp);
+			buffer.keyboardBindings.set('k', _nextChapter);
+			buffer.keyboardBindings.set('i', _previousChapter);
+			buffer.keyboardBindings.set('g', _goto);
+			buffer.keyboardBindings.set('s', _search);
 		}
 	});
 

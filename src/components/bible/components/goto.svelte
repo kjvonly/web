@@ -16,7 +16,14 @@
 		let pel = el?.parentNode as HTMLElement;
 		containerHeight = pel.getBoundingClientRect().height;
 		let input = document.getElementById('goto-input-' + gotoID);
-		input?.focus();
+		if (input) {
+			bookChapter = '';
+		}
+
+		setTimeout(() => {
+			input?.focus();
+		}, 1);
+
 		// Get the input field
 
 		input?.addEventListener('keypress', function (event) {
@@ -40,8 +47,6 @@
 </div>
 
 <style>
-	
-	
 	.input {
 		background-color: gray;
 		position: absolute;
