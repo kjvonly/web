@@ -17,27 +17,27 @@
 
 	let paneKeyBindingMap = new Map<string, Function>();
 
-	paneKeyBindingMap.set('ctl+x 3', () => {
+	paneKeyBindingMap.set('shift+X 3', () => {
 		paneService.splitPane(PaneSplit.Vertical);
 		p = paneService.getRootPane();
 	});
 
-	paneKeyBindingMap.set('ctl+x 2', () => {
+	paneKeyBindingMap.set('shift+X 2', () => {
 		paneService.splitPane(PaneSplit.Horizontal);
 		p = paneService.getRootPane();
 	});
 
-	paneKeyBindingMap.set('ctl+x 0', () => {
+	paneKeyBindingMap.set('shift+X 0', () => {
 		paneService.deletePane();
 		p = paneService.getRootPane();
 	});
 
-	paneKeyBindingMap.set('ctl+x o', () => {
+	paneKeyBindingMap.set('shift+X o', () => {
 		paneService.goToNextPaneWithBuffer();
 		p = paneService.getRootPane();
 	});
 
-	paneKeyBindingMap.set('ctl+x b', () => {
+	paneKeyBindingMap.set('shift+X b', () => {
 		let b = new Buffer();
 		b.componentName = 'Bibletext';
 		b.component = Bibletext;

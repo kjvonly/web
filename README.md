@@ -18,19 +18,20 @@ e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/us
 # Get Started
 ```
 # global keyboard shortcuts
-ctl+x b # to open the bible buffer
-ctl+x 3 # split screen vertically
-ctl+x 2 # split screen horizontally
-ctl+x o # move to next buffer
+shfit+X b # to open the bible buffer
+shfit+X 3 # split screen vertically
+shfit+X 2 # split screen horizontally
+shfit+X o # move to next buffer
 
 # Bible Buffer
-shift+n # next line
-shift+p # previous line
-shift+k # next chapter
-shift+i # previous chapter
-shift+v # page down
-alt+v   # page up
-alt+g   # to open goto popup (shortnames e.g mat 1 or rom 1)
+k # next line
+i # previous line
+l # next chapter
+j # previous chapter
+n # page down
+p # page up
+g # to open goto popup (shortnames e.g mat 1 or rom 1)
+s # search
 ```
 
 ## Developing

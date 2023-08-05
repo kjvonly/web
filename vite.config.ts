@@ -19,9 +19,10 @@ export default defineConfig({
 		},
 		proxy: {
 			'^/api/.*': {
-				target: 'http://localhost:5000',
+				target: 'http://{YOUR IP ADDR}:7777',
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000,
+
 			  },
 		},
 	}
