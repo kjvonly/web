@@ -18,8 +18,8 @@ export default defineConfig({
 			"optionsSuccessStatus": 204
 		},
 		proxy: {
-			'^/api/.*': {
-				target: 'http://{YOUR IP ADDR}:7777',
+			'^/api/.*': {	
+				target: 'http://kjvonly-dev-server:5000',
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000,
 

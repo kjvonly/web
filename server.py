@@ -1203,7 +1203,7 @@ def all(id):
     if not id in m:
         return make_response('file not found', 404)
 
-    response = make_response( send_file("../kjvdata/json.gz/" +  id + ".json.gz"))
+    response = make_response( send_file("../data/json.gz/" +  id + ".json.gz"))
     response.headers['Content-Type'] = 'application/json'
     response.headers['Content-Encoding'] = 'gzip'
     return response

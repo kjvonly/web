@@ -36,7 +36,16 @@ s # search
 
 ## Developing
 
+To serve the kjvonly data you need:
+
+```
+sudo echo localhost     kjvonly-dev-server >> /etc/hosts
+pip install -r requirements
+python server.py
+```
+
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
 
 ```bash
 npm run dev
