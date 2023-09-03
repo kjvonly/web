@@ -36,7 +36,7 @@
 
 	let loaded = false;
 	let chapter: any;
-	let verses: string[] = [];
+	let verses: any[] = [];
 
 	let db = bibleDB;
 
@@ -110,8 +110,7 @@
 		let k, v: any;
 		verses = [];
 		for ([k, v] of Object.entries(c.verses)) {
-			verses.push(v.text);
-			verses = verses;
+			verses.push(v);
 			selectedVerse = 0;
 		}
 
@@ -244,7 +243,9 @@
 		{#if verses.length > 0}
 			{#each verses as v, i}
 				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
-					<p>{v}</p>
+					{#each v.words as w}
+						<span>{w.text}&nbsp;</span>
+					{/each}
 				</div>
 			{/each}
 		{/if}
