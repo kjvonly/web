@@ -101,7 +101,7 @@
 
 	function disableKeybinding() {
 		for (let [key, _] of buffer.keyboardBindings) {
-			buffer.keyboardBindings.delete(key);	
+			buffer.keyboardBindings.delete(key);
 		}
 	}
 
@@ -243,7 +243,9 @@
 	>
 		{#if verses.length > 0}
 			{#each verses as v, i}
-				<p id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>{v}</p>
+				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
+					<p>{v}</p>
+				</div>
 			{/each}
 		{/if}
 	</div>
