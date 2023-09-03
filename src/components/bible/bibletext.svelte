@@ -244,7 +244,8 @@
 			{#each verses as v, i}
 				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
 					{#each v.words as w}
-						<span>{w.text}&nbsp;</span>
+						<span class="{w.class?.join(' ')}">{w.text}</span>
+						<span>&nbsp;</span>
 					{/each}
 				</div>
 			{/each}
@@ -283,6 +284,9 @@
 		height: var(--height);
 		margin: 0px !important;
 		padding: 0px !important;
+	}
+	.redtxt {
+		color: red;
 	}
 	.selected {
 		background-color: rgb(127, 127, 127, 0.25);
