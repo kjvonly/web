@@ -13,7 +13,7 @@
 	let footerHeight: number;
 
 	const dispatch = createEventDispatcher();
-	$: popupHeight = parentHeight - footerHeight + 'px';
+	$: popupHeight = parentHeight + 'px';
 
 	let strongsInput: string = '';
 	let selectedSuggestion: number = 0;
@@ -31,7 +31,7 @@
 	});
 </script>
 
-<div id="strongs-popup-{strongsID}" style:--height={parentHeight} class="w-100 popup-container">
+<div id="strongs-popup-{strongsID}" style:--height={popupHeight} class="w-100 popup-container">
 	<div
 		id="strongs-suggestion-{strongsID}"
 		class="suggestion"
