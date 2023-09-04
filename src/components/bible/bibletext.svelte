@@ -13,6 +13,7 @@
 	import Goto from './components/goto.svelte';
 	import { paneService } from '../../services/pane.service';
 	import Search from './components/search.svelte';
+	import Strongs from './components/strongs.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -164,11 +165,27 @@
 		enableKeyBindings();
 	}
 
+	async function strongsHandler(event: any) {
+		popup = null;
+		enableKeyBindings();
+	}
+
 	function _goto() {
 		disableKeybinding();
 		popup = {
 			component: Goto,
 			handler: gotoHandler
+		};
+	}
+
+	function _strongs(hrefs: string[]) {
+		if (hrefs?.length < 1) {
+			return;
+		}
+		disableKeybinding();
+		popup = {
+			component: Strongs,
+			handler: strongsHandler
 		};
 	}
 
@@ -246,7 +263,13 @@
 			{#each verses as v, i}
 				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
 					{#each v.words as w}
-						<span style:--redtxtColor={redtxtColor} class={w.class?.join(' ')}>{w.text}</span>&nbsp;
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<span
+							on:click={() => _strongs(w.href)}
+							style:--redtxtColor={redtxtColor}
+							class={w.class?.join(' ')}>{w.text}</span
+						>&nbsp;
 					{/each}
 				</div>
 			{/each}
@@ -262,6 +285,7 @@
 				this={popup.component}
 				bind:parentHeight={popupHeight}
 				on:popupHandler={popup.handler}
+				bind:keyboardBindings={buffer.keyboardBindings}
 			/>
 		</div>
 	{/if}
@@ -299,6 +323,7 @@
 
 	.xref {
 		border-bottom: thin dotted darkgray;
+		cursor: pointer;
 	}
 
 	.selected {
