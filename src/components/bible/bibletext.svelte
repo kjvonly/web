@@ -34,7 +34,7 @@
 	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
 
-	$: redtxtColor = 'rgb(255,0,0)'
+	$: redtxtColor = 'rgb(255,0,0)';
 
 	let loaded = false;
 	let chapter: any;
@@ -246,7 +246,7 @@
 			{#each verses as v, i}
 				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
 					{#each v.words as w}
-						<span style:--redtxtColor={redtxtColor} class="{w.class?.join(' ')}">{w.text}&nbsp;</span>
+						<span style:--redtxtColor={redtxtColor} class={w.class?.join(' ')}>{w.text}</span>&nbsp;
 					{/each}
 				</div>
 			{/each}
@@ -287,17 +287,24 @@
 		padding: 0px !important;
 	}
 
-	/* TODO: Decide if supporting footnotes? */
+	/* TODO: Decide if supporting footnotes. */
 	.FOOTNO {
 		display: none;
 		width: 0px !important;
 	}
+
 	.redtxt {
-		color: var(--redtxtColor)
+		color: var(--redtxtColor);
 	}
+
+	.xref {
+		border-bottom: thin dotted darkgray;
+	}
+
 	.selected {
 		background-color: rgb(127, 127, 127, 0.25);
 	}
+
 	.bibletext {
 		overflow-y: scroll;
 		height: var(--height);
