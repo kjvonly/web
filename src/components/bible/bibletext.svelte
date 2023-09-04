@@ -180,7 +180,7 @@
 
 	function _strongs(hrefs: string[]) {
 
-		if (hrefs?.length < 1 || popup != null) {
+		if (!hrefs|| hrefs?.length < 1 || popup != null) {
 			return;
 		}
 
