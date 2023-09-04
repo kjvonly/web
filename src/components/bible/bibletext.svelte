@@ -34,6 +34,8 @@
 	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
 
+	$: redtxtColor = 'rgb(255,0,0)'
+
 	let loaded = false;
 	let chapter: any;
 	let verses: any[] = [];
@@ -244,8 +246,7 @@
 			{#each verses as v, i}
 				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
 					{#each v.words as w}
-						<span class="{w.class?.join(' ')}">{w.text}</span>
-						<span>&nbsp;</span>
+						<span style:--redtxtColor={redtxtColor} class="{w.class?.join(' ')}">{w.text}&nbsp;</span>
 					{/each}
 				</div>
 			{/each}
@@ -285,8 +286,14 @@
 		margin: 0px !important;
 		padding: 0px !important;
 	}
+
+	/* TODO: Decide if supporting footnotes? */
+	.FOOTNO {
+		display: none;
+		width: 0px !important;
+	}
 	.redtxt {
-		color: red;
+		color: var(--redtxtColor)
 	}
 	.selected {
 		background-color: rgb(127, 127, 127, 0.25);
