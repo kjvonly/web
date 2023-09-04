@@ -34,9 +34,11 @@
 	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
 
+	$: redtxtColor = 'rgb(255,0,0)'
+
 	let loaded = false;
 	let chapter: any;
-	let verses: string[] = [];
+	let verses: any[] = [];
 
 	let db = bibleDB;
 
@@ -101,7 +103,7 @@
 
 	function disableKeybinding() {
 		for (let [key, _] of buffer.keyboardBindings) {
-			buffer.keyboardBindings.delete(key);	
+			buffer.keyboardBindings.delete(key);
 		}
 	}
 
@@ -110,8 +112,7 @@
 		let k, v: any;
 		verses = [];
 		for ([k, v] of Object.entries(c.verses)) {
-			verses.push(v.text);
-			verses = verses;
+			verses.push(v);
 			selectedVerse = 0;
 		}
 
@@ -243,7 +244,11 @@
 	>
 		{#if verses.length > 0}
 			{#each verses as v, i}
-				<p id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>{v}</p>
+				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
+					{#each v.words as w}
+						<span style:--redtxtColor={redtxtColor} class="{w.class?.join(' ')}">{w.text}&nbsp;</span>
+					{/each}
+				</div>
 			{/each}
 		{/if}
 	</div>
@@ -280,6 +285,15 @@
 		height: var(--height);
 		margin: 0px !important;
 		padding: 0px !important;
+	}
+
+	/* TODO: Decide if supporting footnotes? */
+	.FOOTNO {
+		display: none;
+		width: 0px !important;
+	}
+	.redtxt {
+		color: var(--redtxtColor)
 	}
 	.selected {
 		background-color: rgb(127, 127, 127, 0.25);
