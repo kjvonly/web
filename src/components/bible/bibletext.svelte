@@ -179,7 +179,8 @@
 	}
 
 	function _strongs(hrefs: string[]) {
-		if (hrefs?.length < 1) {
+
+		if (hrefs?.length < 1 || popup != null) {
 			return;
 		}
 		disableKeybinding();
