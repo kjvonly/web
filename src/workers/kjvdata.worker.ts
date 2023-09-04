@@ -18,18 +18,26 @@ onmessage = async () => {
                         db.putValue('chapters', value)
                     });
                 });
-        
+
             });
             fetch(location.origin + "/api/booknames").then((res) => {
                 res.json().then((json) => {
                     json['id'] = 'booknames'
                     db.putValue('chapters', json)
                 });
-            });        
+            });
+            fetch(location.origin + "/api/strongs").then((res) => {
+                res.json().then((json) => {
+                    let myMap = new Map<string, any>(Object.entries(json))
+                    myMap.forEach((value: any, key: string) => {
+                        value["id"] = key
+                        db.putValue('chapters', value)
+                    });
+                });
+
+            });
         }
     })
-
-
 };
 
 export { };

@@ -13,6 +13,7 @@
 	import Goto from './components/goto.svelte';
 	import { paneService } from '../../services/pane.service';
 	import Search from './components/search.svelte';
+	import Strongs from './components/strongs.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -34,7 +35,7 @@
 	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
 
-	$: redtxtColor = 'rgb(255,0,0)'
+	$: redtxtColor = 'rgb(255,0,0)';
 
 	let loaded = false;
 	let chapter: any;
@@ -164,11 +165,39 @@
 		enableKeyBindings();
 	}
 
+	async function strongsHandler(event: any) {
+		popup = null;
+		enableKeyBindings();
+	}
+
 	function _goto() {
 		disableKeybinding();
 		popup = {
 			component: Goto,
 			handler: gotoHandler
+		};
+	}
+
+	function _strongs(hrefs: string[]) {
+
+		if (hrefs?.length < 1 || popup != null) {
+			return;
+		}
+
+		// NOTE: hrefs starting with G or H are strongs defs
+		var filterd = hrefs.filter( (item: String) => {return item.toLowerCase().startsWith('g') || item.toLowerCase().startsWith('h') })
+		
+		if (filterd.length != 1) {
+			return
+		}
+
+		console.log(filterd)
+
+		disableKeybinding();
+		popup = {
+			component: Strongs,
+			handler: strongsHandler,
+			data: filterd[0],
 		};
 	}
 
@@ -246,7 +275,13 @@
 			{#each verses as v, i}
 				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
 					{#each v.words as w}
-						<span style:--redtxtColor={redtxtColor} class="{w.class?.join(' ')}">{w.text}&nbsp;</span>
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<span
+							on:click={() => _strongs(w.href)}
+							style:--redtxtColor={redtxtColor}
+							class={w.class?.join(' ')}>{w.text}</span
+						>&nbsp;
 					{/each}
 				</div>
 			{/each}
@@ -260,8 +295,10 @@
 		>
 			<svelte:component
 				this={popup.component}
-				bind:parentHeight={popupHeight}
 				on:popupHandler={popup.handler}
+				bind:parentHeight={popupHeight}
+				bind:keyboardBindings={buffer.keyboardBindings}
+				bind:data={popup.data}
 			/>
 		</div>
 	{/if}
@@ -287,17 +324,25 @@
 		padding: 0px !important;
 	}
 
-	/* TODO: Decide if supporting footnotes? */
+	/* TODO: Decide if supporting footnotes. */
 	.FOOTNO {
 		display: none;
 		width: 0px !important;
 	}
+
 	.redtxt {
-		color: var(--redtxtColor)
+		color: var(--redtxtColor);
 	}
+
+	.xref {
+		border-bottom: thin dotted darkgray;
+		cursor: pointer;
+	}
+
 	.selected {
 		background-color: rgb(127, 127, 127, 0.25);
 	}
+
 	.bibletext {
 		overflow-y: scroll;
 		height: var(--height);

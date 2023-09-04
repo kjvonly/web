@@ -2,6 +2,9 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 
+	export let parentHeight: number;
+	export let keyboardBindings: Map<string, Function>;
+	export let data: string;
 	let gotoID: string = uuidv4();
 
 	let containerHeight: number;

@@ -4,6 +4,8 @@
 	import { scrolledIntoView } from '../../../utils/position';
 
     export let parentHeight: number;    
+	export let keyboardBindings: Map<string, Function>;
+	export let data: any;
 	let searchID: string = uuidv4();
     
 
