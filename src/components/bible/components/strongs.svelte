@@ -7,7 +7,9 @@
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
 	export let data: string;
-	let strongsID: string = uuidv4();
+	let strongsID = data;
+	let strongsPopupID: string = uuidv4();
+	let strongs: any;
 
 	let containerHeight: number;
 	let footerHeight: number;
@@ -18,7 +20,7 @@
 	let strongsInput: string = '';
 	let selectedSuggestion: number = 0;
 	onMount(() => {
-		let el = document.getElementById('strongs-popup-' + strongsID);
+		let el = document.getElementById('strongs-popup-' + strongsPopupID);
 		let pel = el?.parentNode as HTMLElement;
 		containerHeight = pel.getBoundingClientRect().height;
 
@@ -27,13 +29,18 @@
 			dispatch('popupHandler', {});
 		});
 
-		//let chapter = await db.getValue('chapters');
+		bibleDB.ready?.then(() => {
+			bibleDB.getValue('chapters', strongsID.toLowerCase()).then((data) => {
+				strongs = data;
+				console.log(strongsPopupID.toLowerCase());
+			});
+		});
 	});
 </script>
 
-<div id="strongs-popup-{strongsID}" style:--height={popupHeight} class="w-100 popup-container">
+<div id="strongs-popup-{strongsPopupID}" style:--height={popupHeight} class="w-100 popup-container">
 	<div
-		id="strongs-suggestion-{strongsID}"
+		id="strongs-suggestion-{strongsPopupID}"
 		class="suggestion"
 		style:--height={popupHeight}
 		tabindex="-1"
@@ -42,7 +49,9 @@
 			<p>{data}</p>
 		{/if}
 
-		<!-- {@html } -->
+		{#if strongs}
+			{@html strongs.strongsDef}
+		{/if}
 	</div>
 </div>
 
@@ -51,16 +60,6 @@
 		height: var(--height);
 		overflow: scroll;
 		background-color: bisque;
-	}
-
-	.input {
-		background-color: gray;
-		position: absolute;
-		bottom: 0;
-	}
-
-	.selected {
-		background-color: rgb(127, 127, 127, 0.25);
 	}
 
 	.popup-container {
