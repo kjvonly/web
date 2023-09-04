@@ -183,10 +183,21 @@
 		if (hrefs?.length < 1 || popup != null) {
 			return;
 		}
+
+		// NOTE: hrefs starting with G or H are strongs defs
+		var filterd = hrefs.filter( (item: String) => {return item.toLowerCase().startsWith('g') || item.toLowerCase().startsWith('h') })
+		
+		if (filterd.length != 1) {
+			return
+		}
+
+		console.log(filterd)
+
 		disableKeybinding();
 		popup = {
 			component: Strongs,
-			handler: strongsHandler
+			handler: strongsHandler,
+			data: filterd[0],
 		};
 	}
 
@@ -284,9 +295,10 @@
 		>
 			<svelte:component
 				this={popup.component}
-				bind:parentHeight={popupHeight}
 				on:popupHandler={popup.handler}
+				bind:parentHeight={popupHeight}
 				bind:keyboardBindings={buffer.keyboardBindings}
+				bind:data={popup.data}
 			/>
 		</div>
 	{/if}

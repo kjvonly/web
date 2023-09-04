@@ -2,9 +2,11 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import { scrolledIntoView } from '../../../utils/position';
+	import { bibleDB } from '../../../db/bible.db';
 
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
+	export let data: string;
 	let strongsID: string = uuidv4();
 
 	let containerHeight: number;
@@ -24,6 +26,8 @@
 			keyboardBindings.delete('Enter');
 			dispatch('popupHandler', {});
 		});
+
+		//let chapter = await db.getValue('chapters');
 	});
 </script>
 
@@ -34,11 +38,11 @@
 		style:--height={popupHeight}
 		tabindex="-1"
 	>
-		{#each { length: 20 } as _, i}
-			<li id="suggestion-{strongsID}-{i}" class={i === selectedSuggestion ? 'selected' : ''}>
-				{i + 1}
-			</li>
-		{/each}
+		{#if data}
+			<p>{data}</p>
+		{/if}
+
+		<!-- {@html } -->
 	</div>
 </div>
 
