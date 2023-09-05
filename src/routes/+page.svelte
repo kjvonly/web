@@ -12,6 +12,7 @@
 	import { paneService } from '../services/pane.service';
 	import Editor from '../components/editor/editor.svelte';
 	import { bibleDB } from '../db/bible.db';
+	import Search from '../components/search/search.svelte';
 
 	let p: Pane;
 
@@ -37,6 +38,7 @@
 		p = paneService.getRootPane();
 	});
 
+	// opens bible buffer
 	paneKeyBindingMap.set('shift+X b', () => {
 		let b = new Buffer();
 		b.componentName = 'Bibletext';
@@ -46,6 +48,18 @@
 		currentBuffer.set(b);
 		p = paneService.getRootPane();
 	});
+
+	// opens search buffer
+	paneKeyBindingMap.set('shift+X s', () => {
+		let b = new Buffer();
+		b.componentName = 'Search';
+		b.component = Search;
+		bufferStore.add(b.key, b);
+		paneService.setBuffer(b);
+		currentBuffer.set(b);
+		p = paneService.getRootPane();
+	});
+	
 
 	paneKeyBindingMap.set('ctl+x e', () => {
 		let b = new Buffer();

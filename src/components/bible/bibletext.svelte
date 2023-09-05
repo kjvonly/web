@@ -3,15 +3,12 @@
 
 	import { pageDown, pageUp, previousLine, nextLine, scrolledIntoView } from '../../utils/position';
 
-	import { BibleService } from '../../api/handler.svelte';
-
 	import { v4 as uuidv4 } from 'uuid';
 	import type { Buffer } from '../../models/buffer.model';
 	import { bufferStore } from '../../stores/buffer.store';
 	import { bibleDB } from '../../db/bible.db';
 	import { bibleNavigationService } from '../../services/bible-navigation.service';
 	import Goto from './components/goto.svelte';
-	import { paneService } from '../../services/pane.service';
 	import Search from './components/search.svelte';
 	import Strongs from './components/strongs.svelte';
 
@@ -21,7 +18,6 @@
 
 	let headerHeight: number;
 	let footerHeight: number;
-
 	let quadrantHeight: number;
 
 	let qh: number;
@@ -179,25 +175,26 @@
 	}
 
 	function _strongs(hrefs: string[]) {
-
-		if (hrefs?.length < 1 || popup != null) {
+		if (!hrefs || hrefs?.length < 1 || popup != null) {
 			return;
 		}
 
 		// NOTE: hrefs starting with G or H are strongs defs
-		var filterd = hrefs.filter( (item: String) => {return item.toLowerCase().startsWith('g') || item.toLowerCase().startsWith('h') })
-		
+		var filterd = hrefs.filter((item: String) => {
+			return item.toLowerCase().startsWith('g') || item.toLowerCase().startsWith('h');
+		});
+
 		if (filterd.length != 1) {
-			return
+			return;
 		}
 
-		console.log(filterd)
+		console.log(filterd);
 
 		disableKeybinding();
 		popup = {
 			component: Strongs,
 			handler: strongsHandler,
-			data: filterd[0],
+			data: filterd[0]
 		};
 	}
 
