@@ -8,11 +8,16 @@ Clone data repo somewhere on your host
 git clone https://github.com/kjvonly/data.git
 ```
 
+
 ```
-docker run --name kjvonly-web -d -v <path-to-json.gz-dir>:/usr/src/kjvdata/json.gz -p 5000:5000 ghcr.io/kjvonly/web:v0.1.0
+make all
 ```
 
-e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/usr/src/kjvdata/json.gz -p 5000:5000 ghcr.io/kjvonly/web:v0.1.0
+```
+docker run --name kjvonly-web -d -v <path-to-json.gz-dir>:/usr/src/data -p 5000:5000 kjvonly/web:0.0.1
+```
+
+e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/usr/src/data/json.gz -p 5000:5000 kjvonly/web:0.0.1
 
 
 # Get Started
