@@ -44,9 +44,7 @@
 	style:--height={quadHeightMax}
 	bind:offsetHeight={quadrantHeight}
 >
-	<div class="header" bind:offsetHeight={headerHeight}>
-		Notes For Genesis 1
-	</div>
+	<div class="header" bind:offsetHeight={headerHeight}>Notes For Genesis 1</div>
 	<div style="z-index: -10" class="editortext" style:--height={textHeight}>
 		<Editor id="{quadrant}-editor" {inline} scriptSrc="node_modules/tinymce/tinymce.min.js" />
 	</div>
@@ -62,8 +60,8 @@
 		-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 		-moz-box-sizing: border-box; /* Firefox, other Gecko */
 		box-sizing: border-box;
-        border-bottom: 1px solid lightgray;
-        height: 30px !important;
+		border-bottom: 1px solid lightgray;
+		height: 30px !important;
 	}
 
 	.tox-editor-container {
@@ -71,7 +69,7 @@
 	}
 	.footer {
 		background-color: gray;
-        height: 30px !important;
+		height: 30px !important;
 	}
 
 	.selected-buffer {

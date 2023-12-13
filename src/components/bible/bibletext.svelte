@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount, afterUpdate } from 'svelte';
-
 	import { pageDown, pageUp, previousLine, nextLine, scrolledIntoView } from '../../utils/position';
 
 	import { v4 as uuidv4 } from 'uuid';
@@ -11,25 +10,26 @@
 	import Goto from './components/goto.svelte';
 	import Search from './components/search.svelte';
 	import Strongs from './components/strongs.svelte';
+	import { paneService } from '../../services/pane.service';
 
 	export let buffer: Buffer;
 	let popup: any;
-	let quadrant: string = uuidv4();
-
+	let id: string = uuidv4();
+	let quadrant = id;
 	let headerHeight: number;
 	let footerHeight: number;
-	let quadrantHeight: number;
 
 	let qh: number;
 	let qb: number;
 	$: uniqueId = quadrant + '-v';
-	$: textHeight = quadrantHeight - headerHeight - footerHeight + 'px';
-	$: quadHeightMax = qh + 'px';
+
 	$: selectedVerse = 0;
 	$: selected = buffer.selected ? 'selected-buffer' : '';
+
 	$: popupHeight = qh / 2;
 	$: popupHeightStyle = qh / 2 + 'px';
 	$: popuptop = qb - qh / 2 + 'px';
+	var popupWidth: string;
 
 	$: redtxtColor = 'rgb(255,0,0)';
 
@@ -77,11 +77,39 @@
 			loaded = true;
 		});
 
+		// TODO clean up. Go back to using css and var technique
+
 		let el = document.getElementById(uniqueId);
 		let pel = el?.parentNode as HTMLElement;
 		let br = pel.getBoundingClientRect();
-		qh = br.height;
+		let quad = document.getElementById(uniqueId) as HTMLElement;
+		let text = document.getElementById(uniqueId + '-bibletext') as HTMLElement;
+
+		quad.style.height = br.height + 'px';
+		quad.style.maxHeight = br.height + 'px';
+		text.style.height = br.height - headerHeight - footerHeight + 'px';
+		text.style.maxHeight = br.height - 60 + 'px';
+
 		qb = br.bottom;
+		qh = br.height;
+
+		popupWidth = pel.getBoundingClientRect().width + 'px';
+
+		const resizeObserver = new ResizeObserver((entries) => {
+			var br = pel.getBoundingClientRect();
+
+			quad.style.height = br.height + 'px';
+			quad.style.maxHeight = br.height + 'px';
+
+			text.style.height = br.height - 60 + 'px';
+			text.style.maxHeight = br.height - 60 + 'px';
+
+			qb = br.bottom;
+			qb = br.bottom;
+			qh = br.height;
+			popupWidth = br.width + 'px';
+		});
+		resizeObserver.observe(pel);
 	});
 
 	function enableKeyBindings() {
@@ -159,6 +187,7 @@
 		let bookChapterStr: string = event.detail.chapter;
 		await updateChapterFromShortName(bookChapterStr);
 		enableKeyBindings();
+		paneService.updatePane();
 	}
 
 	async function strongsHandler(event: any) {
@@ -187,8 +216,6 @@
 		if (filterd.length != 1) {
 			return;
 		}
-
-		console.log(filterd);
 
 		disableKeybinding();
 		popup = {
@@ -249,13 +276,8 @@
 	}
 </script>
 
-<div
-	id={uniqueId}
-	class="quadrant"
-	style:--height={quadHeightMax}
-	bind:offsetHeight={quadrantHeight}
->
-	<div class="header sticky-top" bind:offsetHeight={headerHeight}>
+<div id={uniqueId} class="quadrant">
+	<div class="myheader">
 		<p class="text-sm m-0">
 			{#if chapter}
 				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
@@ -263,25 +285,41 @@
 		</p>
 	</div>
 
-	<div
-		id="{uniqueId}-bibletext"
-		class="bibletext flex-1 space-y-2 text-left flex-col items-left"
-		style:--height={textHeight}
-	>
+	<div id="{uniqueId}-bibletext" class="bibletext">
 		{#if verses.length > 0}
 			{#each verses as v, i}
-				<div id="{uniqueId}{i}" class={i === selectedVerse ? 'selected' : ''}>
-					{#each v.words as w}
+				<div id="{uniqueId}{i}" class="d-flex flex-row {i === selectedVerse ? 'selected' : ''}">
+					{#each new Array(3 - v.words[0].text.length) as i}
+						<span class="invisible">0</span>
+					{/each}
+
+					<span>{v.words[0].text}</span>
+
+					<span>&nbsp;</span>
+					<span>&nbsp;</span>
+
+					<div class="">
+						{#each v.words.slice(1, v.words.length - 1) as w}
+							<!-- svelte-ignore a11y-click-events-have-key-events -->
+							<!-- svelte-ignore a11y-no-static-element-interactions -->
+							<span
+								on:click={() => _strongs(w.href)}
+								style:--redtxtColor={redtxtColor}
+								class="me-2 {w.class?.join(' ')}">{w.text}&nbsp;</span
+							>
+						{/each}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<span
-							on:click={() => _strongs(w.href)}
+							on:click={() => _strongs(v.words[v.words.length - 1].href)}
 							style:--redtxtColor={redtxtColor}
-							class={w.class?.join(' ')}>{w.text}</span
-						>&nbsp;
-					{/each}
+							class={v.words[v.words.length - 1].class?.join(' ')}
+							>{v.words[v.words.length - 1].text}</span
+						>
+					</div>
 				</div>
 			{/each}
+			<span class="w-100"></span>
 		{/if}
 	</div>
 	{#if popup}
@@ -289,6 +327,7 @@
 			class="popups flex flex-fill w-100"
 			style:--height={popupHeightStyle}
 			style:--top={popuptop}
+			style:--maxWidth={popupWidth}
 		>
 			<svelte:component
 				this={popup.component}
@@ -299,7 +338,7 @@
 			/>
 		</div>
 	{/if}
-	<div class="footer sticky-bottom {selected}" bind:offsetHeight={footerHeight}>
+	<div class="myfooter {selected}">
 		<p class="text-sm m-0">
 			<strong class="font-semibold">Bible Buffer</strong>
 		</p>
@@ -310,15 +349,16 @@
 	.popups {
 		height: var(--height);
 		top: var(--top);
-
+		max-width: var(--maxWidth);
 		position: absolute;
 		z-index: 10000;
 	}
 	.quadrant {
-		overflow: hidden;
-		height: var(--height);
 		margin: 0px !important;
 		padding: 0px !important;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 
 	/* TODO: Decide if supporting footnotes. */
@@ -342,18 +382,19 @@
 
 	.bibletext {
 		overflow-y: scroll;
-		height: var(--height);
+		width: 100%;
 	}
 
-	.header {
-		-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-		-moz-box-sizing: border-box; /* Firefox, other Gecko */
-		box-sizing: border-box;
+	span {
+		display: inline-block;
+	}
+
+	.myheader {
 		border-bottom: 1px solid lightgray;
 		height: 30px !important;
 	}
 
-	.footer {
+	.myfooter {
 		background-color: gray;
 		height: 30px !important;
 	}
