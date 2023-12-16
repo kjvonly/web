@@ -1,9 +1,7 @@
 <script lang="ts">
-import { v4 as uuidv4 } from 'uuid';
+	import { v4 as uuidv4 } from 'uuid';
 
-
-
-let id = uuidv4()
+	let id = uuidv4();
 </script>
 
 <div class="row h-50">

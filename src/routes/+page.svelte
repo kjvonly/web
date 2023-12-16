@@ -46,6 +46,7 @@
 		bufferStore.add(b.key, b);
 		paneService.setBuffer(b);
 		currentBuffer.set(b);
+		paneService.updatePane();
 		p = paneService.getRootPane();
 	});
 
@@ -59,7 +60,6 @@
 		currentBuffer.set(b);
 		p = paneService.getRootPane();
 	});
-	
 
 	paneKeyBindingMap.set('ctl+x e', () => {
 		let b = new Buffer();
@@ -71,27 +71,39 @@
 
 	keydownStore.updatePaneKeybindings(paneKeyBindingMap);
 
+	function saveRootPane() {
+		paneService.updatePane();
+	}
+
 	onMount(() => {
 		bibleDB.init();
 		bufferStore.useLocalstorage();
 		paneStore.useLocalstorage();
 		paneStore.subscribe((pane) => {
 			p = pane;
+			console.log(p);
 		});
 	});
 </script>
 
 <div class="container-fluid">
-	<div class="row h-100">
-		<div class="col">
+	<div class="h-100">
+		<div id="_root-pane" class="h-100">
 			{#if p}
-				<RecursivePanes bind:pane={p} />
+				<RecursivePanes bind:pane={p} on:save={saveRootPane} />
 			{/if}
 		</div>
 	</div>
 </div>
 
 <style>
+	div {
+		margin: 0px;
+		padding: 0px;
+	}
+	#_root-pane {
+		display: flex;
+	}
 	.container-fluid {
 		height: 100vh;
 		overflow: hidden;

@@ -1,13 +1,14 @@
 # web
+
 The `kjvonly` web app.
 
 # hosting
+
 Clone data repo somewhere on your host
 
 ```
 git clone https://github.com/kjvonly/data.git
 ```
-
 
 ```
 make all
@@ -19,8 +20,8 @@ docker run --name kjvonly-web -d -v <path-to-json.gz-dir>:/usr/src/data -p 5000:
 
 e.g. docker run --name kjvonly-web -d -v /home/username/kjvonly/data/json.gz:/usr/src/data/json.gz -p 5000:5000 kjvonly/web:0.0.1
 
-
 # Get Started
+
 ```
 # global keyboard shortcuts
 shfit+X b # to open the bible buffer
@@ -51,7 +52,6 @@ python server.py
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-
 ```bash
 npm run dev
 
@@ -70,3 +70,11 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+## Dependencies
+
+### update
+
+```
+npx npm-check-updates -u
+```

@@ -3,17 +3,16 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { scrolledIntoView } from '../../../utils/position';
 
-    export let parentHeight: number;    
+	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
 	export let data: any;
 	let searchID: string = uuidv4();
-    
 
 	let containerHeight: number;
 	let footerHeight: number;
-	
+
 	const dispatch = createEventDispatcher();
-	$: popupHeight = (parentHeight - footerHeight) + 'px'; 
+	$: popupHeight = parentHeight - footerHeight + 'px';
 
 	let searchInput: string = '';
 	let selectedSuggestion: number = 0;
@@ -60,7 +59,8 @@
 		id="search-suggestion-{searchID}"
 		class="suggestion"
 		style:--height={popupHeight}
-		tabindex="-1">
+		tabindex="-1"
+	>
 		{#each { length: 20 } as _, i}
 			<li id="suggestion-{searchID}-{i}" class={i === selectedSuggestion ? 'selected' : ''}>
 				{i + 1}

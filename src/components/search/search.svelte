@@ -132,7 +132,7 @@
 		height: 30px !important;
 	}
 
-    /* TODO: move this up to parent container  */
+	/* TODO: move this up to parent container  */
 	.selected-buffer {
 		background-color: lightgray !important;
 	}
