@@ -1,10 +1,14 @@
 FROM node:20 as build
 
 WORKDIR /usr/src/app
-COPY . . 
+# install packages first to avoid running npm install
+# if packages don't change.
+COPY package.json .
+COPY package-lock.json .
 RUN npm install
-RUN npm run build
 
+COPY . . 
+RUN npm run build
 
 FROM python:3.12.0b4-slim-bullseye
 

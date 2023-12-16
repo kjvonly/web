@@ -1,0 +1,15 @@
+#!/bin/bash
+
+while read oldrev newrev ref; do
+    if [[ $ref =~ .*/master$ ]]; then
+        echo "$PWD" "building image. This may take a few minutes..."
+        git --work-tree=$PWD"/build" --git-dir=$PWD checkout -f $ref
+        # need to be in home dir when using docker snap
+        cd "/home/"$USER"/"$PWD"/build"
+        make all
+        make local_push
+        echo "Done"
+    else
+        echo "Ref $ref successfully received.  Doing nothing: only the master branch may be deployed on this server."
+    fi
+done
