@@ -36,7 +36,6 @@ volumeMounts:
 - name: data
   mountPath: /usr/src/data
 
-
 securityContext: {}
   # capabilities:
   #   drop:
