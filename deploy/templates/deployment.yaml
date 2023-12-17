@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "k8s-web.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "k8s-web.selectorLabels" . | nindent 6 }}
