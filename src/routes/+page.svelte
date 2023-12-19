@@ -105,7 +105,7 @@
 		display: flex;
 	}
 	.container-fluid {
-		height: calc(100vh - 76px);
+		height: calc(100vh - 4.75rem);
 		/* height: 100vh; */
 		overflow: hidden;
 	}
