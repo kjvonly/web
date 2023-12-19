@@ -136,9 +136,10 @@
 		);
 
 	$: pane && reg();
+	$: panePadding = _pane && _pane.parentNode !== null && _pane.split === PaneSplit.Null ? "padding:1rem;": "";
 </script>
 
-<div id="_{id}-pane" class="pane">
+<div id="_{id}-pane" class="pane" style="{panePadding}">
 	{#if _pane && _pane.parentNode === null && _pane.split === PaneSplit.Null}
 		<div id="{id}-root" class="w-100">
 			{#if !(_pane.buffer instanceof NullBuffer)}
@@ -199,7 +200,9 @@
 			</div>
 		{/if}
 	{:else if _pane && _pane.parentNode !== null && !(_pane.buffer instanceof NullBuffer)}
+	<div class="buffer-container">
 		<svelte:component this={_pane.buffer.component} bind:buffer={pane.buffer} />
+	</div>
 	{/if}
 </div>
 
@@ -211,7 +214,7 @@
 		width: 100%;
 		display: flex;
 		align-self: flex-start;
-		padding: 1rem;
+
 	}
 
 	.horizontal-resize-container {
