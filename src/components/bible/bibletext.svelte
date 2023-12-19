@@ -291,25 +291,25 @@
 						<span class="invisible">0</span>
 					{/each}
 
-					<span class="noselect">{v.words[0].text}</span>
+					<span class="kjvonly-noselect">{v.words[0].text}</span>
 
-					<span>&nbsp;</span>
-					<span>&nbsp;</span>
+					<span class="kjvonly-noselect">&nbsp;</span>
+					<span class="kjvonly-noselect">&nbsp;</span>
 
-					<div class="verses noselect">
+					<div class="verses kjvonly-noselect">
 						{#each v.words.slice(1, v.words.length - 1) as w}
 							<!-- svelte-ignore a11y-click-events-have-key-events -->
 							<!-- svelte-ignore a11y-no-static-element-interactions -->
 							<span
 								on:click={() => _strongs(w.href)}
-								class="me-2 {w.class?.join(' ')}">{w.text}&nbsp;</span
+								class="kjvonly-noselect {w.class?.join(' ')}">{w.text}&nbsp;</span
 							>
 						{/each}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<span
 							on:click={() => _strongs(v.words[v.words.length - 1].href)}
-							class={v.words[v.words.length - 1].class?.join(' ')}
+							class="kjvonly-noselect {v.words[v.words.length - 1].class?.join(' ')}"
 							>{v.words[v.words.length - 1].text}</span
 						>
 					</div>
@@ -410,13 +410,4 @@
 		color: #fff;
 	}
 
-	.noselect, span {
-		-webkit-touch-callout: none; /* iOS Safari */
-		-webkit-user-select: none; /* Safari */
-		-khtml-user-select: none; /* Konqueror HTML */
-		-moz-user-select: none; /* Old versions of Firefox */
-		-ms-user-select: none; /* Internet Explorer/Edge */
-		user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
-	}
 </style>

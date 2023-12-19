@@ -166,7 +166,9 @@
 					{/if}
 				{/if}
 			</div>
-			<div id="_{id}-vertical-resize" class="resize h-100"></div>
+			<div class="vertical-resize-container">
+				<div id="_{id}-vertical-resize" class="vertical-resize"></div>
+			</div>
 			<div id="_{id}-vertical-right" class="right">
 				{#if _pane}
 					{#if _pane.rightPane}
@@ -183,7 +185,9 @@
 						{/if}
 					{/if}
 				</div>
-				<div id="_{id}-horizontal-resize" class="resizeh"></div>
+				<div  class="horizontal-resize-container">
+					<div id="_{id}-horizontal-resize" class="horizontal-resize"></div>
+				</div>
 
 				<div id="_{id}-horizontal-right" class="bottom">
 					{#if _pane}
@@ -207,26 +211,40 @@
 		width: 100%;
 		display: flex;
 		align-self: flex-start;
+		padding: 1rem;
 	}
 
-	.resizeh {
-		background-color: $primary;
+	.horizontal-resize-container {
+		.horizontal-resize {
+			background-color: $primary;
+			height: 14px;
+			width: 25%;
+			cursor: row-resize;
+			flex-shrink: 0;
+			position: relative;
+			z-index: 10;
+		}
 		height: 14px;
 		width: 100%;
-		cursor: row-resize;
-		flex-shrink: 0;
-		position: relative;
-		z-index: 10;
+		justify-content: center;
+		display: flex;
 	}
 
-	.resize {
-		background-color: $primary;
+	.vertical-resize-container {
+		.vertical-resize {
+			background-color: $primary;
+			width: 14px;
+			height: 25%;
+			cursor: col-resize;
+			flex-shrink: 0;
+			position: relative;
+			z-index: 10;
+		}
+
 		height: 100%;
 		width: 14px;
-		cursor: col-resize;
-		flex-shrink: 0;
-		position: relative;
-		z-index: 10;
+		align-items: center;
+		display: flex;
 	}
 
 	.left {
