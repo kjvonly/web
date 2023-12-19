@@ -2,15 +2,10 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { Pane, PaneSplit } from '../../models/pane.model';
 	import { NullBuffer } from '../../models/buffer.model';
-	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 	import {
-		ConsecutiveBreaker,
-		ExponentialBackoff,
 		retry,
 		handleAll,
-		circuitBreaker,
-		wrap,
 		ConstantBackoff
 	} from 'cockatiel';
 	export let pane: Pane;
@@ -209,12 +204,6 @@
 </div>
 
 <style>
-	.row,
-	.col-6 {
-		margin: 0;
-		padding: 0;
-	}
-
 	.pane {
 		height: 100%;
 		width: 100%;
@@ -264,9 +253,5 @@
 	div {
 		margin: 0px;
 		padding: 0px;
-	}
-	.container-fluid {
-		height: 100vh;
-		overflow: hidden;
 	}
 </style>

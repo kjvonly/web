@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { keydownStore } from '../services/keydown.service';
+	import  Navbar from '../theme/layout/navbar.svelte';
 
 	// Import our custom CSS
 	import '../scss/styles.scss';
@@ -12,6 +13,7 @@
 </script>
 
 <div class="layout">
+	<Navbar></Navbar>
 	<slot />
 </div>
 
@@ -20,4 +22,5 @@
 		overflow: hidden;
 		height: 100vh;
 	}
+
 </style>

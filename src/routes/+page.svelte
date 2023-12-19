@@ -105,7 +105,8 @@
 		display: flex;
 	}
 	.container-fluid {
-		height: 100vh;
+		height: calc(100vh - 76px);
+		/* height: 100vh; */
 		overflow: hidden;
 	}
 </style>
