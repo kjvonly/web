@@ -3,11 +3,7 @@
 	import { Pane, PaneSplit } from '../../models/pane.model';
 	import { NullBuffer } from '../../models/buffer.model';
 	import { createEventDispatcher } from 'svelte';
-	import {
-		retry,
-		handleAll,
-		ConstantBackoff
-	} from 'cockatiel';
+	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
 	export let pane: Pane;
 
 	let id = uuidv4();

@@ -12,9 +12,9 @@
 				<Icon data={bars} scale="2"></Icon>
 				<div class="title"><span class="font-weight-bold">KVJ</span>only</div>
 			</div>
-            <div>
-                <img class="logo" alt="The project logo" src={logo} />
-            </div>
+			<div>
+				<img class="logo" alt="The project logo" src={logo} />
+			</div>
 			<div class="d-flex flex-row">
 				<div id="user">
 					<span> m4c </span>
@@ -66,13 +66,13 @@
 		margin-right: 0.5rem;
 	}
 
-    .title {
-        margin-left: 1rem;
-        margin-right: 1rem;
-        span {
-        font-weight: bold;
-        color: $base-red
-        }
-        font-size: 1.75rem;
-    } 
+	.title {
+		margin-left: 1rem;
+		margin-right: 1rem;
+		span {
+			font-weight: bold;
+			color: $base-red;
+		}
+		font-size: 1.75rem;
+	}
 </style>
