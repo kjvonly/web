@@ -31,8 +31,6 @@
 	$: popuptop = qb - qh / 2 + 'px';
 	var popupWidth: string;
 
-	$: redtxtColor = 'rgb(255,0,0)';
-
 	let loaded = false;
 	let chapter: any;
 	let verses: any[] = [];
@@ -293,18 +291,17 @@
 						<span class="invisible">0</span>
 					{/each}
 
-					<span>{v.words[0].text}</span>
+					<span class="noselect">{v.words[0].text}</span>
 
 					<span>&nbsp;</span>
 					<span>&nbsp;</span>
 
-					<div class="">
+					<div class="verses noselect">
 						{#each v.words.slice(1, v.words.length - 1) as w}
 							<!-- svelte-ignore a11y-click-events-have-key-events -->
 							<!-- svelte-ignore a11y-no-static-element-interactions -->
 							<span
 								on:click={() => _strongs(w.href)}
-								style:--redtxtColor={redtxtColor}
 								class="me-2 {w.class?.join(' ')}">{w.text}&nbsp;</span
 							>
 						{/each}
@@ -312,7 +309,6 @@
 						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<span
 							on:click={() => _strongs(v.words[v.words.length - 1].href)}
-							style:--redtxtColor={redtxtColor}
 							class={v.words[v.words.length - 1].class?.join(' ')}
 							>{v.words[v.words.length - 1].text}</span
 						>
@@ -345,7 +341,9 @@
 	</div>
 </div>
 
-<style>
+<style lang="scss">
+	@import '../../scss/styles.scss';
+
 	.popups {
 		height: var(--height);
 		top: var(--top);
@@ -363,12 +361,12 @@
 
 	/* TODO: Decide if supporting footnotes. */
 	.FOOTNO {
-		display: none;
+		visibility: hidden !important;
 		width: 0px !important;
 	}
 
 	.redtxt {
-		color: var(--redtxtColor);
+		color: $secondary;
 	}
 
 	.xref {
@@ -385,8 +383,11 @@
 		width: 100%;
 	}
 
-	span {
-		display: inline-block;
+	.verses {
+		word-spacing: 0.05rem;
+		span {
+			display: inline-block;
+		}
 	}
 
 	.myheader {
@@ -401,5 +402,21 @@
 
 	.selected-buffer {
 		background-color: lightgray !important;
+	}
+
+	/*** Works on common browsers ***/
+	::selection {
+		background-color: $secondary;
+		color: #fff;
+	}
+
+	.noselect, span {
+		-webkit-touch-callout: none; /* iOS Safari */
+		-webkit-user-select: none; /* Safari */
+		-khtml-user-select: none; /* Konqueror HTML */
+		-moz-user-select: none; /* Old versions of Firefox */
+		-ms-user-select: none; /* Internet Explorer/Edge */
+		user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 	}
 </style>

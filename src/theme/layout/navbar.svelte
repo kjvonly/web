@@ -33,7 +33,7 @@
 		height: 4.75rem;
 		padding: 1.25rem;
 		width: 100%;
-		background-color: $base-blue;
+		background-color: $primary;
 		color: white;
 		align-items: center;
 		display: flex;
@@ -48,7 +48,7 @@
 		-webkit-border-radius: 1.5rem;
 		-moz-border-radius: 1.5rem;
 		border-radius: 1.5rem;
-		background: $base-red;
+		background: $secondary;
 	}
 	#user > span {
 		justify-content: center;
@@ -60,7 +60,7 @@
 	}
 
 	.logo {
-		fill: $base-red !important;
+		fill: $secondary !important;
 		height: 3rem;
 		margin-left: 0.5rem;
 		margin-right: 0.5rem;
@@ -71,7 +71,7 @@
 		margin-right: 1rem;
 		span {
 			font-weight: bold;
-			color: $base-red;
+			color: $secondary;
 		}
 		font-size: 1.75rem;
 	}

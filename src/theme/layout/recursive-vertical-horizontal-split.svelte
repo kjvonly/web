@@ -199,7 +199,9 @@
 	{/if}
 </div>
 
-<style>
+<style lang="scss">
+	@import '../../scss/styles.scss';
+
 	.pane {
 		height: 100%;
 		width: 100%;
@@ -208,7 +210,7 @@
 	}
 
 	.resizeh {
-		background-color: yellow;
+		background-color: $primary;
 		height: 14px;
 		width: 100%;
 		cursor: row-resize;
@@ -218,7 +220,7 @@
 	}
 
 	.resize {
-		background-color: yellow;
+		background-color: $primary;
 		height: 100%;
 		width: 14px;
 		cursor: col-resize;
