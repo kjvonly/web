@@ -23,7 +23,7 @@
     -moz-border-radius: 1.5rem;
     border-radius: 1.5rem;
     @include themify($themes) {
-		background: themed('secondary');
+		background: themed('secondary-800');
 	}
 }
 
@@ -38,7 +38,7 @@
 
 .logo {
     @include themify($themes) {
-		fill: themed('secondary');
+		fill: themed('secondary-800');
 	}
     height: 3rem;
     margin-left: 0.5rem;
@@ -51,7 +51,7 @@
     span {
         font-weight: bold;
         @include themify($themes) {
-            color: themed('secondary');
+            color: themed('secondary-800');
         }
     }
     font-size: 1.75rem;

@@ -1,7 +1,10 @@
 // Import all of Bootstrap's CSS
 @import '~bootstrap/scss/bootstrap';
 @import './themes.scss';
-@import './layout/navbar.scss';
+
+@import './layout/layout.scss';
+@import './components/components.scss';
+
 .disableScroll {
 	overflow-y: hidden;
 	overflow-x: hidden;

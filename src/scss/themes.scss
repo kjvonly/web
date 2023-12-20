@@ -16,16 +16,16 @@ $primary-colors: (
 );
 
 $secondary-colors: (
-    sedcondary-900: $secondary-900,
-    sedcondary-800: $secondary-800,
-    sedcondary-700: $secondary-700,
-    sedcondary-600: $secondary-600,
-    sedcondary-500: $secondary-500,
-    sedcondary-400: $secondary-400,
-    sedcondary-300: $secondary-300,
-    sedcondary-200: $secondary-200,
-    sedcondary-100: $secondary-100,
-    sedcondary-50: $secondary-50,
+    secondary-900: $secondary-900,
+    secondary-800: $secondary-800,
+    secondary-700: $secondary-700,
+    secondary-600: $secondary-600,
+    secondary-500: $secondary-500,
+    secondary-400: $secondary-400,
+    secondary-300: $secondary-300,
+    secondary-200: $secondary-200,
+    secondary-100: $secondary-100,
+    secondary-50: $secondary-50,
 );
 
 $colors: map-merge($primary-colors, $secondary-colors );
