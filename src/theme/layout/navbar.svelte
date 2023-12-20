@@ -10,7 +10,7 @@
 		<div class="d-flex flex-row align-items-center justify-content-between w-100">
 			<div class="d-flex flex-row align-items-center">
 				<Icon data={bars} scale="2"></Icon>
-				<div class="title"><span class="font-weight-bold">KVJ</span>only</div>
+				<div class="title"><span class="font-weight-bold">KJV</span>only</div>
 			</div>
 			<div>
 				<img class="logo" alt="The project logo" src={logo} />
