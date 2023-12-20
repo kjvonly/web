@@ -21,11 +21,6 @@ $primary-200: #98a8ce;
 $primary-100: #c0cae2;
 $primary-50: #e6eaf3;
 
-$light-background: #ffffff;
-$light-surface: #ffffff;
-$light-error: #b00020;
-$light-on-primary: #ffffff;
-
 
 $secondary-900: #b00026;
 $secondary-800: #bf0a31;
@@ -38,9 +33,61 @@ $secondary-200: #e9949d;
 $secondary-100: #facad4;
 $secondary-50: #fdeaef;
 
-$primary: $primary-900;
-$secondary: $secondary-800;
+$themes: (
+	light: (
+		primary: $primary-500,
+		primary-variant: $primary-700,
+		secondary: $secondary-200,
+		secondary-variant: $secondary-900,
+		background: #ffffff,
+		surface: #ffffff,
+		error: #b00020,
+		on-primary: #ffffff,
+		on-secondary: #000000,
+		on-background: #000000,
+		on-surface: #000000,
+		on-error: #ffffff,
+	)
+	dark: (
+		primary: $primary-200,
+		primary-variant: $primary-700,
+		secondary: $secondary-200,
+		secondary-variant: $secondary-200,
+		background: #121212,
+		surface: #121212,
+		error: #cf6679,
+		on-primary: #000000,
+		on-secondary: #000000,
+		on-background: #000000,
+		on-surface: #ffffff,
+		on-error: #000000,
+	)
+);
 
+
+@mixin themify($themes: $themes ) {
+	@each $theme, $map in $themes {
+
+		.theme-#{$theme} & {
+			$theme-map: (
+				) !global;
+
+			@each $key, $submap in $map {
+				$value: map-get(map-get($themes, $theme), '#{$key}'
+				);
+			$theme-map: map-merge($theme-map, ($key: $value)) !global;
+		}
+
+		@content;
+		$theme-map: null !global;
+	}
+
+}
+}
+
+@function themed($key ) {
+	@return map-get($theme-map, $key );
+}
 
 .kjvonly-noselect {
 	-webkit-touch-callout: none;
