@@ -96,7 +96,11 @@
 	</div>
 </div>
 
-<style>
+<style lang='scss'>
+	@import '../scss/styles.scss';
+
+
+	
 	div {
 		margin: 0px;
 		padding: 0px;
@@ -108,5 +112,10 @@
 		height: calc(100vh - 4.75rem);
 		/* height: 100vh; */
 		overflow: hidden;
+
+		@include themify($themes) {
+			background-color: themed('primary')
+		}
 	}
+
 </style>
