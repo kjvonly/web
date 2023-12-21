@@ -2,8 +2,8 @@
 @import '~bootstrap/scss/bootstrap';
 @import './themes.scss';
 
-@import './layout/layout.scss';
-@import './components/components.scss';
+@import './layout/_all.scss';
+@import './components/_all.scss';
 
 .disableScroll {
 	overflow-y: hidden;

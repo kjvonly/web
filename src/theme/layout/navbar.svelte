@@ -5,7 +5,7 @@
 	import logo from '$lib/assets/cross.svg';
 </script>
 
-<div class="kjvonly-navbar w-100">
+<div class="kjv-navbar w-100">
 	<div class="row w-100">
 		<div class="d-flex flex-row align-items-center justify-content-between w-100">
 			<div class="d-flex flex-row align-items-center">
