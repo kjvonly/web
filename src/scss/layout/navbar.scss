@@ -14,45 +14,45 @@
 }
 
 #user {
-    width: 3rem;
-    height: 3rem;
-    max-width: 3rem;
-    max-height: 3rem;
+	width: 3rem;
+	height: 3rem;
+	max-width: 3rem;
+	max-height: 3rem;
 
-    -webkit-border-radius: 1.5rem;
-    -moz-border-radius: 1.5rem;
-    border-radius: 1.5rem;
-    @include themify($themes) {
+	-webkit-border-radius: 1.5rem;
+	-moz-border-radius: 1.5rem;
+	border-radius: 1.5rem;
+	@include themify($themes) {
 		background: themed('secondary-800');
 	}
 }
 
 #user > span {
-    justify-content: center;
-    align-content: center;
-    display: flex;
-    height: 100%;
-    width: 100%;
-    flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+	display: flex;
+	height: 100%;
+	width: 100%;
+	flex-wrap: wrap;
 }
 
 .logo {
-    @include themify($themes) {
+	@include themify($themes) {
 		fill: themed('secondary-800');
 	}
-    height: 3rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+	height: 3rem;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 .title {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    span {
-        font-weight: bold;
-        @include themify($themes) {
-            color: themed('secondary-800');
-        }
-    }
-    font-size: 1.75rem;
+	margin-left: 1rem;
+	margin-right: 1rem;
+	span {
+		font-weight: bold;
+		@include themify($themes) {
+			color: themed('secondary-800');
+		}
+	}
+	font-size: 1.75rem;
 }

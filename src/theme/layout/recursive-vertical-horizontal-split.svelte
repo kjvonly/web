@@ -123,19 +123,18 @@
 
 	let currentSplit: PaneSplit = PaneSplit.Null;
 
-
-	function registerSelectBuffer(){
+	function registerSelectBuffer() {
 		// _{id}-buffer
-		if (_pane && _pane.parentNode !== null && _pane.split === PaneSplit.Null) {	
-			var b =  document.querySelector(`#_${id}-buffer`) as HTMLElement;
-			if (b === null){
-				throw  `DOM NOT RENDERED YET FOR _${id}-buffer`;
+		if (_pane && _pane.parentNode !== null && _pane.split === PaneSplit.Null) {
+			var b = document.querySelector(`#_${id}-buffer`) as HTMLElement;
+			if (b === null) {
+				throw `DOM NOT RENDERED YET FOR _${id}-buffer`;
 			}
 
 			b.addEventListener('mouseup', (e) => {
-				paneService.selectPane(pane.buffer)
-			})
-		}		
+				paneService.selectPane(pane.buffer);
+			});
+		}
 	}
 
 	// Register EventListeners
@@ -150,7 +149,7 @@
 			100
 		);
 
-		var registerSelectBufferEventsListeners = () =>
+	var registerSelectBufferEventsListeners = () =>
 		setTimeout(
 			() =>
 				retryPolicy
@@ -158,23 +157,13 @@
 					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
 			100
 		);
-	
+
 	$: pane && registerResizeEventsListeners() && registerSelectBufferEventsListeners();
-	$: panePadding =
-		_pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
+	$: panePadding = _pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
 </script>
 
 <div id="_{id}-pane" class="pane" style={panePadding}>
-	{#if _pane && _pane.parentNode === null && _pane.split === PaneSplit.Null}
-		<div id="{id}-root" class="w-100">
-			{#if !(_pane.buffer instanceof NullBuffer)}
-				<svelte:component this={_pane.buffer.component} bind:buffer={pane.buffer} />
-			{/if}
-			{#if _pane.buffer instanceof NullBuffer && _pane.buffer.selected}
-				<span>selected</span>
-			{/if}
-		</div>
-	{:else if _pane && _pane.parentNode !== null && _pane.split === PaneSplit.Null}
+	{#if _pane && _pane.split === PaneSplit.Null}
 		<div id="_{id}-buffer" class="w-100">
 			{#if !(_pane.buffer instanceof NullBuffer)}
 				<svelte:component this={_pane.buffer.component} bind:buffer={pane.buffer} />
@@ -226,4 +215,3 @@
 		{/if}
 	{/if}
 </div>
-
