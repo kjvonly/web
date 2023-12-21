@@ -5,6 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
 	import { paneService } from '../../services/pane.service';
+	import VerticalSplit from './vertical-split.svelte';
 	export let pane: Pane;
 
 	let id = uuidv4();
@@ -57,58 +58,12 @@
 		});
 	}
 
-	function resizeCol(resizeId: string, leftId: string, rightId: string, containerId: string) {
-		var resize = document.querySelector(resizeId) as HTMLElement;
-		var left = document.querySelector(leftId) as HTMLElement;
-		var right = document.querySelector(rightId) as HTMLElement;
-		var container = document.querySelector(containerId) as HTMLElement;
-
-		if (resize === null || left === null || right === null || container === null) {
-			console.log(id, resize, left, right, container);
-			throw `DOM NOT RENDERED YET FOR ${id}`;
-		}
-
-		left.style.width = _pane.leftPercentage;
-		right.style.width = _pane.rightPercentage;
-
-		var drag = false;
-		var l: number;
-
-		function mouseMove(e: MouseEvent | any) {
-			if (drag) {
-				var moveX = e.x;
-				var rect = container ? container.getBoundingClientRect() : new DOMRect();
-				l = ((moveX - rect.x) / rect.width) * 100;
-				left.style.width = l + '%';
-				right.style.width = 100 - l + '%';
-			}
-		}
-
-		resize.addEventListener('mousedown', function (e: MouseEvent | any) {
-			drag = true;
-			container.addEventListener('mousemove', mouseMove);
-		});
-
-		container.addEventListener('mouseup', function (e: MouseEvent) {
-			drag = false;
-			container.removeEventListener('mousemove', mouseMove);
-			pane.leftPercentage = l + '%';
-			pane.rightPercentage = 100 - l + '%';
-			saveRootPane();
-		});
-	}
-
 	function registerResize() {
 		if (_pane && _pane.split !== PaneSplit.Null) {
 			if (currentSplit === PaneSplit.Null) {
 				currentSplit = _pane.split;
 				if (_pane.split === PaneSplit.Vertical) {
-					resizeCol(
-						`#_${id}-vertical-resize`,
-						`#_${id}-vertical-left`,
-						`#_${id}-vertical-right`,
-						`#_${id}-pane`
-					);
+
 				} else if (_pane.split === PaneSplit.Horizontal) {
 					resizeRow(
 						`#_${id}-horizontal-resize`,
@@ -174,23 +129,7 @@
 		</div>
 	{:else if _pane && _pane.split !== PaneSplit.Null && _pane.buffer instanceof NullBuffer}
 		{#if _pane.split === PaneSplit.Vertical}
-			<div id="_{id}-vertical-left" class="left">
-				{#if _pane}
-					{#if _pane.leftPane}
-						<svelte:self bind:pane={_pane.leftPane} on:save={saveRootPane} />
-					{/if}
-				{/if}
-			</div>
-			<div class="vertical-resize-container">
-				<div id="_{id}-vertical-resize" class="vertical-resize"></div>
-			</div>
-			<div id="_{id}-vertical-right" class="right">
-				{#if _pane}
-					{#if _pane.rightPane}
-						<svelte:self bind:pane={_pane.rightPane} on:save={saveRootPane} />
-					{/if}
-				{/if}
-			</div>
+			<VerticalSplit bind:pane={_pane} bind:id={id} on:save={saveRootPane}></VerticalSplit>
 		{:else if _pane.split === PaneSplit.Horizontal}
 			<div class="d-flex flex-column w-100">
 				<div id="_{id}-horizontal-left" class="top">
