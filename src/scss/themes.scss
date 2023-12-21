@@ -71,7 +71,9 @@ $chapter-light: (
     kjv-chapter-header-color: map-get($light, 'on-primary'),
     kjv-chapter-footer-background-color: $primary-700,
     kjv-chapter-footer-color: map-get($light, 'on-primary'),
-    kjv-chapter-selected-verse-background-color: $primary-50,
+    kjv-chapter-selected-verse-background-color: $primary-50, 
+
+    kjv-chapter-selected-buffer-background-color: $secondary-800,
 
     /* quadrant */
     kjv-chapter-quadrant-background-color: map-get($light, 'surface'),

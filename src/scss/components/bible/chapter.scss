@@ -21,6 +21,7 @@
     @include themify($themes)  {
         background-color: themed(kjv-chapter-quadrant-background-color);
     }
+    
     box-shadow:  10px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -94,7 +95,8 @@
 
 .selected-buffer {
     @include themify($themes) {
-        background-color: themed('primary-variant');
+        
+        background-color: themed('kjv-chapter-selected-buffer-background-color');
         color: themed('on-primary')
     }
 }
