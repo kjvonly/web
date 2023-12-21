@@ -96,11 +96,9 @@
 	</div>
 </div>
 
-<style lang='scss'>
+<style lang="scss">
 	@import '../scss/styles.scss';
 
-
-	
 	div {
 		margin: 0px;
 		padding: 0px;
@@ -114,8 +112,7 @@
 		overflow: hidden;
 
 		@include themify($themes) {
-			background-color: themed('primary')
+			background-color: themed('primary');
 		}
 	}
-
 </style>

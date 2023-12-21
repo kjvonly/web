@@ -1,71 +1,71 @@
 @import '../themes.scss';
 
-	.pane {
-		height: 100%;
-		width: 100%;
-		display: flex;
-		align-self: flex-start;
-	}
+.pane {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-self: flex-start;
+}
 
-	.horizontal-resize-container {
-		.horizontal-resize {
-            @include themify($themes) {
-                background-color: themed('primary-variant');
-            }
-            border-radius: 25px;
-			height: 14px;
-			width: 25%;
-			cursor: row-resize;
-			flex-shrink: 0;
-			position: relative;
-			z-index: 10;
+.horizontal-resize-container {
+	.horizontal-resize {
+		@include themify($themes) {
+			background-color: themed('primary-variant');
 		}
+		border-radius: 25px;
 		height: 14px;
-		width: 100%;
-		justify-content: center;
-		display: flex;
+		width: 25%;
+		cursor: row-resize;
+		flex-shrink: 0;
+		position: relative;
+		z-index: 10;
 	}
+	height: 14px;
+	width: 100%;
+	justify-content: center;
+	display: flex;
+}
 
-	.vertical-resize-container {
-		.vertical-resize {
-            @include themify($themes) {
-                background-color: themed('primary-variant');
-            }
-            border-radius: 25px;
-			width: 14px;
-			height: 25%;
-			cursor: col-resize;
-			flex-shrink: 0;
-			position: relative;
-			z-index: 10;
+.vertical-resize-container {
+	.vertical-resize {
+		@include themify($themes) {
+			background-color: themed('primary-variant');
 		}
-
-		height: 100%;
+		border-radius: 25px;
 		width: 14px;
-		align-items: center;
-		display: flex;
+		height: 25%;
+		cursor: col-resize;
+		flex-shrink: 0;
+		position: relative;
+		z-index: 10;
 	}
 
-    .left {
-		width: 50%;
-	}
+	height: 100%;
+	width: 14px;
+	align-items: center;
+	display: flex;
+}
 
-	.right {
-		width: 50%;
-	}
+.left {
+	width: 50%;
+}
 
-	.top {
-		width: 100%;
-		height: 50%;
-		align-self: flex-start;
-	}
+.right {
+	width: 50%;
+}
 
-	.bottom {
-		height: 50%;
-		width: 100%;
-	}
+.top {
+	width: 100%;
+	height: 50%;
+	align-self: flex-start;
+}
 
-	div {
-		margin: 0px;
-		padding: 0px;
-	}
+.bottom {
+	height: 50%;
+	width: 100%;
+}
+
+div {
+	margin: 0px;
+	padding: 0px;
+}
