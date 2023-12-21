@@ -1,7 +1,18 @@
 // Import all of Bootstrap's CSS
 @import '~bootstrap/scss/bootstrap';
+@import './themes.scss';
+@import './common.scss';
+
+@import './layout/_all.scss';
+@import './components/_all.scss';
 
 .disableScroll {
 	overflow-y: hidden;
 	overflow-x: hidden;
+}
+
+body {
+	@include themify($themes){
+		background-color: themed('body');
+	}
 }

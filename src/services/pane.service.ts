@@ -1,3 +1,15 @@
+/**
+ * A Pane is a node structures. Each pane consist of a left or right 
+ * pane or a buffer. A leaf pane always has a NullBuffer.
+ * 
+ * The PaneService is responsible for tracking pane data structure,
+ * including current selected pane and pane buffer
+ * 
+ * When modifying a buffer access the buffer via the Pane data structure.
+ * TODO - make all functions accept a Pane object to avoid possibility 
+ * of modifying a buffer without the associated pane.
+ */
+
 import { NullBuffer, Buffer } from '../models/buffer.model';
 import { NullPane, Pane, PaneSplit } from '../models/pane.model';
 import { currentBuffer } from './current-buffer.service';
@@ -98,6 +110,11 @@ export class PaneService {
 		} finally {
 			this.updatePane();
 		}
+	}
+
+	selectPane(b: Buffer){
+		currentBuffer.set(b);
+		this.updatePane();
 	}
 
 	deletePane() {

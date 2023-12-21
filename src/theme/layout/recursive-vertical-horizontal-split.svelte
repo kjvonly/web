@@ -2,17 +2,9 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { Pane, PaneSplit } from '../../models/pane.model';
 	import { NullBuffer } from '../../models/buffer.model';
-	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
-	import {
-		ConsecutiveBreaker,
-		ExponentialBackoff,
-		retry,
-		handleAll,
-		circuitBreaker,
-		wrap,
-		ConstantBackoff
-	} from 'cockatiel';
+	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
+	import { paneService } from '../../services/pane.service';
 	export let pane: Pane;
 
 	let id = uuidv4();
@@ -131,11 +123,25 @@
 
 	let currentSplit: PaneSplit = PaneSplit.Null;
 
-	// Create a retry policy that'll try whatever function we execute 3
-	// times with a randomized exponential backoff.
+
+	function registerSelectBuffer(){
+		// _{id}-buffer
+		if (_pane && _pane.parentNode !== null && _pane.split === PaneSplit.Null) {	
+			var b =  document.querySelector(`#_${id}-buffer`) as HTMLElement;
+			if (b === null){
+				throw  `DOM NOT RENDERED YET FOR _${id}-buffer`;
+			}
+
+			b.addEventListener('mouseup', (e) => {
+				paneService.selectPane(pane.buffer)
+			})
+		}		
+	}
+
+	// Register EventListeners
 	const retryPolicy = retry(handleAll, { maxAttempts: 6, backoff: new ConstantBackoff(500) });
 
-	var reg = () =>
+	var registerResizeEventsListeners = () =>
 		setTimeout(
 			() =>
 				retryPolicy
@@ -144,10 +150,21 @@
 			100
 		);
 
-	$: pane && reg();
+		var registerSelectBufferEventsListeners = () =>
+		setTimeout(
+			() =>
+				retryPolicy
+					.execute(() => registerSelectBuffer())
+					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
+			100
+		);
+	
+	$: pane && registerResizeEventsListeners() && registerSelectBufferEventsListeners();
+	$: panePadding =
+		_pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
 </script>
 
-<div id="_{id}-pane" class="pane">
+<div id="_{id}-pane" class="pane" style={panePadding}>
 	{#if _pane && _pane.parentNode === null && _pane.split === PaneSplit.Null}
 		<div id="{id}-root" class="w-100">
 			{#if !(_pane.buffer instanceof NullBuffer)}
@@ -175,7 +192,9 @@
 					{/if}
 				{/if}
 			</div>
-			<div id="_{id}-vertical-resize" class="resize h-100"></div>
+			<div class="vertical-resize-container">
+				<div id="_{id}-vertical-resize" class="vertical-resize"></div>
+			</div>
 			<div id="_{id}-vertical-right" class="right">
 				{#if _pane}
 					{#if _pane.rightPane}
@@ -192,7 +211,9 @@
 						{/if}
 					{/if}
 				</div>
-				<div id="_{id}-horizontal-resize" class="resizeh"></div>
+				<div class="horizontal-resize-container">
+					<div id="_{id}-horizontal-resize" class="horizontal-resize"></div>
+				</div>
 
 				<div id="_{id}-horizontal-right" class="bottom">
 					{#if _pane}
@@ -203,70 +224,6 @@
 				</div>
 			</div>
 		{/if}
-	{:else if _pane && _pane.parentNode !== null && !(_pane.buffer instanceof NullBuffer)}
-		<svelte:component this={_pane.buffer.component} bind:buffer={pane.buffer} />
 	{/if}
 </div>
 
-<style>
-	.row,
-	.col-6 {
-		margin: 0;
-		padding: 0;
-	}
-
-	.pane {
-		height: 100%;
-		width: 100%;
-		display: flex;
-		align-self: flex-start;
-	}
-
-	.resizeh {
-		background-color: yellow;
-		height: 14px;
-		width: 100%;
-		cursor: row-resize;
-		flex-shrink: 0;
-		position: relative;
-		z-index: 10;
-	}
-
-	.resize {
-		background-color: yellow;
-		height: 100%;
-		width: 14px;
-		cursor: col-resize;
-		flex-shrink: 0;
-		position: relative;
-		z-index: 10;
-	}
-
-	.left {
-		width: 50%;
-	}
-
-	.right {
-		width: 50%;
-	}
-
-	.top {
-		width: 100%;
-		height: 50%;
-		align-self: flex-start;
-	}
-
-	.bottom {
-		height: 50%;
-		width: 100%;
-	}
-
-	div {
-		margin: 0px;
-		padding: 0px;
-	}
-	.container-fluid {
-		height: 100vh;
-		overflow: hidden;
-	}
-</style>

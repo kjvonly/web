@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Bibletext from '../components/bible/bibletext.svelte';
+	import Chapter from '../components/bible/chapter.svelte';
 	import RecursivePanes from '../theme/layout/recursive-vertical-horizontal-split.svelte';
 	import { keydownStore } from '../services/keydown.service';
 	import { bufferStore } from '../stores/buffer.store';
@@ -41,8 +41,8 @@
 	// opens bible buffer
 	paneKeyBindingMap.set('shift+X b', () => {
 		let b = new Buffer();
-		b.componentName = 'Bibletext';
-		b.component = Bibletext;
+		b.componentName = 'Chapter';
+		b.component = Chapter;
 		bufferStore.add(b.key, b);
 		paneService.setBuffer(b);
 		currentBuffer.set(b);
@@ -96,7 +96,11 @@
 	</div>
 </div>
 
-<style>
+<style lang='scss'>
+	@import '../scss/styles.scss';
+
+
+	
 	div {
 		margin: 0px;
 		padding: 0px;
@@ -105,7 +109,13 @@
 		display: flex;
 	}
 	.container-fluid {
-		height: 100vh;
+		height: calc(100vh - 4.75rem);
+		/* height: 100vh; */
 		overflow: hidden;
+
+		@include themify($themes) {
+			background-color: themed('primary')
+		}
 	}
+
 </style>

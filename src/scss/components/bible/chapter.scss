@@ -1,0 +1,105 @@
+@import '../../themes.scss';
+@import '../../common.scss';
+
+.popups {
+    height: var(--height);
+    top: var(--top);
+    max-width: var(--maxWidth);
+    position: absolute;
+    z-index: 10000;
+}
+
+.kjv-chapter-quadrant {
+    margin: 0px !important;
+    padding: 0px !important;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+    overflow: hidden;    
+
+    @include themify($themes)  {
+        background-color: themed(kjv-chapter-quadrant-background-color);
+    }
+    
+    box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+/* TODO: Decide if supporting footnotes. */
+.FOOTNO {
+    visibility: hidden !important;
+    width: 0px !important;
+}
+
+.redtxt {
+    @include themify($themes) {
+        color: themed('secondary-900')
+    }
+    
+}
+
+.xref {
+    border-bottom: thin dotted darkgray;
+    cursor: pointer;
+}
+
+.selected {
+    @include themify($themes) {
+        background-color: themed('kjv-chapter-selected-verse-background-color');
+    }
+}
+
+.kjv-chapter {
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.kjv-verse-inner {
+    
+    margin-left: 2rem;
+    margin-right: 2rem;
+    
+    @extend %kjvonly-noselect;
+}
+
+.kjv-words {
+    word-spacing: 0.05rem;
+    span {
+        display: inline-block;
+    }
+}
+
+.kjv-chapter-header {
+    @include themify($themes) {
+        background-color: themed('kjv-chapter-header-background-color');
+        color: themed('kjv-chapter-header-color');
+    }
+    padding: 2rem;
+    align-items: center;
+    display: flex;
+    height: 30px !important;
+    
+    @extend %kjvonly-noselect;
+}
+
+.kjv-chapter-footer {
+    @include themify($themes) {
+        background-color: themed('kjv-chapter-footer-background-color');
+        color: themed('kjv-chapter-footer-color');
+    }
+
+    padding: 2rem;
+    height: 30px !important;
+    align-items: center;
+    display: flex;
+
+    @extend %kjvonly-noselect;
+}
+
+.selected-buffer {
+    @include themify($themes) {
+        
+        background-color: themed('kjv-chapter-selected-buffer-background-color');
+        color: themed('on-primary')
+    }
+}

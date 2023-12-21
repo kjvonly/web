@@ -23,5 +23,5 @@ export default defineConfig({
 				proxyTimeout: 6000 * 60 * 1000
 			}
 		}
-	}
+	},
 });

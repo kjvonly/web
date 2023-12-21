@@ -1,0 +1,115 @@
+@use "sass:map";
+
+@import './colors.scss';
+@import './utils.scss';
+// https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
+
+$primary-colors: (
+    primary-900: $primary-900,
+    primary-800: $primary-800,
+    primary-700: $primary-700,
+    primary-600: $primary-600,
+    primary-500: $primary-500,
+    primary-400: $primary-400,
+    primary-300: $primary-300,
+    primary-200: $primary-200,
+    primary-100: $primary-100,
+    primary-50: $primary-50,
+);
+
+$secondary-colors: (
+    secondary-900: $secondary-900,
+    secondary-800: $secondary-800,
+    secondary-700: $secondary-700,
+    secondary-600: $secondary-600,
+    secondary-500: $secondary-500,
+    secondary-400: $secondary-400,
+    secondary-300: $secondary-300,
+    secondary-200: $secondary-200,
+    secondary-100: $secondary-100,
+    secondary-50: $secondary-50,
+);
+
+$colors: map-merge($primary-colors, $secondary-colors );
+$light: (
+    primary: $primary-500,
+    primary-variant: $primary-700,
+    secondary: $secondary-200,
+    secondary-variant: $secondary-900,
+    background: #ffffff,
+    surface: #ffffff,
+    error: #b00020,
+    on-primary: #ffffff,
+    on-secondary: #000000,
+    on-background: #000000,
+    on-surface: #000000,
+    on-error: #ffffff,
+
+    body: $primary-50,
+);
+$dark: (
+    primary: $primary-200,
+    primary-variant: $primary-700,
+    secondary: $secondary-200,
+    secondary-variant: $secondary-200,
+    background: #121212,
+    surface: #121212,
+    error: #cf6679,
+    on-primary: #000000,
+    on-secondary: #000000,
+    on-background: #ffffff,
+    on-surface: #ffffff,
+    on-error: #000000,
+);
+
+
+
+$chapter-light: (
+
+    /* header */
+    kjv-chapter-header-background-color: map-get($light, 'primary'),
+    kjv-chapter-header-color: map-get($light, 'on-primary'),
+    kjv-chapter-footer-background-color: $primary-700,
+    kjv-chapter-footer-color: map-get($light, 'on-primary'),
+    kjv-chapter-selected-verse-background-color: $primary-50, 
+
+    kjv-chapter-selected-buffer-background-color: $secondary-800,
+
+    /* quadrant */
+    kjv-chapter-quadrant-background-color: map-get($light, 'surface'),
+);
+
+$chapter-dark: ();
+
+$light-theme: map-collect($light, $colors, $chapter-light);
+$dark-theme: map-merge($dark, $colors);
+$themes: (
+    light: $light-theme,
+    dark: $dark-theme,
+);
+
+$theme-map: null;
+
+@mixin themify($themes: $themes) {
+    @each $theme, $map in $themes {
+
+        .#{$theme}-theme & {
+            $theme-map: (
+                ) !global;
+
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), '#{$key}'
+                );
+            $theme-map: map-merge($theme-map, ($key: $value)) !global;
+        }
+
+        @content;
+        $theme-map: null !global;
+    }
+
+}
+}
+
+@function themed($key) {
+    @return map-get($theme-map, $key);
+}

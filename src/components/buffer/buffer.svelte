@@ -47,8 +47,8 @@ TODO: Add in some exports to bind header, footer, and content
 	</div>
 
 	<div
-		id="{uniqueId}-bibletext"
-		class="bibletext flex-1 space-y-2 text-left flex-col items-left"
+		id="{uniqueId}-chapter"
+		class="chapter flex-1 space-y-2 text-left flex-col items-left"
 		style:--height={contentHeight}
 	/>
 	<div class="footer sticky-bottom {selected}" bind:offsetHeight={footerHeight}>

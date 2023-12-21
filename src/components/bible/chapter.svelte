@@ -31,8 +31,6 @@
 	$: popuptop = qb - qh / 2 + 'px';
 	var popupWidth: string;
 
-	$: redtxtColor = 'rgb(255,0,0)';
-
 	let loaded = false;
 	let chapter: any;
 	let verses: any[] = [];
@@ -83,7 +81,7 @@
 		let pel = el?.parentNode as HTMLElement;
 		let br = pel.getBoundingClientRect();
 		let quad = document.getElementById(uniqueId) as HTMLElement;
-		let text = document.getElementById(uniqueId + '-bibletext') as HTMLElement;
+		let text = document.getElementById(uniqueId + '-chapter') as HTMLElement;
 
 		quad.style.height = br.height + 'px';
 		quad.style.maxHeight = br.height + 'px';
@@ -142,7 +140,7 @@
 		}
 
 		bufferStore.add(buffer.key, buffer);
-		scrolledIntoView(uniqueId, '0', uniqueId + '-bibletext');
+		scrolledIntoView(uniqueId, '0', uniqueId + '-chapter');
 	}
 
 	async function updateChapterFromChapterKey(chapterKey: string) {
@@ -242,16 +240,11 @@
 	}
 
 	function _pageDown() {
-		selectedVerse = pageDown(
-			uniqueId,
-			verses.length - 1,
-			verses.length - 1,
-			uniqueId + '-bibletext'
-		);
+		selectedVerse = pageDown(uniqueId, verses.length - 1, verses.length - 1, uniqueId + '-chapter');
 	}
 
 	function _pageUp() {
-		selectedVerse = pageUp(uniqueId, 0, uniqueId + '-bibletext');
+		selectedVerse = pageUp(uniqueId, 0, uniqueId + '-chapter');
 	}
 
 	function _previousLine() {
@@ -259,12 +252,7 @@
 			_previousChapter();
 			return;
 		}
-		selectedVerse = previousLine(
-			uniqueId,
-			selectedVerse,
-			verses.length - 1,
-			uniqueId + '-bibletext'
-		);
+		selectedVerse = previousLine(uniqueId, selectedVerse, verses.length - 1, uniqueId + '-chapter');
 	}
 
 	function _nextLine() {
@@ -272,12 +260,12 @@
 			_nextChapter();
 			return;
 		}
-		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-bibletext');
+		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-chapter');
 	}
 </script>
 
-<div id={uniqueId} class="quadrant">
-	<div class="myheader">
+<div id={uniqueId} class="kjv-chapter-quadrant">
+	<div class="kjv-chapter-header">
 		<p class="text-sm m-0">
 			{#if chapter}
 				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
@@ -285,37 +273,39 @@
 		</p>
 	</div>
 
-	<div id="{uniqueId}-bibletext" class="bibletext">
+	<div id="{uniqueId}-chapter" class="kjv-chapter">
 		{#if verses.length > 0}
 			{#each verses as v, i}
-				<div id="{uniqueId}{i}" class="d-flex flex-row {i === selectedVerse ? 'selected' : ''}">
-					{#each new Array(3 - v.words[0].text.length) as i}
-						<span class="invisible">0</span>
-					{/each}
+				<div class="kjv-verse-outer">
+					<div class="kjv-verse-inner  {i === selectedVerse ? 'selected' : ''}">
+						<div id="{uniqueId}{i}" class="d-flex flex-row">
+							{#each new Array(3 - v.words[0].text.length) as i}
+								<span class="invisible">0</span>
+							{/each}
 
-					<span>{v.words[0].text}</span>
+							<span class="kjvonly-noselect">{v.words[0].text}</span>
 
-					<span>&nbsp;</span>
-					<span>&nbsp;</span>
+							<span class="kjvonly-noselect">&nbsp;</span>
+							<span class="kjvonly-noselect">&nbsp;</span>
 
-					<div class="">
-						{#each v.words.slice(1, v.words.length - 1) as w}
-							<!-- svelte-ignore a11y-click-events-have-key-events -->
-							<!-- svelte-ignore a11y-no-static-element-interactions -->
-							<span
-								on:click={() => _strongs(w.href)}
-								style:--redtxtColor={redtxtColor}
-								class="me-2 {w.class?.join(' ')}">{w.text}&nbsp;</span
-							>
-						{/each}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
-						<span
-							on:click={() => _strongs(v.words[v.words.length - 1].href)}
-							style:--redtxtColor={redtxtColor}
-							class={v.words[v.words.length - 1].class?.join(' ')}
-							>{v.words[v.words.length - 1].text}</span
-						>
+							<div class="kjv-words kjvonly-noselect">
+								{#each v.words.slice(1, v.words.length - 1) as w}
+									<!-- svelte-ignore a11y-click-events-have-key-events -->
+									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<span
+										on:click={() => _strongs(w.href)}
+										class="kjvonly-noselect {w.class?.join(' ')}">{w.text}&nbsp;</span
+									>
+								{/each}
+								<!-- svelte-ignore a11y-click-events-have-key-events -->
+								<!-- svelte-ignore a11y-no-static-element-interactions -->
+								<span
+									on:click={() => _strongs(v.words[v.words.length - 1].href)}
+									class="kjvonly-noselect {v.words[v.words.length - 1].class?.join(' ')}"
+									>{v.words[v.words.length - 1].text}</span
+								>
+							</div>
+						</div>
 					</div>
 				</div>
 			{/each}
@@ -338,68 +328,9 @@
 			/>
 		</div>
 	{/if}
-	<div class="myfooter {selected}">
+	<div class="kjv-chapter-footer {selected}">
 		<p class="text-sm m-0">
 			<strong class="font-semibold">Bible Buffer</strong>
 		</p>
 	</div>
 </div>
-
-<style>
-	.popups {
-		height: var(--height);
-		top: var(--top);
-		max-width: var(--maxWidth);
-		position: absolute;
-		z-index: 10000;
-	}
-	.quadrant {
-		margin: 0px !important;
-		padding: 0px !important;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	/* TODO: Decide if supporting footnotes. */
-	.FOOTNO {
-		display: none;
-		width: 0px !important;
-	}
-
-	.redtxt {
-		color: var(--redtxtColor);
-	}
-
-	.xref {
-		border-bottom: thin dotted darkgray;
-		cursor: pointer;
-	}
-
-	.selected {
-		background-color: rgb(127, 127, 127, 0.25);
-	}
-
-	.bibletext {
-		overflow-y: scroll;
-		width: 100%;
-	}
-
-	span {
-		display: inline-block;
-	}
-
-	.myheader {
-		border-bottom: 1px solid lightgray;
-		height: 30px !important;
-	}
-
-	.myfooter {
-		background-color: gray;
-		height: 30px !important;
-	}
-
-	.selected-buffer {
-		background-color: lightgray !important;
-	}
-</style>
