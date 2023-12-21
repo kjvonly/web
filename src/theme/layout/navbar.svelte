@@ -13,7 +13,7 @@
 				<div class="title"><span class="font-weight-bold">KJV</span>only</div>
 			</div>
 			<div>
-				<img class="logo" alt="The project logo" src={logo} />
+				<img class="logo" alt="app logo - cross" src={logo} />
 			</div>
 			<div class="d-flex flex-row">
 				<div id="user">

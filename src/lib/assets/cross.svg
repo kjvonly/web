@@ -13,6 +13,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+
   <sodipodi:namedview
      id="namedview1"
      pagecolor="#ffffff"
@@ -49,7 +50,7 @@
      id="g1635"
      transform="translate(-95.352423,-1.030837)">
     <path
-       style="fill:#bf0a30;stroke-width:1.37411"
+       style="fill:#bf0a30;"
        d="M 188.12777,185.55108 H 95.352423 V 95.867841 H 188.12775 V 1.030837 h 91.7445 v 94.837004 h 92.77533 v 89.682819 h -92.77533 l -0.004,281.42267 -91.74533,-0.006 0.005,-281.41571 z"
        id="path1945"
        sodipodi:nodetypes="cccccccccccccc" />
