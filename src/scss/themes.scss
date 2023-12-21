@@ -44,6 +44,8 @@ $light: (
     on-background: #000000,
     on-surface: #000000,
     on-error: #ffffff,
+
+    body: $primary-50,
 );
 $dark: (
     primary: $primary-200,
@@ -66,13 +68,13 @@ $chapter-light: (
 
     /* header */
     kjv-chapter-header-background-color: map-get($light, 'primary'),
-    kjv-chapter-header-color: map.get($light, 'on-primary'),
+    kjv-chapter-header-color: map-get($light, 'on-primary'),
     kjv-chapter-footer-background-color: $primary-700,
-    kjv-chapter-footer-color: map.get($light, 'on-primary'),
+    kjv-chapter-footer-color: map-get($light, 'on-primary'),
     kjv-chapter-selected-verse-background-color: $primary-50,
 
     /* quadrant */
-    kjv-chapter-quadrant-background-color: $secondary-200,
+    kjv-chapter-quadrant-background-color: map-get($light, 'surface'),
 );
 
 $chapter-dark: ();

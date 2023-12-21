@@ -276,8 +276,8 @@
 	<div id="{uniqueId}-chapter" class="kjv-chapter">
 		{#if verses.length > 0}
 			{#each verses as v, i}
-				<div class="kjv-verse-outer {i === selectedVerse ? 'selected' : ''}">
-					<div class="kjv-verse-inner">
+				<div class="kjv-verse-outer">
+					<div class="kjv-verse-inner  {i === selectedVerse ? 'selected' : ''}">
 						<div id="{uniqueId}{i}" class="d-flex flex-row">
 							{#each new Array(3 - v.words[0].text.length) as i}
 								<span class="invisible">0</span>

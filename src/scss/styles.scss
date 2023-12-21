@@ -10,3 +10,9 @@
 	overflow-y: hidden;
 	overflow-x: hidden;
 }
+
+body {
+	@include themify($themes){
+		background-color: themed('body');
+	}
+}

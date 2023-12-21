@@ -21,6 +21,7 @@
     @include themify($themes)  {
         background-color: themed(kjv-chapter-quadrant-background-color);
     }
+    box-shadow:  10px 10px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* TODO: Decide if supporting footnotes. */
@@ -54,8 +55,8 @@
 
 .kjv-verse-inner {
     
-    padding-left: 2rem;
-    padding-right: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     
     @extend %kjvonly-noselect;
 }
