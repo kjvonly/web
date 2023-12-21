@@ -1,12 +1,12 @@
 import { NullBuffer } from '../models/buffer.model';
 import type { Pane } from '../models/pane.model';
-import Bibletext from '../components/bible/bibletext.svelte';
+import Chapter from '../components/bible/chapter.svelte';
 import Editor from '../components/editor/editor.svelte';
 export class ComponentMapping {
 	getCompoent(component: string) {
 		switch (component) {
-			case 'Bibletext':
-				return Bibletext;
+			case 'Chapter':
+				return Chapter;
 			case 'Editor':
 				return Editor;
 		}

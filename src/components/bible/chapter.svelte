@@ -81,7 +81,7 @@
 		let pel = el?.parentNode as HTMLElement;
 		let br = pel.getBoundingClientRect();
 		let quad = document.getElementById(uniqueId) as HTMLElement;
-		let text = document.getElementById(uniqueId + '-bibletext') as HTMLElement;
+		let text = document.getElementById(uniqueId + '-chapter') as HTMLElement;
 
 		quad.style.height = br.height + 'px';
 		quad.style.maxHeight = br.height + 'px';
@@ -140,7 +140,7 @@
 		}
 
 		bufferStore.add(buffer.key, buffer);
-		scrolledIntoView(uniqueId, '0', uniqueId + '-bibletext');
+		scrolledIntoView(uniqueId, '0', uniqueId + '-chapter');
 	}
 
 	async function updateChapterFromChapterKey(chapterKey: string) {
@@ -244,12 +244,12 @@
 			uniqueId,
 			verses.length - 1,
 			verses.length - 1,
-			uniqueId + '-bibletext'
+			uniqueId + '-chapter'
 		);
 	}
 
 	function _pageUp() {
-		selectedVerse = pageUp(uniqueId, 0, uniqueId + '-bibletext');
+		selectedVerse = pageUp(uniqueId, 0, uniqueId + '-chapter');
 	}
 
 	function _previousLine() {
@@ -261,7 +261,7 @@
 			uniqueId,
 			selectedVerse,
 			verses.length - 1,
-			uniqueId + '-bibletext'
+			uniqueId + '-chapter'
 		);
 	}
 
@@ -270,7 +270,7 @@
 			_nextChapter();
 			return;
 		}
-		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-bibletext');
+		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-chapter');
 	}
 </script>
 
@@ -283,7 +283,7 @@
 		</p>
 	</div>
 
-	<div id="{uniqueId}-bibletext" class="bibletext">
+	<div id="{uniqueId}-chapter" class="chapter">
 		{#if verses.length > 0}
 			{#each verses as v, i}
 				<div id="{uniqueId}{i}" class="d-flex flex-row {i === selectedVerse ? 'selected' : ''}">
