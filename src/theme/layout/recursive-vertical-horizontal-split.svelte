@@ -4,6 +4,7 @@
 	import { NullBuffer } from '../../models/buffer.model';
 	import { createEventDispatcher } from 'svelte';
 	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
+	import { paneService } from '../../services/pane.service';
 	export let pane: Pane;
 
 	let id = uuidv4();
@@ -122,11 +123,25 @@
 
 	let currentSplit: PaneSplit = PaneSplit.Null;
 
-	// Create a retry policy that'll try whatever function we execute 3
-	// times with a randomized exponential backoff.
+
+	function registerSelectBuffer(){
+		// _{id}-buffer
+		if (_pane && _pane.parentNode !== null && _pane.split === PaneSplit.Null) {	
+			var b =  document.querySelector(`#_${id}-buffer`) as HTMLElement;
+			if (b === null){
+				throw  `DOM NOT RENDERED YET FOR _${id}-buffer`;
+			}
+
+			b.addEventListener('mouseup', (e) => {
+				paneService.selectPane(pane.buffer)
+			})
+		}		
+	}
+
+	// Register EventListeners
 	const retryPolicy = retry(handleAll, { maxAttempts: 6, backoff: new ConstantBackoff(500) });
 
-	var reg = () =>
+	var registerResizeEventsListeners = () =>
 		setTimeout(
 			() =>
 				retryPolicy
@@ -135,9 +150,18 @@
 			100
 		);
 
-	$: pane && reg();
+		var registerSelectBufferEventsListeners = () =>
+		setTimeout(
+			() =>
+				retryPolicy
+					.execute(() => registerSelectBuffer())
+					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
+			100
+		);
+	
+	$: pane && registerResizeEventsListeners() && registerSelectBufferEventsListeners();
 	$: panePadding =
-		_pane && _pane.parentNode !== null && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
+		_pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
 </script>
 
 <div id="_{id}-pane" class="pane" style={panePadding}>
@@ -200,10 +224,6 @@
 				</div>
 			</div>
 		{/if}
-	{:else if _pane && _pane.parentNode !== null && !(_pane.buffer instanceof NullBuffer)}
-		<div class="buffer-container">
-			<svelte:component this={_pane.buffer.component} bind:buffer={pane.buffer} />
-		</div>
 	{/if}
 </div>
 

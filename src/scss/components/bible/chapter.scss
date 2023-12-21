@@ -22,7 +22,7 @@
         background-color: themed(kjv-chapter-quadrant-background-color);
     }
     
-    box-shadow:  10px 10px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
 /* TODO: Decide if supporting footnotes. */
@@ -87,8 +87,11 @@
         background-color: themed('kjv-chapter-footer-background-color');
         color: themed('kjv-chapter-footer-color');
     }
+
     padding: 2rem;
     height: 30px !important;
+    align-items: center;
+    display: flex;
 
     @extend %kjvonly-noselect;
 }
