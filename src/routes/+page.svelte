@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Chapter from '../components/bible/chapter.svelte';
-	import RecursivePanes from '../theme/layout/recursive-vertical-horizontal-split.svelte';
+	import RecursivePanes from '../theme/layout/recursive-pane.svelte';
 	import { keydownStore } from '../services/keydown.service';
 	import { bufferStore } from '../stores/buffer.store';
 	import { BufferService } from '../models/buffer.model';
