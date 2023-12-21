@@ -275,7 +275,7 @@
 </script>
 
 <div id={uniqueId} class="quadrant">
-	<div class="myheader">
+	<div class="kjv-chapter-header">
 		<p class="text-sm m-0">
 			{#if chapter}
 				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
@@ -334,7 +334,7 @@
 			/>
 		</div>
 	{/if}
-	<div class="myfooter {selected}">
+	<div class="kjv-chapter-footer {selected}">
 		<p class="text-sm m-0">
 			<strong class="font-semibold">Bible Buffer</strong>
 		</p>

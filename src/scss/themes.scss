@@ -1,3 +1,5 @@
+@use "sass:map";
+
 @import './colors.scss';
 @import './utils.scss';
 // https://medium.com/@dmitriy.borodiy/easy-color-theming-with-scss-bc38fd5734d1
@@ -53,12 +55,24 @@ $dark: (
     error: #cf6679,
     on-primary: #000000,
     on-secondary: #000000,
-    on-background: #000000,
+    on-background: #ffffff,
     on-surface: #ffffff,
     on-error: #000000,
 );
 
-$light-theme: map-merge($light, $colors);
+
+
+$chapter-light: (
+    kjv-chapter-header-background-color: $primary-200,
+    kjv-chapter-header-color: map.get($light, 'on-surface'),
+    kjv-chapter-footer-background-color: $primary-100,
+    kjv-chapter-footer-color: map.get($light, 'on-background'),
+    kjv-chapter-selected-verse-background-color: $primary-50,
+);
+
+$chapter-dark: ();
+
+$light-theme: map-collect($light, $colors, $chapter-light);
 $dark-theme: map-merge($dark, $colors);
 $themes: (
     light: $light-theme,
