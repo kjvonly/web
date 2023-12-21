@@ -240,12 +240,7 @@
 	}
 
 	function _pageDown() {
-		selectedVerse = pageDown(
-			uniqueId,
-			verses.length - 1,
-			verses.length - 1,
-			uniqueId + '-chapter'
-		);
+		selectedVerse = pageDown(uniqueId, verses.length - 1, verses.length - 1, uniqueId + '-chapter');
 	}
 
 	function _pageUp() {
@@ -257,12 +252,7 @@
 			_previousChapter();
 			return;
 		}
-		selectedVerse = previousLine(
-			uniqueId,
-			selectedVerse,
-			verses.length - 1,
-			uniqueId + '-chapter'
-		);
+		selectedVerse = previousLine(uniqueId, selectedVerse, verses.length - 1, uniqueId + '-chapter');
 	}
 
 	function _nextLine() {
@@ -274,7 +264,7 @@
 	}
 </script>
 
-<div id={uniqueId} class="quadrant">
+<div id={uniqueId} class="kjv-chapter-quadrant">
 	<div class="kjv-chapter-header">
 		<p class="text-sm m-0">
 			{#if chapter}
@@ -283,35 +273,39 @@
 		</p>
 	</div>
 
-	<div id="{uniqueId}-chapter" class="chapter">
+	<div id="{uniqueId}-chapter" class="kjv-chapter">
 		{#if verses.length > 0}
 			{#each verses as v, i}
-				<div id="{uniqueId}{i}" class="d-flex flex-row {i === selectedVerse ? 'selected' : ''}">
-					{#each new Array(3 - v.words[0].text.length) as i}
-						<span class="invisible">0</span>
-					{/each}
+				<div class="kjv-verse-outer {i === selectedVerse ? 'selected' : ''}">
+					<div class="kjv-verse-inner">
+						<div id="{uniqueId}{i}" class="d-flex flex-row">
+							{#each new Array(3 - v.words[0].text.length) as i}
+								<span class="invisible">0</span>
+							{/each}
 
-					<span class="kjvonly-noselect">{v.words[0].text}</span>
+							<span class="kjvonly-noselect">{v.words[0].text}</span>
 
-					<span class="kjvonly-noselect">&nbsp;</span>
-					<span class="kjvonly-noselect">&nbsp;</span>
+							<span class="kjvonly-noselect">&nbsp;</span>
+							<span class="kjvonly-noselect">&nbsp;</span>
 
-					<div class="verses kjvonly-noselect">
-						{#each v.words.slice(1, v.words.length - 1) as w}
-							<!-- svelte-ignore a11y-click-events-have-key-events -->
-							<!-- svelte-ignore a11y-no-static-element-interactions -->
-							<span
-								on:click={() => _strongs(w.href)}
-								class="kjvonly-noselect {w.class?.join(' ')}">{w.text}&nbsp;</span
-							>
-						{/each}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
-						<span
-							on:click={() => _strongs(v.words[v.words.length - 1].href)}
-							class="kjvonly-noselect {v.words[v.words.length - 1].class?.join(' ')}"
-							>{v.words[v.words.length - 1].text}</span
-						>
+							<div class="kjv-words kjvonly-noselect">
+								{#each v.words.slice(1, v.words.length - 1) as w}
+									<!-- svelte-ignore a11y-click-events-have-key-events -->
+									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<span
+										on:click={() => _strongs(w.href)}
+										class="kjvonly-noselect {w.class?.join(' ')}">{w.text}&nbsp;</span
+									>
+								{/each}
+								<!-- svelte-ignore a11y-click-events-have-key-events -->
+								<!-- svelte-ignore a11y-no-static-element-interactions -->
+								<span
+									on:click={() => _strongs(v.words[v.words.length - 1].href)}
+									class="kjvonly-noselect {v.words[v.words.length - 1].class?.join(' ')}"
+									>{v.words[v.words.length - 1].text}</span
+								>
+							</div>
+						</div>
 					</div>
 				</div>
 			{/each}

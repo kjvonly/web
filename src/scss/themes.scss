@@ -63,11 +63,16 @@ $dark: (
 
 
 $chapter-light: (
-    kjv-chapter-header-background-color: $primary-200,
-    kjv-chapter-header-color: map.get($light, 'on-surface'),
-    kjv-chapter-footer-background-color: $primary-100,
-    kjv-chapter-footer-color: map.get($light, 'on-background'),
+
+    /* header */
+    kjv-chapter-header-background-color: map-get($light, 'primary'),
+    kjv-chapter-header-color: map.get($light, 'on-primary'),
+    kjv-chapter-footer-background-color: $primary-700,
+    kjv-chapter-footer-color: map.get($light, 'on-primary'),
     kjv-chapter-selected-verse-background-color: $primary-50,
+
+    /* quadrant */
+    kjv-chapter-quadrant-background-color: $secondary-200,
 );
 
 $chapter-dark: ();

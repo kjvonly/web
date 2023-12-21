@@ -1,4 +1,5 @@
 @import '../../themes.scss';
+@import '../../common.scss';
 
 .popups {
     height: var(--height);
@@ -7,12 +8,19 @@
     position: absolute;
     z-index: 10000;
 }
-.quadrant {
+
+.kjv-chapter-quadrant {
     margin: 0px !important;
     padding: 0px !important;
     width: 100%;
     display: flex;
     flex-direction: column;
+    border-radius: 1rem;
+    overflow: hidden;    
+
+    @include themify($themes)  {
+        background-color: themed(kjv-chapter-quadrant-background-color);
+    }
 }
 
 /* TODO: Decide if supporting footnotes. */
@@ -39,12 +47,20 @@
     }
 }
 
-.chapter {
+.kjv-chapter {
     overflow-y: scroll;
     width: 100%;
 }
 
-.verses {
+.kjv-verse-inner {
+    
+    padding-left: 2rem;
+    padding-right: 2rem;
+    
+    @extend %kjvonly-noselect;
+}
+
+.kjv-words {
     word-spacing: 0.05rem;
     span {
         display: inline-block;
@@ -56,17 +72,12 @@
         background-color: themed('kjv-chapter-header-background-color');
         color: themed('kjv-chapter-header-color');
     }
-
-    border-bottom: 1px solid lightgray;
-
-    padding-left: 1rem;
-    padding-right: 1rem;
-    
+    padding: 2rem;
+    align-items: center;
+    display: flex;
     height: 30px !important;
-}
-
-.quadrant {
     
+    @extend %kjvonly-noselect;
 }
 
 .kjv-chapter-footer {
@@ -74,11 +85,10 @@
         background-color: themed('kjv-chapter-footer-background-color');
         color: themed('kjv-chapter-footer-color');
     }
-
-    padding-left: 1rem;
-    padding-right: 1rem;
-    
+    padding: 2rem;
     height: 30px !important;
+
+    @extend %kjvonly-noselect;
 }
 
 .selected-buffer {
