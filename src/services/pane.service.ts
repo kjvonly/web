@@ -19,10 +19,11 @@ import { paneStore } from '../stores/pane.store';
 
 export class PaneService {
 	private rootPane: Pane = new NullPane();
-	private ps: any;
+	private _paneStore: any;
+
 	constructor(p: any = paneStore) {
-		this.ps = p;
-		this.ps.subscribe((pane: Pane) => {
+		this._paneStore = p;
+		this._paneStore.subscribe((pane: Pane) => {
 			if (this.rootPane instanceof NullPane && !(pane instanceof NullPane)) {
 				componentMapping.map(pane);
 				this.rootPane = pane;
@@ -180,18 +181,18 @@ export class PaneService {
 				}
 			}
 		}
-		paneStore.set(this.rootPane);
+		this._paneStore.set(this.rootPane);
 	}
 
 	updatePane() {
-		this.ps.set(this.rootPane);
+		this._paneStore.set(this.rootPane);
 	}
 
 	setBuffer(b: Buffer) {
 		let p = this.getCurrent();
 		p.buffer = b;
 		currentBuffer.set(b);
-		paneStore.set(this.rootPane);
+		this._paneStore.set(this.rootPane);
 	}
 
 	getRootPane(): Pane {
@@ -214,7 +215,7 @@ export class PaneService {
 
 		p.buffer = new NullBuffer();
 		currentBuffer.set(p.leftPane.buffer);
-		paneStore.set(this.rootPane);
+		this._paneStore.set(this.rootPane);
 	}
 }
 
