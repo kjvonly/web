@@ -22,11 +22,17 @@ export default defineConfig({
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000
 			}
-		},
-
+		}
 	},
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}'],
-		exclude: [      ...configDefaults.exclude		],
+		exclude: [...configDefaults.exclude],
+		deps: {
+			optimizer: {
+				ssr: {
+					exclude: ['"@tinymce/tinymce-svelte']
+				}
+			}
+		}
 	}
 });

@@ -1,20 +1,14 @@
-import { describe, expect, it } from 'vitest';
-//import { PaneService } from './pane.service';
+import { assert, describe, expect, it } from 'vitest';
+import { PaneService } from './pane.service';
 
 import sinon from 'sinon';
 
-
-
-
 it('should be true', () => {
+	var paneStore: any = { subscribe: () => {} };
 
-	var paneStore: any = { everything: () => { } }
-	
-	var mock = sinon.mock(paneStore);
-	mock.expects("everything").once();
+	var spy = sinon.spy(paneStore, 'subscribe');
 
-	paneStore.everything();
+	new PaneService(paneStore);
 
-	mock.verify()
-	
+	assert(spy.callCount === 1, 'should have called spy once');
 });

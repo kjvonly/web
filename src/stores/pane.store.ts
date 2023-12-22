@@ -73,4 +73,4 @@ const _paneStore = () => {
 	};
 };
 
-export const 	paneStore = _paneStore();
+export const paneStore = _paneStore();
