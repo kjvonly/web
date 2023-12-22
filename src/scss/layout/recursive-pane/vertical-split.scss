@@ -1,0 +1,30 @@
+@import '../../themes.scss';
+
+.vertical-resize-container {
+	.vertical-resize {
+		@include themify($themes) {
+			background-color: themed('primary-variant');
+		}
+		border-radius: 25px;
+		width: 14px;
+		height: 25%;
+		cursor: col-resize;
+		flex-shrink: 0;
+		position: relative;
+		z-index: 10;
+	}
+
+	height: 100%;
+	width: 14px;
+	align-items: center;
+	display: flex;
+}
+
+
+.left {
+	width: 50%;
+}
+
+.right {
+	width: 50%;
+}
