@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Chapter from '../components/bible/chapter.svelte';
-	import RecursivePanes from '../theme/layout/recursive-pane.svelte';
+	import RecursivePanes from '../theme/layout/recursive-pane/recursive-pane.svelte';
 	import { keydownStore } from '../services/keydown.service';
 	import { bufferStore } from '../stores/buffer.store';
 	import { BufferService } from '../models/buffer.model';
@@ -81,7 +81,6 @@
 		paneStore.useLocalstorage();
 		paneStore.subscribe((pane) => {
 			p = pane;
-			console.log(p);
 		});
 	});
 </script>

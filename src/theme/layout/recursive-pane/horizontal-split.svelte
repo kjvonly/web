@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { Pane, PaneSplit } from '../../models/pane.model';
+	import { Pane, PaneSplit } from '../../../models/pane.model';
 	import RecursivePane from './recursive-pane.svelte';
 	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
 
