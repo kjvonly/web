@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, configDefaults } from 'vitest/config';
 import path from 'path';
 
 export default defineConfig({
@@ -22,6 +22,11 @@ export default defineConfig({
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000
 			}
-		}
+		},
+
+	},
+	test: {
+		include: ['src/**/*.{test,spec}.{js,ts}'],
+		exclude: [      ...configDefaults.exclude		],
 	}
 });

@@ -206,8 +206,8 @@ export class PaneService {
 		paneStore.set(this.rootPane);
 	}
 
-	constructor() {
-		paneStore.subscribe((pane) => {
+	constructor(p: any = paneStore) {
+		p.subscribe((pane: Pane) => {
 			if (this.rootPane instanceof NullPane && !(pane instanceof NullPane)) {
 				componentMapping.map(pane);
 				this.rootPane = pane;
