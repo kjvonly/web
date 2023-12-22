@@ -6,6 +6,7 @@
 	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
 	import { paneService } from '../../services/pane.service';
 	import VerticalSplit from './vertical-split.svelte';
+	import HorizontalSplit from './horizontal-split.svelte';
 	export let pane: Pane;
 
 	let id = uuidv4();
@@ -129,9 +130,9 @@
 		</div>
 	{:else if _pane && _pane.split !== PaneSplit.Null && _pane.buffer instanceof NullBuffer}
 		{#if _pane.split === PaneSplit.Vertical}
-			<VerticalSplit bind:pane={_pane} bind:id={id} on:save={saveRootPane}></VerticalSplit>
+		<VerticalSplit bind:pane={_pane} bind:id={id} on:save={saveRootPane}></VerticalSplit>
 		{:else if _pane.split === PaneSplit.Horizontal}
-			<div class="d-flex flex-column w-100">
+			<!-- <div class="d-flex flex-column w-100">
 				<div id="_{id}-horizontal-left" class="top">
 					{#if _pane}
 						{#if _pane.leftPane}
@@ -150,7 +151,8 @@
 						{/if}
 					{/if}
 				</div>
-			</div>
+			</div> -->
+			<HorizontalSplit bind:pane={_pane} bind:id={id} on:save={saveRootPane}></HorizontalSplit>
 		{/if}
 	{/if}
 </div>
