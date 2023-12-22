@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { Pane, PaneSplit } from '../../../models/pane.model';
+	import type { Pane } from '../../../models/pane.model';
 	import RecursivePane from './recursive-pane.svelte';
 	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
 
@@ -14,7 +14,6 @@
 		dispatch('save');
 	}
 
-	let currentSplit: PaneSplit = PaneSplit.Null;
 	function resizeRow(resizeId: string, leftId: string, rightId: string, containerId: string) {
 		var resize = document.querySelector(resizeId) as HTMLElement;
 		var top = document.querySelector(leftId) as HTMLElement;
@@ -22,8 +21,7 @@
 		var container = document.querySelector(containerId) as HTMLElement;
 
 		if (resize === null || top === null || bottom === null || container === null) {
-			console.log('something null');
-			return;
+			throw `DOM NOT RENDERED YET FOR ${id}`;
 		}
 
 		top.style.height = _pane.leftPercentage;
@@ -57,19 +55,12 @@
 	}
 
 	function registerResize() {
-		if (_pane && _pane.split !== PaneSplit.Null) {
-			if (currentSplit === PaneSplit.Null) {
-				currentSplit = _pane.split;
-				if (_pane.split === PaneSplit.Horizontal) {
-					resizeRow(
-						`#_${id}-horizontal-resize`,
-						`#_${id}-horizontal-left`,
-						`#_${id}-horizontal-right`,
-						`#_${id}-pane`
-					);
-				}
-			}
-		}
+		resizeRow(
+			`#_${id}-horizontal-resize`,
+			`#_${id}-horizontal-left`,
+			`#_${id}-horizontal-right`,
+			`#_${id}-pane`
+		);
 	}
 	// Register EventListeners
 	const retryPolicy = retry(handleAll, { maxAttempts: 6, backoff: new ConstantBackoff(500) });
