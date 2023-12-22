@@ -5,8 +5,8 @@
 		@include themify($themes) {
 			background-color: themed('primary-variant');
 		}
-		border-radius: 25px;
-		width: 14px;
+		border-radius: 1rem;
+		width: 1rem;
 		height: 25%;
 		cursor: col-resize;
 		flex-shrink: 0;
@@ -15,16 +15,16 @@
 	}
 
 	height: 100%;
-	width: 14px;
+	width: 1rem;
 	align-items: center;
 	display: flex;
 }
 
 
-.left {
+.kjv-left-pane {
 	width: 50%;
 }
 
-.right {
+.kjv-right-pane  {
 	width: 50%;
 }

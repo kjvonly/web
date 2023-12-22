@@ -78,7 +78,7 @@
 </script>
 
 <div class="d-flex flex-column w-100">
-	<div id="_{id}-horizontal-left" class="top">
+	<div id="_{id}-horizontal-left" class="kjv-top-pane">
 		{#if _pane}
 			{#if _pane.leftPane}
 				<RecursivePane bind:pane={_pane.leftPane} on:save={saveRootPane} />
@@ -89,7 +89,7 @@
 		<div id="_{id}-horizontal-resize" class="horizontal-resize"></div>
 	</div>
 
-	<div id="_{id}-horizontal-right" class="bottom">
+	<div id="_{id}-horizontal-right" class="kjv-bottom-pane">
 		{#if _pane}
 			{#if _pane.rightPane}
 				<RecursivePane bind:pane={_pane.rightPane} on:save={saveRootPane} />

@@ -77,7 +77,7 @@
 	$: pane && registerResizeEventsListeners();
 </script>
 
-<div id="_{id}-vertical-left" class="left">
+<div id="_{id}-vertical-left" class="kjv-left-pane">
 	{#if _pane}
 		{#if _pane.leftPane}
 			<RecursivePane bind:pane={_pane.leftPane} on:save={saveRootPane} />
@@ -87,7 +87,7 @@
 <div class="vertical-resize-container">
 	<div id="_{id}-vertical-resize" class="vertical-resize"></div>
 </div>
-<div id="_{id}-vertical-right" class="right">
+<div id="_{id}-vertical-right" class="kjv-right-pane">
 	{#if _pane}
 		{#if _pane.rightPane}
 			<RecursivePane bind:pane={_pane.rightPane} on:save={saveRootPane} />
