@@ -22,13 +22,10 @@
 		"@types/node": "^20.10.4",
 		"@types/uuid": "^9.0.7",
 		"autoprefixer": "^10.4.16",
-
 		"highlight.js": "^11.9.0",
 		"jsdom": "^23.0.1",
 		"postcss": "^8.4.32",
-
 		"sass": "^1.69.5",
-
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
