@@ -120,13 +120,13 @@ export class PaneService {
 			currentBuffer.set(panes[0].buffer);
 			return;
 		} finally {
-			this.updatePane();
+			this.saveRootPane();
 		}
 	}
 
 	selectPane(b: Buffer) {
 		currentBuffer.set(b);
-		this.updatePane();
+		this.saveRootPane();
 	}
 
 	deletePane() {
@@ -184,19 +184,18 @@ export class PaneService {
 		this._paneStore.set(this.rootPane);
 	}
 
-	updatePane() {
-		this._paneStore.set(this.rootPane);
+
+
+	getRootPane(): Pane {
+		return this.rootPane;
 	}
+
 
 	setBuffer(b: Buffer) {
 		let p = this.getCurrent();
 		p.buffer = b;
 		currentBuffer.set(b);
 		this._paneStore.set(this.rootPane);
-	}
-
-	getRootPane(): Pane {
-		return this.rootPane;
 	}
 
 	splitPane(paneSplit: PaneSplit) {
@@ -217,6 +216,12 @@ export class PaneService {
 		currentBuffer.set(p.leftPane.buffer);
 		this._paneStore.set(this.rootPane);
 	}
+
+	/* tested */
+	saveRootPane() {
+		this._paneStore.set(this.rootPane);
+	}
+
 }
 
 export let paneService = new PaneService();

@@ -46,7 +46,7 @@
 		bufferStore.add(b.key, b);
 		paneService.setBuffer(b);
 		currentBuffer.set(b);
-		paneService.updatePane();
+		paneService.saveRootPane();
 		p = paneService.getRootPane();
 	});
 
@@ -72,7 +72,7 @@
 	keydownStore.updatePaneKeybindings(paneKeyBindingMap);
 
 	function saveRootPane() {
-		paneService.updatePane();
+		paneService.saveRootPane();
 	}
 
 	onMount(() => {

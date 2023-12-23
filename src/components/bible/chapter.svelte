@@ -186,7 +186,7 @@
 		await updateChapterFromShortName(bookChapterStr);
 		enableKeyBindings();
 		paneService.updatePane();
-	}
+	}saveRootPane
 
 	async function strongsHandler(event: any) {
 		popup = null;
