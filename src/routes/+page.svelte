@@ -78,7 +78,7 @@
 	onMount(() => {
 		bibleDB.init();
 		bufferStore.useLocalstorage();
-		paneStore.useLocalstorage();
+		paneStore.useLocalStorage();
 		paneStore.subscribe((pane) => {
 			p = pane;
 		});

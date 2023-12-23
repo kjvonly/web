@@ -4,14 +4,13 @@ import Chapter from '../components/bible/chapter.svelte';
 import Editor from '../components/editor/editor.svelte';
 
 /**
- * Component Mapping is responsible for converting the 
+ * Component Mapping is responsible for converting the
  * string value of the component class.
- * 
+ *
  */
 export class ComponentMapping {
-
 	/**
-	 * 
+	 *
 	 * @param componentName string of class to be returned
 	 * @returns component class
 	 */
@@ -23,14 +22,14 @@ export class ComponentMapping {
 				return Editor;
 		}
 
-		return null
+		return null;
 	}
 
 	/**
 	 * recursively traverses the pane tree
 	 * updating the buffers with proper
 	 * typescript type
-	 * 
+	 *
 	 * @param p Pane to map the buffer
 	 */
 	map(p: Pane) {
