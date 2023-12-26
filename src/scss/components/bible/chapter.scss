@@ -25,9 +25,15 @@
 	box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
+
+
+u.FOOTNO + u.whitespace {
+	display: none;
+}
+
 /* TODO: Decide if supporting footnotes. */
 .FOOTNO {
-	visibility: hidden !important;
+	display: none;
 	width: 0px !important;
 }
 
@@ -40,6 +46,8 @@
 u {
 	text-decoration: none;
 }
+
+
 
 u.xref {
 	text-decoration: underline dotted darkgray;
@@ -67,7 +75,7 @@ u.xref {
 }
 
 .kjv-words {
-	word-spacing: 0.05rem;
+	word-spacing: .5rem;
 	span {
 		display: inline-block;
 	}

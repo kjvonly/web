@@ -289,21 +289,14 @@
 							<span class="kjvonly-noselect">&nbsp;</span>
 
 							<div class="kjv-words kjvonly-noselect">
-								{#each v.words.slice(1, v.words.length - 1) as w}
+								{#each v.words.slice(1, v.words.length) as w}
 									<!-- svelte-ignore a11y-click-events-have-key-events -->
 									<!-- svelte-ignore a11y-no-static-element-interactions -->
 									<span
 										on:click={() => _strongs(w.href)}
-										class="kjvonly-noselect"><u class="{w.class?.join(' ')}">{w.text}</u>&nbsp;</span
+										class="kjvonly-noselect"><u class="{w.class?.join(' ')}">{w.text}</u><u class="whitespace">&nbsp;</u></span
 									>
 								{/each}
-								<!-- svelte-ignore a11y-click-events-have-key-events -->
-								<!-- svelte-ignore a11y-no-static-element-interactions -->
-								<span
-									on:click={() => _strongs(v.words[v.words.length - 1].href)}
-									class="kjvonly-noselect {v.words[v.words.length - 1].class?.join(' ')}"
-									>{v.words[v.words.length - 1].text}</span
-								>
 							</div>
 						</div>
 					</div>
