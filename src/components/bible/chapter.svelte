@@ -185,7 +185,7 @@
 		let bookChapterStr: string = event.detail.chapter;
 		await updateChapterFromShortName(bookChapterStr);
 		enableKeyBindings();
-		paneService.updatePane();
+		paneService.saveRootPane();
 	}
 
 	async function strongsHandler(event: any) {

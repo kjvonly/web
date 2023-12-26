@@ -52,7 +52,7 @@ const _paneStore = () => {
 		subscribe,
 		set: set,
 		update: update,
-		useLocalstorage: () => {
+		useLocalStorage: () => {
 			subscribe((val) => {
 				if (!(val instanceof NullPane)) {
 					let p2j = new PaneJson();

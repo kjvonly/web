@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, configDefaults } from 'vitest/config';
 import path from 'path';
 
 export default defineConfig({
@@ -21,6 +21,17 @@ export default defineConfig({
 				target: 'http://kjvonly-dev-server:5000',
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000
+			}
+		}
+	},
+	test: {
+		include: ['src/**/*.{test,spec}.{js,ts}'],
+		exclude: [...configDefaults.exclude],
+		deps: {
+			optimizer: {
+				ssr: {
+					exclude: ['"@tinymce/tinymce-svelte']
+				}
 			}
 		}
 	}

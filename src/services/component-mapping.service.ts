@@ -2,16 +2,36 @@ import { NullBuffer } from '../models/buffer.model';
 import type { Pane } from '../models/pane.model';
 import Chapter from '../components/bible/chapter.svelte';
 import Editor from '../components/editor/editor.svelte';
+
+/**
+ * Component Mapping is responsible for converting the
+ * string value of the component class.
+ *
+ */
 export class ComponentMapping {
-	getCompoent(component: string) {
-		switch (component) {
+	/**
+	 *
+	 * @param componentName string of class to be returned
+	 * @returns component class
+	 */
+	getCompoent(componentName: string): Object | null {
+		switch (componentName) {
 			case 'Chapter':
 				return Chapter;
 			case 'Editor':
 				return Editor;
 		}
+
+		return null;
 	}
 
+	/**
+	 * recursively traverses the pane tree
+	 * updating the buffers with proper
+	 * typescript type
+	 *
+	 * @param p Pane to map the buffer
+	 */
 	map(p: Pane) {
 		if (p.leftPane) {
 			this.map(p.leftPane);
@@ -25,8 +45,6 @@ export class ComponentMapping {
 			p.buffer.component = this.getCompoent(p.buffer.componentName);
 			p.buffer.onFocus = () => {};
 			p.buffer.keyboardBindings = new Map<string, Function>();
-		} else {
-			p.buffer = new NullBuffer();
 		}
 	}
 }

@@ -19,102 +19,19 @@ import { paneStore } from '../stores/pane.store';
 
 export class PaneService {
 	private rootPane: Pane = new NullPane();
+	private _paneStore: any;
+	private _currentBuffer: any;
 
-	getCurrent(): Pane {
-		let key = currentBuffer.get().key;
-		return this.findBufferPane(key, this.rootPane);
-	}
-
-	findBufferPane(key: string, pane: Pane | null): Pane {
-		if (!pane || pane instanceof NullPane) {
-			return new NullPane();
-		}
-
-		if (pane.split === PaneSplit.Null && pane.buffer.key === key) {
-			return pane;
-		}
-
-		// recurse left panes
-		let newPane = this.findBufferPane(key, pane.leftPane);
-
-		if (!(newPane instanceof NullPane)) {
-			return newPane;
-		}
-
-		// recurse right panes
-		newPane = this.findBufferPane(key, pane.rightPane);
-
-		if (!(newPane instanceof NullPane)) {
-			return newPane;
-		}
-
-		return new NullPane();
-	}
-
-	getPanesWithBuffers(): Pane[] {
-		let queue = new Queue<Pane>();
-		queue.enqueue(this.rootPane);
-
-		let panesWithBuffers = [];
-		while (queue.size() != 0) {
-			let currentPane = queue.dequeue();
-
-			if (currentPane?.buffer && currentPane.split === PaneSplit.Null) {
-				panesWithBuffers.push(currentPane);
+	constructor(ps: any = paneStore, cb: any = currentBuffer) {
+		this._paneStore = ps;
+		this._currentBuffer = cb;
+		this._paneStore.subscribe((pane: Pane) => {
+			if (this.rootPane instanceof NullPane && !(pane instanceof NullPane)) {
+				componentMapping.map(pane);
+				this.rootPane = pane;
+				this.setCurrentBufferOnLoad();
 			}
-
-			if (currentPane?.leftPane) {
-				queue.enqueue(currentPane.leftPane);
-			}
-
-			if (currentPane?.rightPane) {
-				queue.enqueue(currentPane.rightPane);
-			}
-		}
-
-		return panesWithBuffers;
-	}
-
-	setCurrentBufferOnLoad() {
-		for (var p of this.getPanesWithBuffers()) {
-			if (p.buffer.selected) {
-				this.setBuffer(p.buffer);
-				return;
-			}
-		}
-		this.setBuffer(this.rootPane.buffer);
-	}
-
-	goToNextPaneWithBuffer() {
-		let p: Pane;
-		let next: boolean = false;
-		let cb = currentBuffer.get();
-		let panes = this.getPanesWithBuffers();
-		if (panes.length === 0) {
-			return;
-		}
-
-		try {
-			for (p of panes) {
-				if (next) {
-					currentBuffer.set(p.buffer);
-					return;
-				}
-				if (p.buffer.key === cb.key) {
-					next = true;
-				}
-			}
-			// if on last last buffer. go to first buffer
-			currentBuffer.set(panes[0].buffer);
-			return;
-		} finally {
-			this.updatePane();
-		}
-	}
-
-	selectPane(b: Buffer) {
-		currentBuffer.set(b);
-		this.updatePane();
+		});
 	}
 
 	deletePane() {
@@ -169,22 +86,47 @@ export class PaneService {
 				}
 			}
 		}
-		paneStore.set(this.rootPane);
+		this._paneStore.set(this.rootPane);
 	}
 
-	updatePane() {
-		paneStore.set(this.rootPane);
-	}
-
-	setBuffer(b: Buffer) {
-		let p = this.getCurrent();
-		p.buffer = b;
-		currentBuffer.set(b);
-		paneStore.set(this.rootPane);
+	/* tested */
+	saveRootPane() {
+		this._paneStore.set(this.rootPane);
 	}
 
 	getRootPane(): Pane {
 		return this.rootPane;
+	}
+
+	selectPane(b: Buffer) {
+		this._currentBuffer.set(b);
+		this.saveRootPane();
+	}
+
+	findBufferPane(key: string, pane: Pane | null): Pane {
+		if (!pane || pane instanceof NullPane) {
+			return new NullPane();
+		}
+
+		if (pane.split === PaneSplit.Null && pane.buffer.key === key) {
+			return pane;
+		}
+
+		// recurse left panes
+		let newPane = this.findBufferPane(key, pane.leftPane);
+
+		if (!(newPane instanceof NullPane)) {
+			return newPane;
+		}
+
+		// recurse right panes
+		newPane = this.findBufferPane(key, pane.rightPane);
+
+		if (!(newPane instanceof NullPane)) {
+			return newPane;
+		}
+
+		return new NullPane();
 	}
 
 	splitPane(paneSplit: PaneSplit) {
@@ -202,18 +144,81 @@ export class PaneService {
 		p.rightPane.split = PaneSplit.Null;
 
 		p.buffer = new NullBuffer();
-		currentBuffer.set(p.leftPane.buffer);
-		paneStore.set(this.rootPane);
+		this._currentBuffer.set(p.leftPane.buffer);
+		this._paneStore.set(this.rootPane);
 	}
 
-	constructor() {
-		paneStore.subscribe((pane) => {
-			if (this.rootPane instanceof NullPane && !(pane instanceof NullPane)) {
-				componentMapping.map(pane);
-				this.rootPane = pane;
-				this.setCurrentBufferOnLoad();
+	setBuffer(b: Buffer) {
+		let p = this.getCurrent();
+		p.buffer = b;
+		this._currentBuffer.set(b);
+		this._paneStore.set(this.rootPane);
+	}
+
+	getCurrent(): Pane {
+		let key = this._currentBuffer.get().key;
+		return this.findBufferPane(key, this.rootPane);
+	}
+
+	getPanesWithBuffers(): Pane[] {
+		let queue = new Queue<Pane>();
+		queue.enqueue(this.rootPane);
+
+		let panesWithBuffers = [];
+		while (queue.size() != 0) {
+			let currentPane = queue.dequeue();
+
+			if (currentPane?.buffer && currentPane.split === PaneSplit.Null) {
+				panesWithBuffers.push(currentPane);
 			}
-		});
+
+			if (currentPane?.leftPane) {
+				queue.enqueue(currentPane.leftPane);
+			}
+
+			if (currentPane?.rightPane) {
+				queue.enqueue(currentPane.rightPane);
+			}
+		}
+
+		return panesWithBuffers;
+	}
+
+	setCurrentBufferOnLoad() {
+		for (var p of this.getPanesWithBuffers()) {
+			if (p.buffer.selected) {
+				this.setBuffer(p.buffer);
+				return;
+			}
+		}
+		this.setBuffer(this.rootPane.buffer);
+	}
+
+	goToNextPaneWithBuffer() {
+		let p: Pane;
+		let next: boolean = false;
+		let cb = this._currentBuffer.get();
+		let panes = this.getPanesWithBuffers();
+		if (panes.length === 0) {
+			return;
+		}
+
+		try {
+			for (p of panes) {
+				if (next) {
+					this._currentBuffer.set(p.buffer);
+					return;
+				}
+				if (p.buffer.key === cb.key) {
+					next = true;
+				}
+			}
+			// if on last last buffer. go to first buffer
+			this._currentBuffer.set(panes[0].buffer);
+			return;
+		} finally {
+			this.saveRootPane();
+		}
 	}
 }
 
