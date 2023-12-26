@@ -16,7 +16,7 @@ describe('paneService', () => {
 	var paneStore: any;
 
 	const currentBuffer = {
-		get: () => { let b = new Buffer(); b.key = '1'; return b;  },
+		get: () => { let b = new Buffer(); b.key = '1'; return b; },
 		set: (buffer: any) => { }
 	};
 	var currentBufferMock: sinon.SinonMock;
@@ -223,13 +223,23 @@ describe('paneService', () => {
 			let ps = new PaneService(paneStore, currentBuffer);
 			// set rootPane of paneService
 			paneStore.subs[0](p)
-			ps.findBufferPane = (key: string, pane: Pane): Pane  =>  {
+			ps.findBufferPane = (key: string, pane: Pane): Pane => {
 				assert(key === '1')
 				assert(pane === p)
 				return new Pane()
 			}
-			
+
 			ps.getCurrent()
+		})
+	})
+
+	describe('getPanesWithBuffers', () => {
+		it('should return panes when paneSplit is Null', () => {
+			let ps = new PaneService(paneStore, currentBuffer);
+			// set rootPane of paneService
+			paneStore.subs[0](p)
+			let panes = ps.getPanesWithBuffers()
+			assert(panes.length === 4)
 		})
 	})
 });

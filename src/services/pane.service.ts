@@ -34,32 +34,6 @@ export class PaneService {
 		});
 	}
 
-
-
-	getPanesWithBuffers(): Pane[] {
-		let queue = new Queue<Pane>();
-		queue.enqueue(this.rootPane);
-
-		let panesWithBuffers = [];
-		while (queue.size() != 0) {
-			let currentPane = queue.dequeue();
-
-			if (currentPane?.buffer && currentPane.split === PaneSplit.Null) {
-				panesWithBuffers.push(currentPane);
-			}
-
-			if (currentPane?.leftPane) {
-				queue.enqueue(currentPane.leftPane);
-			}
-
-			if (currentPane?.rightPane) {
-				queue.enqueue(currentPane.rightPane);
-			}
-		}
-
-		return panesWithBuffers;
-	}
-
 	setCurrentBufferOnLoad() {
 		for (var p of this.getPanesWithBuffers()) {
 			if (p.buffer.selected) {
@@ -225,7 +199,29 @@ export class PaneService {
 		return this.findBufferPane(key, this.rootPane);
 	}
 
-	
+	getPanesWithBuffers(): Pane[] {
+		let queue = new Queue<Pane>();
+		queue.enqueue(this.rootPane);
+
+		let panesWithBuffers = [];
+		while (queue.size() != 0) {
+			let currentPane = queue.dequeue();
+
+			if (currentPane?.buffer && currentPane.split === PaneSplit.Null) {
+				panesWithBuffers.push(currentPane);
+			}
+
+			if (currentPane?.leftPane) {
+				queue.enqueue(currentPane.leftPane);
+			}
+
+			if (currentPane?.rightPane) {
+				queue.enqueue(currentPane.rightPane);
+			}
+		}
+
+		return panesWithBuffers;
+	}
 }
 
 export let paneService = new PaneService();
