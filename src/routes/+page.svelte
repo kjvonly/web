@@ -3,7 +3,6 @@
 	import Chapter from '../components/bible/chapter.svelte';
 	import RecursivePanes from '../theme/layout/recursive-pane/recursive-pane.svelte';
 	import { keydownStore } from '../services/keydown.service';
-	import { bufferStore } from '../stores/buffer.store';
 	import { BufferService } from '../models/buffer.model';
 	import { PaneSplit, type Pane } from '../models/pane.model';
 	import { Buffer } from '../models/buffer.model';
@@ -43,7 +42,6 @@
 		let b = new Buffer();
 		b.componentName = 'Chapter';
 		b.component = Chapter;
-		bufferStore.add(b.key, b);
 		paneService.setBuffer(b);
 		currentBuffer.set(b);
 		paneService.saveRootPane();
@@ -55,7 +53,6 @@
 		let b = new Buffer();
 		b.componentName = 'Search';
 		b.component = Search;
-		bufferStore.add(b.key, b);
 		paneService.setBuffer(b);
 		currentBuffer.set(b);
 		p = paneService.getRootPane();
@@ -64,7 +61,6 @@
 	paneKeyBindingMap.set('ctl+x e', () => {
 		let b = new Buffer();
 		b.component = Editor;
-		bufferStore.add(b.key, b);
 		paneService.setBuffer(b);
 		p = paneService.getRootPane();
 	});
@@ -77,7 +73,6 @@
 
 	onMount(() => {
 		bibleDB.init();
-		bufferStore.useLocalstorage();
 		paneStore.useLocalStorage();
 		paneStore.subscribe((pane) => {
 			p = pane;

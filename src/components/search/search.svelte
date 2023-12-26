@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { Buffer } from '../../models/buffer.model';
-	import { bufferStore } from '../../stores/buffer.store';
-
+	
 	import { v4 as uuidv4 } from 'uuid';
 
 	export let buffer: Buffer;
@@ -30,17 +29,6 @@
 	let searchInput: string = '';
 
 	onMount(() => {
-		bufferStore.subscribe((buffs) => {
-			if (loaded) {
-				return;
-			}
-			let b = buffs.get(buffer.key);
-			if (b) {
-				buffer.bag = b.bag;
-			}
-			loaded = true;
-		});
-
 		//Sets the height of the buffer
 		let el = document.getElementById(uniqueId);
 		let pel = el?.parentNode as HTMLElement;

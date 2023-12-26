@@ -2,7 +2,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { Pane, PaneSplit } from '../../../models/pane.model';
 	import { NullBuffer } from '../../../models/buffer.model';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
 	import { paneService } from '../../../services/pane.service';
 	import VerticalSplit from './vertical-split.svelte';
@@ -30,19 +30,20 @@
 		}
 	}
 
-	// Register EventListeners
-	const retryPolicy = retry(handleAll, { maxAttempts: 6, backoff: new ConstantBackoff(500) });
+	onMount(() => {
+		// Register EventListeners
+		const retryPolicy = retry(handleAll, { maxAttempts: 500, backoff: new ConstantBackoff(500) });
+		(() => {
+			setTimeout(
+				() =>
+					retryPolicy
+						.execute(() => registerSelectBuffer())
+						.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
+				1000
+			);
+		})();
+	});
 
-	var registerSelectBufferPaneEventsListeners = () =>
-		setTimeout(
-			() =>
-				retryPolicy
-					.execute(() => registerSelectBuffer())
-					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
-			100
-		);
-
-	$: pane && registerSelectBufferPaneEventsListeners();
 	$: panePadding = _pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
 </script>
 

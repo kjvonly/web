@@ -4,7 +4,6 @@
 
 	import { v4 as uuidv4 } from 'uuid';
 	import type { Buffer } from '../../models/buffer.model';
-	import { bufferStore } from '../../stores/buffer.store';
 	import { bibleDB } from '../../db/bible.db';
 	import { bibleNavigationService } from '../../services/bible-navigation.service';
 	import Goto from './components/goto.svelte';
@@ -56,24 +55,24 @@
 			}
 		});
 
-		bufferStore.subscribe((buffs) => {
-			if (loaded) {
-				return;
-			}
-			let b = buffs.get(buffer.key);
-			if (b) {
-				buffer.bag = b.bag;
-				db.ready?.then((val) => {
-					if (!val) {
-						return;
-					}
-					if (buffer?.bag?.currentChapterKey) {
-						updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
-					}
-				});
-			}
-			loaded = true;
-		});
+		// bufferStore.subscribe((buffs) => {
+		// 	if (loaded) {
+		// 		return;
+		// 	}
+		// 	let b = buffs.get(buffer.key);
+		// 	if (b) {
+		// 		buffer.bag = b.bag;
+		// 		db.ready?.then((val) => {
+		// 			if (!val) {
+		// 				return;
+		// 			}
+		// 			if (buffer?.bag?.currentChapterKey) {
+		// 				updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
+		// 			}
+		// 		});
+		// 	}
+		// 	loaded = true;
+		// });
 
 		// TODO clean up. Go back to using css and var technique
 
@@ -139,14 +138,12 @@
 			selectedVerse = 0;
 		}
 
-		bufferStore.add(buffer.key, buffer);
 		scrolledIntoView(uniqueId, '0', uniqueId + '-chapter');
 	}
 
 	async function updateChapterFromChapterKey(chapterKey: string) {
 		let chapter = await db.getValue('chapters', chapterKey);
 		buffer.bag.currentChapterKey = chapterKey;
-		bufferStore.add(buffer.key, buffer);
 		updateChapter(chapter);
 	}
 
@@ -227,7 +224,6 @@
 		let nc = bibleNavigationService.next(buffer.bag.currentChapterKey);
 		let chapter = await db.getValue('chapters', nc);
 		buffer.bag.currentChapterKey = nc;
-		bufferStore.add(buffer.key, buffer);
 		updateChapter(chapter);
 	}
 
@@ -235,7 +231,6 @@
 		let nc = bibleNavigationService.previous(buffer.bag.currentChapterKey);
 		let chapter = await db.getValue('chapters', nc);
 		buffer.bag.currentChapterKey = nc;
-		bufferStore.add(buffer.key, buffer);
 		updateChapter(chapter);
 	}
 
@@ -262,6 +257,27 @@
 		}
 		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-chapter');
 	}
+
+	var u = () => {
+		if (loaded) {
+			return
+		}
+		
+		db.ready?.then((val) => {
+			if (!val) {
+				return;
+			}
+			if (buffer?.bag?.currentChapterKey) {
+				updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
+			}
+		});
+
+		loaded =true;
+		
+	
+	
+	};
+	$: buffer && u();
 </script>
 
 <div id={uniqueId} class="kjv-chapter-quadrant">
@@ -292,9 +308,9 @@
 								{#each v.words.slice(1, v.words.length) as w}
 									<!-- svelte-ignore a11y-click-events-have-key-events -->
 									<!-- svelte-ignore a11y-no-static-element-interactions -->
-									<span
-										on:click={() => _strongs(w.href)}
-										class="kjvonly-noselect"><u class="{w.class?.join(' ')}">{w.text}</u><u class="whitespace">&nbsp;</u></span
+									<span on:click={() => _strongs(w.href)} class="kjvonly-noselect"
+										><u class={w.class?.join(' ')}>{w.text}</u><u class="whitespace">&nbsp;</u
+										></span
 									>
 								{/each}
 							</div>

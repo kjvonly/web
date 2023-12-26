@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Pane } from '../../../models/pane.model';
 	import RecursivePane from './recursive-pane.svelte';
 	import { retry, handleAll, ConstantBackoff } from 'cockatiel';
@@ -62,19 +62,20 @@
 			`#_${id}-pane`
 		);
 	}
-	// Register EventListeners
-	const retryPolicy = retry(handleAll, { maxAttempts: 6, backoff: new ConstantBackoff(500) });
 
-	var registerResizeEventsListeners = () =>
-		setTimeout(
-			() =>
-				retryPolicy
-					.execute(() => registerResize())
-					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
-			100
-		);
-
-	$: pane && registerResizeEventsListeners();
+	onMount(() => {
+		// Register EventListeners
+		const retryPolicy = retry(handleAll, { maxAttempts: 500, backoff: new ConstantBackoff(500) });
+		(() => {
+			setTimeout(
+				() =>
+					retryPolicy
+						.execute(() => registerResize())
+						.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
+				1000
+			);
+		})();
+	});
 </script>
 
 <div class="d-flex flex-column w-100">
