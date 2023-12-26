@@ -34,15 +34,6 @@ export class PaneService {
 		});
 	}
 
-	setCurrentBufferOnLoad() {
-		for (var p of this.getPanesWithBuffers()) {
-			if (p.buffer.selected) {
-				this.setBuffer(p.buffer);
-				return;
-			}
-		}
-		this.setBuffer(this.rootPane.buffer);
-	}
 
 	goToNextPaneWithBuffer() {
 		let p: Pane;
@@ -221,6 +212,17 @@ export class PaneService {
 		}
 
 		return panesWithBuffers;
+	}
+
+
+	setCurrentBufferOnLoad() {
+		for (var p of this.getPanesWithBuffers()) {
+			if (p.buffer.selected) {
+				this.setBuffer(p.buffer);
+				return;
+			}
+		}
+		this.setBuffer(this.rootPane.buffer);
 	}
 }
 

@@ -242,4 +242,16 @@ describe('paneService', () => {
 			assert(panes.length === 4)
 		})
 	})
+
+	describe('setCurrentBufferOnLoad', () => {
+		it('should set current buffer from saved selected buffer', () => {
+			prl.buffer.selected = true
+			let ps = new PaneService(paneStore, currentBuffer);
+			ps.setBuffer = (b: Buffer) => {
+				assert(b === prl.buffer)
+			}
+			
+			paneStore.subs[0](p)
+		})
+	})
 });
