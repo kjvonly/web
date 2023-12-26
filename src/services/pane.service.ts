@@ -155,13 +155,6 @@ export class PaneService {
 		this._paneStore.set(this.rootPane);
 	}
 
-	setBuffer(b: Buffer) {
-		let p = this.getCurrent();
-		p.buffer = b;
-		currentBuffer.set(b);
-		this._paneStore.set(this.rootPane);
-	}
-
 	
 
 	/* tested */
@@ -222,6 +215,15 @@ export class PaneService {
 		this._currentBuffer.set(p.leftPane.buffer);
 		this._paneStore.set(this.rootPane);
 	}
+
+	setBuffer(b: Buffer) {
+		let p = this.getCurrent();
+		p.buffer = b;
+		this._currentBuffer.set(b);
+		this._paneStore.set(this.rootPane);
+	}
+
+	
 }
 
 export let paneService = new PaneService();

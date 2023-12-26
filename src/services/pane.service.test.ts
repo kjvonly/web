@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { NullPane, Pane, PaneSplit } from '../models/pane.model';
 import { currentBuffer } from './current-buffer.service';
 import { afterEach } from 'node:test';
-import { NullBuffer } from '../models/buffer.model';
+import { Buffer, NullBuffer } from '../models/buffer.model';
 
 interface IPaneStore {
 	subscribe(fn: Function): void;
@@ -188,6 +188,29 @@ describe('paneService', () => {
 			assert(prl.rightPane.buffer instanceof NullBuffer, "rightPane.buffer should be NullBuffer")
 			assert(prl.rightPane.parentNode ===  prl, "rightPane.parentNode should be prl")
 			
+			currentBufferMock.verify()
+			assert(spy.calledWithExactly(p))
+		})
+	})
+
+	describe('setBuffer', () => {
+		it('should set buffer and save root pane', () => {
+			var spy = sinon.spy(paneStore, 'set');			
+			let ps = new PaneService(paneStore, currentBuffer);
+
+			// set rootPane of paneService
+			paneStore.subs[0](p)
+
+			ps.getCurrent = () => {
+				prl.buffer.bag = "this bag"
+				return prl
+			}
+			
+			let newBuffer = new Buffer()
+			currentBufferMock.expects('set').withExactArgs(newBuffer)
+			
+			ps.setBuffer(newBuffer)
+
 			currentBufferMock.verify()
 			assert(spy.calledWithExactly(p))
 		})
