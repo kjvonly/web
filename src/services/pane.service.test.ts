@@ -16,8 +16,12 @@ describe('paneService', () => {
 	var paneStore: any;
 
 	const currentBuffer = {
-		get: () => { let b = new Buffer(); b.key = '1'; return b; },
-		set: (buffer: any) => { }
+		get: () => {
+			let b = new Buffer();
+			b.key = '1';
+			return b;
+		},
+		set: (buffer: any) => {}
 	};
 	var currentBufferMock: sinon.SinonMock;
 
@@ -37,7 +41,7 @@ describe('paneService', () => {
 			subscribe(fn: Function) {
 				this.subs.push(fn);
 			}
-			set() { }
+			set() {}
 		})();
 
 		// parent
@@ -68,7 +72,6 @@ describe('paneService', () => {
 		pr.leftPane = prl;
 		pr.rightPane = prr;
 		pr.split = PaneSplit.Vertical;
-
 	});
 
 	describe('constructor', () => {
@@ -156,48 +159,47 @@ describe('paneService', () => {
 			let ps = new PaneService(paneStore, currentBuffer);
 
 			// set rootPane of paneService
-			paneStore.subs[0](p)
+			paneStore.subs[0](p);
 
 			ps.getCurrent = () => {
-				prl.buffer.bag = "this bag"
-				return prl
-			}
+				prl.buffer.bag = 'this bag';
+				return prl;
+			};
 
-			let b = prl.buffer
-			currentBufferMock.expects('set').withExactArgs(b)
+			let b = prl.buffer;
+			currentBufferMock.expects('set').withExactArgs(b);
 
 			// before asserts
-			assert(prl.split === PaneSplit.Null, 'prl pane should be null before split')
+			assert(prl.split === PaneSplit.Null, 'prl pane should be null before split');
 
-			assert(prl.leftPane === null, 'prl.leftPane should be null')
-			assert(prl.rightPane === null, 'prl.RightPane should be null')
-			ps.splitPane(PaneSplit.Vertical)
+			assert(prl.leftPane === null, 'prl.leftPane should be null');
+			assert(prl.rightPane === null, 'prl.RightPane should be null');
+			ps.splitPane(PaneSplit.Vertical);
 
 			// prl
 			// @ts-ignore
-			assert(prl.split === PaneSplit.Vertical)
-			assert(prl.buffer.bag !== "this bag")
+			assert(prl.split === PaneSplit.Vertical);
+			assert(prl.buffer.bag !== 'this bag');
 
 			// left pane
-			assert(prl.leftPane !== null, "leftPane should not be null")
-			
-			// @ts-ignore						
-			assert(prl.leftPane.buffer.bag === "this bag", "leftPane.buffer should be NullBuffer")
-			// @ts-ignore
-			assert(prl.leftPane.parentNode === prl, "leftPane.parentNode should be prl")
+			assert(prl.leftPane !== null, 'leftPane should not be null');
 
+			// @ts-ignore
+			assert(prl.leftPane.buffer.bag === 'this bag', 'leftPane.buffer should be NullBuffer');
+			// @ts-ignore
+			assert(prl.leftPane.parentNode === prl, 'leftPane.parentNode should be prl');
 
 			// right pane
-			assert(prl.rightPane !== null, "rightPane should not be null")
+			assert(prl.rightPane !== null, 'rightPane should not be null');
 			// @ts-ignore
-			assert(prl.rightPane.buffer instanceof NullBuffer, "rightPane.buffer should be NullBuffer")
+			assert(prl.rightPane.buffer instanceof NullBuffer, 'rightPane.buffer should be NullBuffer');
 			// @ts-ignore
-			assert(prl.rightPane.parentNode === prl, "rightPane.parentNode should be prl")
+			assert(prl.rightPane.parentNode === prl, 'rightPane.parentNode should be prl');
 
-			currentBufferMock.verify()
-			assert(spy.calledWithExactly(p))
-		})
-	})
+			currentBufferMock.verify();
+			assert(spy.calledWithExactly(p));
+		});
+	});
 
 	describe('setBuffer', () => {
 		it('should set buffer and save root pane', () => {
@@ -205,94 +207,88 @@ describe('paneService', () => {
 			let ps = new PaneService(paneStore, currentBuffer);
 
 			// set rootPane of paneService
-			paneStore.subs[0](p)
+			paneStore.subs[0](p);
 
 			ps.getCurrent = () => {
-				prl.buffer.bag = "this bag"
-				return prl
-			}
+				prl.buffer.bag = 'this bag';
+				return prl;
+			};
 
-			let newBuffer = new Buffer()
-			currentBufferMock.expects('set').withExactArgs(newBuffer)
+			let newBuffer = new Buffer();
+			currentBufferMock.expects('set').withExactArgs(newBuffer);
 
-			ps.setBuffer(newBuffer)
+			ps.setBuffer(newBuffer);
 
-			currentBufferMock.verify()
-			assert(spy.calledWithExactly(p))
-		})
-	})
+			currentBufferMock.verify();
+			assert(spy.calledWithExactly(p));
+		});
+	});
 
 	describe('getCurrent', () => {
 		it('should get the current pane selected pane', () => {
-
 			var spy = sinon.spy(paneStore, 'set');
 			let ps = new PaneService(paneStore, currentBuffer);
 			// set rootPane of paneService
-			paneStore.subs[0](p)
+			paneStore.subs[0](p);
 			ps.findBufferPane = (key: string, pane: Pane): Pane => {
-				assert(key === '1')
-				assert(pane === p)
-				return new Pane()
-			}
+				assert(key === '1');
+				assert(pane === p);
+				return new Pane();
+			};
 
-			ps.getCurrent()
-		})
-	})
+			ps.getCurrent();
+		});
+	});
 
 	describe('getPanesWithBuffers', () => {
 		it('should return panes when paneSplit is Null', () => {
 			let ps = new PaneService(paneStore, currentBuffer);
 			// set rootPane of paneService
-			paneStore.subs[0](p)
-			let panes = ps.getPanesWithBuffers()
-			assert(panes.length === 4)
-		})
-	})
+			paneStore.subs[0](p);
+			let panes = ps.getPanesWithBuffers();
+			assert(panes.length === 4);
+		});
+	});
 
 	describe('setCurrentBufferOnLoad', () => {
 		it('should set current buffer from saved selected buffer', () => {
-			prl.buffer.selected = true
-
+			prl.buffer.selected = true;
 
 			let ps = new PaneService(paneStore, currentBuffer);
 			ps.setBuffer = (b: Buffer) => {
-				assert(b === prl.buffer)
-			}
+				assert(b === prl.buffer);
+			};
 
-			paneStore.subs[0](p)
-		})
-	})
+			paneStore.subs[0](p);
+		});
+	});
 
 	describe('goToNextPaneWithBuffer', () => {
 		it('should go to next pane with buffer', () => {
 			let ps = new PaneService(paneStore, currentBuffer);
 			ps.getCurrent = () => {
-				return plr
-			}
+				return plr;
+			};
 
-			paneStore.subs[0](p)
-			
-			currentBufferMock.expects('set').calledWith(prl.buffer)
-			ps.goToNextPaneWithBuffer()
-			currentBufferMock.verify()
+			paneStore.subs[0](p);
 
-		})
+			currentBufferMock.expects('set').calledWith(prl.buffer);
+			ps.goToNextPaneWithBuffer();
+			currentBufferMock.verify();
+		});
 
 		it('should go to first pane with buffer if on last pane with buffer', () => {
 			let ps = new PaneService(paneStore, currentBuffer);
 			ps.getCurrent = () => {
-				return prr
-			}
+				return prr;
+			};
 
+			paneStore.subs[0](p);
 
-			paneStore.subs[0](p)
+			currentBufferMock.expects('set').calledWith(pll.buffer);
 
-			currentBufferMock.expects('set').calledWith(pll.buffer)
-
-
-			ps.goToNextPaneWithBuffer()
-			currentBufferMock.verify()
-
-		})
-	})
+			ps.goToNextPaneWithBuffer();
+			currentBufferMock.verify();
+		});
+	});
 });
