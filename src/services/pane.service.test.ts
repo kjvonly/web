@@ -174,18 +174,24 @@ describe('paneService', () => {
 			ps.splitPane(PaneSplit.Vertical)
 
 			// prl
+			// @ts-ignore
 			assert(prl.split === PaneSplit.Vertical)
 			assert(prl.buffer.bag !== "this bag")
 
 			// left pane
 			assert(prl.leftPane !== null, "leftPane should not be null")
+			
+			// @ts-ignore						
 			assert(prl.leftPane.buffer.bag === "this bag", "leftPane.buffer should be NullBuffer")
+			// @ts-ignore
 			assert(prl.leftPane.parentNode === prl, "leftPane.parentNode should be prl")
 
 
 			// right pane
 			assert(prl.rightPane !== null, "rightPane should not be null")
+			// @ts-ignore
 			assert(prl.rightPane.buffer instanceof NullBuffer, "rightPane.buffer should be NullBuffer")
+			// @ts-ignore
 			assert(prl.rightPane.parentNode === prl, "rightPane.parentNode should be prl")
 
 			currentBufferMock.verify()
