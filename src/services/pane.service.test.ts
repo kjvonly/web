@@ -16,10 +16,18 @@ describe('paneService', () => {
 	var paneStore: any;
 
 	const currentBuffer = {
-		get: () => {},
-		set: () => {}
+		get: () => { },
+		set: (buffer: any) => { }
 	};
 	var currentBufferMock: sinon.SinonMock;
+
+	var p: Pane;
+	var pl: Pane;
+	var pr: Pane;
+	var pll: Pane;
+	var plr: Pane;
+	var prl: Pane;
+	var prr: Pane;
 
 	beforeEach(() => {
 		currentBufferMock = sinon.mock(currentBuffer);
@@ -29,8 +37,38 @@ describe('paneService', () => {
 			subscribe(fn: Function) {
 				this.subs.push(fn);
 			}
-			set() {}
+			set() { }
 		})();
+
+		// parent
+		p = new Pane();
+
+		// depth 1
+		pl = new Pane();
+		pr = new Pane();
+
+		// depth 2
+		pll = new Pane();
+		plr = new Pane();
+		prl = new Pane();
+		prr = new Pane();
+
+		// connect depth 1
+		p.leftPane = pl;
+		p.rightPane = pr;
+		p.split = PaneSplit.Vertical;
+
+		// connect depth 2
+		// connect left
+		pl.leftPane = pll;
+		pl.rightPane = plr;
+		pl.split = PaneSplit.Horizontal;
+
+		// connect right
+		pr.leftPane = prl;
+		pr.rightPane = prr;
+		pr.split = PaneSplit.Vertical;
+
 	});
 
 	describe('constructor', () => {
@@ -101,35 +139,6 @@ describe('paneService', () => {
 		it('should return correct pane from key', () => {
 			let ps = new PaneService(paneStore, currentBuffer);
 
-			// parent
-			let p = new Pane();
-
-			// depth 1
-			let pl = new Pane();
-			let pr = new Pane();
-
-			// depth 2
-			let pll = new Pane();
-			let plr = new Pane();
-			let prl = new Pane();
-			let prr = new Pane();
-
-			// connect depth 1
-			p.leftPane = pl;
-			p.rightPane = pr;
-			p.split = PaneSplit.Vertical;
-
-			// connect depth 2
-			// connect left
-			pl.leftPane = pll;
-			pl.rightPane = plr;
-			pl.split = PaneSplit.Horizontal;
-
-			// connect right
-			pr.leftPane = prl;
-			pr.rightPane = prr;
-			pr.split = PaneSplit.Vertical;
-
 			let np = ps.findBufferPane(prr.buffer.key, p);
 			assert(prr.id === np.id, 'should be pane prr');
 
@@ -140,4 +149,47 @@ describe('paneService', () => {
 			assert(pll.id === np.id, 'should be pane pll');
 		});
 	});
+
+	describe('splitPane', () => {
+		it('should split pane vertically', () => {
+			var spy = sinon.spy(paneStore, 'set');			
+			let ps = new PaneService(paneStore, currentBuffer);
+
+			// set rootPane of paneService
+			paneStore.subs[0](p)
+
+			ps.getCurrent = () => {
+				prl.buffer.bag = "this bag"
+				return prl
+			}
+
+			let b = prl.buffer
+			currentBufferMock.expects('set').withExactArgs(b)		
+
+			// before asserts
+			assert(prl.split === PaneSplit.Null, 'prl pane should be null before split')
+
+			assert(prl.leftPane === null, 'prl.leftPane should be null')
+			assert(prl.rightPane === null, 'prl.RightPane should be null')
+			ps.splitPane(PaneSplit.Vertical)
+
+			// prl
+			assert(prl.split === PaneSplit.Vertical)
+			assert(prl.buffer.bag !== "this bag")
+
+			// left pane
+			assert(prl.leftPane !== null, "leftPane should not be null")
+			assert(prl.leftPane.buffer.bag === "this bag", "leftPane.buffer should be NullBuffer")
+			assert(prl.leftPane.parentNode ===  prl, "leftPane.parentNode should be prl")
+
+
+			// right pane
+			assert(prl.rightPane !== null, "rightPane should not be null")
+			assert(prl.rightPane.buffer instanceof NullBuffer, "rightPane.buffer should be NullBuffer")
+			assert(prl.rightPane.parentNode ===  prl, "rightPane.parentNode should be prl")
+			
+			currentBufferMock.verify()
+			assert(spy.calledWithExactly(p))
+		})
+	})
 });

@@ -162,24 +162,7 @@ export class PaneService {
 		this._paneStore.set(this.rootPane);
 	}
 
-	splitPane(paneSplit: PaneSplit) {
-		let p = this.getCurrent();
-		p.split = paneSplit;
-
-		p.leftPane = new Pane();
-		p.leftPane.buffer = p.buffer;
-		p.leftPane.parentNode = p;
-		p.leftPane.split = PaneSplit.Null;
-
-		p.rightPane = new Pane();
-		p.rightPane.buffer = new NullBuffer();
-		p.rightPane.parentNode = p;
-		p.rightPane.split = PaneSplit.Null;
-
-		p.buffer = new NullBuffer();
-		currentBuffer.set(p.leftPane.buffer);
-		this._paneStore.set(this.rootPane);
-	}
+	
 
 	/* tested */
 	saveRootPane() {
@@ -219,6 +202,25 @@ export class PaneService {
 		}
 
 		return new NullPane();
+	}
+
+	splitPane(paneSplit: PaneSplit) {
+		let p = this.getCurrent();
+		p.split = paneSplit;
+
+		p.leftPane = new Pane();
+		p.leftPane.buffer = p.buffer;
+		p.leftPane.parentNode = p;
+		p.leftPane.split = PaneSplit.Null;
+
+		p.rightPane = new Pane();
+		p.rightPane.buffer = new NullBuffer();
+		p.rightPane.parentNode = p;
+		p.rightPane.split = PaneSplit.Null;
+
+		p.buffer = new NullBuffer();
+		this._currentBuffer.set(p.leftPane.buffer);
+		this._paneStore.set(this.rootPane);
 	}
 }
 
