@@ -14,5 +14,32 @@
 body {
 	@include themify($themes) {
 		background-color: themed('body');
+
+		/* Thin Scrollbar */
+
+		//firefox
+		scrollbar-color: themed('kjv-scrollbar-background-color') transparent !important;
+		scrollbar-width: auto !important;
+
+		/* Chrome/Brave */
+		::-webkit-scrollbar {
+			/* width of the entire scrollbar */
+			width: themed('kjv-scrollbar-width');
+		}
+
+		::-webkit-scrollbar-track {
+			/* color of the tracking area */
+			background: themed('kjv-scrollbar-track-color');
+
+		}
+
+		::-webkit-scrollbar-thumb {
+			/* color of the scroll thumb */
+			background-color: themed('kjv-scrollbar-background-color');
+			/* roundness of the scroll thumb */
+			border-radius: themed('kjv-scrollbar-border-radius');
+
+		}
+
 	}
 }

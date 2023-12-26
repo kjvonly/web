@@ -273,9 +273,6 @@
 		});
 
 		loaded =true;
-		
-	
-	
 	};
 	$: buffer && u();
 </script>
