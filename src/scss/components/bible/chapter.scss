@@ -37,8 +37,12 @@
 	}
 }
 
-.xref {
-	border-bottom: thin dotted darkgray;
+u {
+	text-decoration: none;
+}
+
+u.xref {
+	text-decoration: underline dotted darkgray;
 	cursor: pointer;
 }
 

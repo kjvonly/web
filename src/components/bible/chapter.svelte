@@ -294,7 +294,7 @@
 									<!-- svelte-ignore a11y-no-static-element-interactions -->
 									<span
 										on:click={() => _strongs(w.href)}
-										class="kjvonly-noselect {w.class?.join(' ')}">{w.text}&nbsp;</span
+										class="kjvonly-noselect"><u class="{w.class?.join(' ')}">{w.text}</u>&nbsp;</span
 									>
 								{/each}
 								<!-- svelte-ignore a11y-click-events-have-key-events -->
