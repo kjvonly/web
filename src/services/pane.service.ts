@@ -34,10 +34,7 @@ export class PaneService {
 		});
 	}
 
-	getCurrent(): Pane {
-		let key = currentBuffer.get().key;
-		return this.findBufferPane(key, this.rootPane);
-	}
+
 
 	getPanesWithBuffers(): Pane[] {
 		let queue = new Queue<Pane>();
@@ -221,6 +218,11 @@ export class PaneService {
 		p.buffer = b;
 		this._currentBuffer.set(b);
 		this._paneStore.set(this.rootPane);
+	}
+
+	getCurrent(): Pane {
+		let key = this._currentBuffer.get().key;
+		return this.findBufferPane(key, this.rootPane);
 	}
 
 	

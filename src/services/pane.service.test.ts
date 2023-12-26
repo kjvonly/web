@@ -16,7 +16,7 @@ describe('paneService', () => {
 	var paneStore: any;
 
 	const currentBuffer = {
-		get: () => { },
+		get: () => { let b = new Buffer(); b.key = '1'; return b;  },
 		set: (buffer: any) => { }
 	};
 	var currentBufferMock: sinon.SinonMock;
@@ -152,7 +152,7 @@ describe('paneService', () => {
 
 	describe('splitPane', () => {
 		it('should split pane vertically', () => {
-			var spy = sinon.spy(paneStore, 'set');			
+			var spy = sinon.spy(paneStore, 'set');
 			let ps = new PaneService(paneStore, currentBuffer);
 
 			// set rootPane of paneService
@@ -164,7 +164,7 @@ describe('paneService', () => {
 			}
 
 			let b = prl.buffer
-			currentBufferMock.expects('set').withExactArgs(b)		
+			currentBufferMock.expects('set').withExactArgs(b)
 
 			// before asserts
 			assert(prl.split === PaneSplit.Null, 'prl pane should be null before split')
@@ -180,14 +180,14 @@ describe('paneService', () => {
 			// left pane
 			assert(prl.leftPane !== null, "leftPane should not be null")
 			assert(prl.leftPane.buffer.bag === "this bag", "leftPane.buffer should be NullBuffer")
-			assert(prl.leftPane.parentNode ===  prl, "leftPane.parentNode should be prl")
+			assert(prl.leftPane.parentNode === prl, "leftPane.parentNode should be prl")
 
 
 			// right pane
 			assert(prl.rightPane !== null, "rightPane should not be null")
 			assert(prl.rightPane.buffer instanceof NullBuffer, "rightPane.buffer should be NullBuffer")
-			assert(prl.rightPane.parentNode ===  prl, "rightPane.parentNode should be prl")
-			
+			assert(prl.rightPane.parentNode === prl, "rightPane.parentNode should be prl")
+
 			currentBufferMock.verify()
 			assert(spy.calledWithExactly(p))
 		})
@@ -195,7 +195,7 @@ describe('paneService', () => {
 
 	describe('setBuffer', () => {
 		it('should set buffer and save root pane', () => {
-			var spy = sinon.spy(paneStore, 'set');			
+			var spy = sinon.spy(paneStore, 'set');
 			let ps = new PaneService(paneStore, currentBuffer);
 
 			// set rootPane of paneService
@@ -205,14 +205,31 @@ describe('paneService', () => {
 				prl.buffer.bag = "this bag"
 				return prl
 			}
-			
+
 			let newBuffer = new Buffer()
 			currentBufferMock.expects('set').withExactArgs(newBuffer)
-			
+
 			ps.setBuffer(newBuffer)
 
 			currentBufferMock.verify()
 			assert(spy.calledWithExactly(p))
+		})
+	})
+
+	describe('getCurrent', () => {
+		it('should get the current pane selected pane', () => {
+
+			var spy = sinon.spy(paneStore, 'set');
+			let ps = new PaneService(paneStore, currentBuffer);
+			// set rootPane of paneService
+			paneStore.subs[0](p)
+			ps.findBufferPane = (key: string, pane: Pane): Pane  =>  {
+				assert(key === '1')
+				assert(pane === p)
+				return new Pane()
+			}
+			
+			ps.getCurrent()
 		})
 	})
 });
