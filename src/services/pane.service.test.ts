@@ -246,12 +246,47 @@ describe('paneService', () => {
 	describe('setCurrentBufferOnLoad', () => {
 		it('should set current buffer from saved selected buffer', () => {
 			prl.buffer.selected = true
+
+
 			let ps = new PaneService(paneStore, currentBuffer);
 			ps.setBuffer = (b: Buffer) => {
 				assert(b === prl.buffer)
 			}
-			
+
 			paneStore.subs[0](p)
+		})
+	})
+
+	describe('goToNextPaneWithBuffer', () => {
+		it('should go to next pane with buffer', () => {
+			let ps = new PaneService(paneStore, currentBuffer);
+			ps.getCurrent = () => {
+				return plr
+			}
+
+			paneStore.subs[0](p)
+			
+			currentBufferMock.expects('set').calledWith(prl.buffer)
+			ps.goToNextPaneWithBuffer()
+			currentBufferMock.verify()
+
+		})
+
+		it('should go to first pane with buffer if on last pane with buffer', () => {
+			let ps = new PaneService(paneStore, currentBuffer);
+			ps.getCurrent = () => {
+				return prr
+			}
+
+
+			paneStore.subs[0](p)
+
+			currentBufferMock.expects('set').calledWith(pll.buffer)
+
+
+			ps.goToNextPaneWithBuffer()
+			currentBufferMock.verify()
+
 		})
 	})
 });

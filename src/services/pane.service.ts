@@ -34,34 +34,6 @@ export class PaneService {
 		});
 	}
 
-
-	goToNextPaneWithBuffer() {
-		let p: Pane;
-		let next: boolean = false;
-		let cb = currentBuffer.get();
-		let panes = this.getPanesWithBuffers();
-		if (panes.length === 0) {
-			return;
-		}
-
-		try {
-			for (p of panes) {
-				if (next) {
-					currentBuffer.set(p.buffer);
-					return;
-				}
-				if (p.buffer.key === cb.key) {
-					next = true;
-				}
-			}
-			// if on last last buffer. go to first buffer
-			currentBuffer.set(panes[0].buffer);
-			return;
-		} finally {
-			this.saveRootPane();
-		}
-	}
-
 	deletePane() {
 		let cp = this.getCurrent();
 		if (cp.id === this.rootPane.id) {
@@ -116,8 +88,6 @@ export class PaneService {
 		}
 		this._paneStore.set(this.rootPane);
 	}
-
-	
 
 	/* tested */
 	saveRootPane() {
@@ -223,6 +193,33 @@ export class PaneService {
 			}
 		}
 		this.setBuffer(this.rootPane.buffer);
+	}
+
+	goToNextPaneWithBuffer() {
+		let p: Pane;
+		let next: boolean = false;
+		let cb = this._currentBuffer.get();
+		let panes = this.getPanesWithBuffers();
+		if (panes.length === 0) {
+			return;
+		}
+
+		try {
+			for (p of panes) {
+				if (next) {
+					this._currentBuffer.set(p.buffer);
+					return;
+				}
+				if (p.buffer.key === cb.key) {
+					next = true;
+				}
+			}
+			// if on last last buffer. go to first buffer
+			this._currentBuffer.set(panes[0].buffer);
+			return;
+		} finally {
+			this.saveRootPane();
+		}
 	}
 }
 
