@@ -257,6 +257,27 @@
 		}
 		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-chapter');
 	}
+
+	var u = () => {
+		if (loaded) {
+			return
+		}
+		
+		db.ready?.then((val) => {
+			if (!val) {
+				return;
+			}
+			if (buffer?.bag?.currentChapterKey) {
+				updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
+			}
+		});
+
+		loaded =true;
+		
+	
+	
+	};
+	$: buffer && u();
 </script>
 
 <div id={uniqueId} class="kjv-chapter-quadrant">
@@ -287,9 +308,9 @@
 								{#each v.words.slice(1, v.words.length) as w}
 									<!-- svelte-ignore a11y-click-events-have-key-events -->
 									<!-- svelte-ignore a11y-no-static-element-interactions -->
-									<span
-										on:click={() => _strongs(w.href)}
-										class="kjvonly-noselect"><u class="{w.class?.join(' ')}">{w.text}</u><u class="whitespace">&nbsp;</u></span
+									<span on:click={() => _strongs(w.href)} class="kjvonly-noselect"
+										><u class={w.class?.join(' ')}>{w.text}</u><u class="whitespace">&nbsp;</u
+										></span
 									>
 								{/each}
 							</div>

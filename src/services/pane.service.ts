@@ -34,6 +34,18 @@ export class PaneService {
 		});
 	}
 
+	setCurrentBufferOnLoad() {
+		for (var p of this.getPanesWithBuffers()) {
+			if (p.buffer.selected) {
+				this._currentBuffer.set(p.buffer);
+				this._paneStore.set(this.rootPane)
+				return;
+			}
+		}
+		this._currentBuffer.set(this.rootPane.buffer);
+		this._paneStore.set(this.rootPane)
+	}
+
 	deletePane() {
 		let cp = this.getCurrent();
 		if (cp.id === this.rootPane.id) {
@@ -184,15 +196,7 @@ export class PaneService {
 		return panesWithBuffers;
 	}
 
-	setCurrentBufferOnLoad() {
-		for (var p of this.getPanesWithBuffers()) {
-			if (p.buffer.selected) {
-				this.setBuffer(p.buffer);
-				return;
-			}
-		}
-		this.setBuffer(this.rootPane.buffer);
-	}
+
 
 	goToNextPaneWithBuffer() {
 		let p: Pane;

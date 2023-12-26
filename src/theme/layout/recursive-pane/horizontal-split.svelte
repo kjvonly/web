@@ -62,10 +62,18 @@
 			`#_${id}-pane`
 		);
 	}
+	
 	// Register EventListeners
 	const retryPolicy = retry(handleAll, { maxAttempts: 6, backoff: new ConstantBackoff(500) });
+	var registerResizeSuccessful = false;
 
-	var registerResizeEventsListeners = () =>
+	var registerResizeEventsListeners = () => {
+		if(registerResizeSuccessful){
+			return
+		}
+
+		console.log('horizontal registerResizeEvent')
+
 		setTimeout(
 			() =>
 				retryPolicy
@@ -73,8 +81,9 @@
 					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
 			100
 		);
+	}
 
-	$: pane && registerResizeEventsListeners();
+	$: _pane && registerResizeEventsListeners();
 </script>
 
 <div class="d-flex flex-column w-100">

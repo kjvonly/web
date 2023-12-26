@@ -42,7 +42,7 @@
 			100
 		);
 
-	$: pane && registerSelectBufferPaneEventsListeners();
+	$: _pane && registerSelectBufferPaneEventsListeners();
 	$: panePadding = _pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
 </script>
 

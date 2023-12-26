@@ -65,17 +65,27 @@
 	}
 
 	// Register EventListeners
-	const retryPolicy = retry(handleAll, { maxAttempts: 6, backoff: new ConstantBackoff(500) });
-	var registerResizeEventsListeners = () =>
+	const retryPolicy = retry(handleAll, { maxAttempts: 500, backoff: new ConstantBackoff(500) });
+	(() => {
 		setTimeout(
 			() =>
 				retryPolicy
 					.execute(() => registerResize())
 					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
-			100
+			500
 		);
+	})();
 
-	$: pane && registerResizeEventsListeners();
+	var registerResizeSuccessful = false;
+	var registerResizeEventsListeners = () => {
+		if (registerResizeSuccessful) {
+			return;
+		}
+
+		console.log('vertical registerResizeEvent');
+	};
+
+	//$: _pane && registerResizeEventsListeners();
 </script>
 
 <div id="_{id}-vertical-left" class="kjv-left-pane">
