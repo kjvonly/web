@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	import type { Pane } from '../../../models/pane.model';
 	import RecursivePane from './recursive-pane.svelte';
@@ -64,28 +64,19 @@
 		);
 	}
 
-	// Register EventListeners
-	const retryPolicy = retry(handleAll, { maxAttempts: 500, backoff: new ConstantBackoff(500) });
-	(() => {
-		setTimeout(
-			() =>
-				retryPolicy
-					.execute(() => registerResize())
-					.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
-			500
-		);
-	})();
-
-	var registerResizeSuccessful = false;
-	var registerResizeEventsListeners = () => {
-		if (registerResizeSuccessful) {
-			return;
-		}
-
-		console.log('vertical registerResizeEvent');
-	};
-
-	//$: _pane && registerResizeEventsListeners();
+	onMount(() => {
+		// Register EventListeners
+		const retryPolicy = retry(handleAll, { maxAttempts: 500, backoff: new ConstantBackoff(500) });
+		(() => {
+			setTimeout(
+				() =>
+					retryPolicy
+						.execute(() => registerResize())
+						.catch((reason) => console.log(reason, 'could not register app listeners for pane')),
+				500
+			);
+		})();
+	});
 </script>
 
 <div id="_{id}-vertical-left" class="kjv-left-pane">
