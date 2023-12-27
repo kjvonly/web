@@ -12,6 +12,7 @@
 	import Editor from '../components/editor/editor.svelte';
 	import { bibleDB } from '../db/bible.db';
 	import Search from '../components/search/search.svelte';
+	import TestCard from '../components/card/test-card.svelte';
 
 	let p: Pane;
 
@@ -47,6 +48,17 @@
 		paneService.saveRootPane();
 		p = paneService.getRootPane();
 	});
+
+	// opens bible buffer
+	paneKeyBindingMap.set('shift+X t', () => {
+		let b = new Buffer();
+		b.componentName = 'TestCard';
+		b.component = TestCard;
+		paneService.setBuffer(b);
+		currentBuffer.set(b);
+		paneService.saveRootPane();
+		p = paneService.getRootPane();
+	});	
 
 	// opens search buffer
 	paneKeyBindingMap.set('shift+X s', () => {

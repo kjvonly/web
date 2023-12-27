@@ -56,16 +56,22 @@
 		});
 		resizeObserver.observe(pel);
 	});
-
 </script>
 
+<!-- https://learn.svelte.dev/tutorial/named-slots -->
+
 <div id={uniqueId} class="kjv-card-quadrant">
+	<!-- card header -->
 	<div class="kjv-card-header">
-		
+		<slot name="header" {id}/>
 	</div>
 
+	<!-- card body -->
 	<div id="{uniqueId}-card" class="kjv-card">
+		<slot name="body" {buffer} />
 	</div>
+
+	<!-- card popup -->
 	{#if popup}
 		<div
 			class="popups flex flex-fill w-100"
@@ -83,8 +89,9 @@
 			/>
 		</div>
 	{/if}
+
+	<!-- card footer -->
 	<div id="_{uniqueId}-footer" class="kjv-card-footer {selected}">
-		<p class="text-sm m-0">
-		</p>
+		<slot name="footer" {uniqueId} {id} />
 	</div>
 </div>
