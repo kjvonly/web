@@ -55,27 +55,6 @@
 			}
 		});
 
-		// bufferStore.subscribe((buffs) => {
-		// 	if (loaded) {
-		// 		return;
-		// 	}
-		// 	let b = buffs.get(buffer.key);
-		// 	if (b) {
-		// 		buffer.bag = b.bag;
-		// 		db.ready?.then((val) => {
-		// 			if (!val) {
-		// 				return;
-		// 			}
-		// 			if (buffer?.bag?.currentChapterKey) {
-		// 				updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
-		// 			}
-		// 		});
-		// 	}
-		// 	loaded = true;
-		// });
-
-		// TODO clean up. Go back to using css and var technique
-
 		let el = document.getElementById(uniqueId);
 		let pel = el?.parentNode as HTMLElement;
 		let br = pel.getBoundingClientRect();
@@ -258,6 +237,7 @@
 		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-chapter');
 	}
 
+	// Refactor this next piece of code. do a retry circuit breaker.
 	var u = () => {
 		if (loaded) {
 			return;
