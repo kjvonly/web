@@ -49,7 +49,7 @@
 </script>
 
 <div id="goto-popup-{gotoID}" class="flex flex-fill w-100">
-	<div class="d-flex flex-fill align-items-end kjv-chapter-goto-container w-100" style:--height={gotoHeightStyle}>
+	<div class="d-flex flex-fill align-items-end  kjv-chapter-goto-container w-100" style:--height={gotoHeightStyle}>
 		<div class="d-flex  kjv-chapter-goto-input-container w-100">
 			<p class="pe-2 m-0">Go to:</p>
 			<input

@@ -90,6 +90,10 @@ $scrollbar-light: (
 
 $goto-light: (
 	kjv-goto-background-color: map-get($light, 'primary-variant'),
+	kjv-goto-color: map-get($light, 'on-primary'),
+	kjv-goto-border-color: $primary-100,
+	kjv-goto-border-focus-color: map-get($light, 'on-primary'),
+	kjv-goto-border-focus-background-color: map-get($light, 'primary'),
 );
 $chapter-dark: (
 );
@@ -125,3 +129,4 @@ $theme-map: null;
 @function themed($key) {
 	@return map-get($theme-map, $key);
 }
+
