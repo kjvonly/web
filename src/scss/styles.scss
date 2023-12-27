@@ -30,7 +30,6 @@ body {
 		::-webkit-scrollbar-track {
 			/* color of the tracking area */
 			background: themed('kjv-scrollbar-track-color');
-
 		}
 
 		::-webkit-scrollbar-thumb {
@@ -38,8 +37,6 @@ body {
 			background-color: themed('kjv-scrollbar-background-color');
 			/* roundness of the scroll thumb */
 			border-radius: themed('kjv-scrollbar-border-radius');
-
 		}
-
 	}
 }

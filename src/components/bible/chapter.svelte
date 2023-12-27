@@ -260,9 +260,9 @@
 
 	var u = () => {
 		if (loaded) {
-			return
+			return;
 		}
-		
+
 		db.ready?.then((val) => {
 			if (!val) {
 				return;
@@ -272,7 +272,7 @@
 			}
 		});
 
-		loaded =true;
+		loaded = true;
 	};
 	$: buffer && u();
 </script>

@@ -46,10 +46,8 @@ export class ComponentMapping {
 			p.buffer.onFocus = () => {};
 			p.buffer.keyboardBindings = new Map<string, Function>();
 		} else {
-			p.buffer = new NullBuffer()
+			p.buffer = new NullBuffer();
 		}
-
-		
 	}
 }
 

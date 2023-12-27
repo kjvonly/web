@@ -9,7 +9,7 @@ export class CurrentBuffer {
 
 	set(b: Buffer) {
 		this.buffer.selected = false;
-	
+
 		this.buffer = b;
 		this.buffer.selected = true;
 		keydownStore.updateSelectedBufferKeybindings(b.keyboardBindings);

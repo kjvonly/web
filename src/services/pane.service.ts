@@ -38,12 +38,12 @@ export class PaneService {
 		for (var p of this.getPanesWithBuffers()) {
 			if (p.buffer.selected) {
 				this._currentBuffer.set(p.buffer);
-				this._paneStore.set(this.rootPane)
+				this._paneStore.set(this.rootPane);
 				return;
 			}
 		}
 		this._currentBuffer.set(this.rootPane.buffer);
-		this._paneStore.set(this.rootPane)
+		this._paneStore.set(this.rootPane);
 	}
 
 	deletePane() {
@@ -195,8 +195,6 @@ export class PaneService {
 
 		return panesWithBuffers;
 	}
-
-
 
 	goToNextPaneWithBuffer() {
 		let p: Pane;
