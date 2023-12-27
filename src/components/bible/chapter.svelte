@@ -260,9 +260,9 @@
 
 	var u = () => {
 		if (loaded) {
-			return
+			return;
 		}
-		
+
 		db.ready?.then((val) => {
 			if (!val) {
 				return;
@@ -272,7 +272,7 @@
 			}
 		});
 
-		loaded =true;
+		loaded = true;
 	};
 	$: buffer && u();
 </script>
@@ -331,10 +331,11 @@
 				bind:parentHeight={popupHeight}
 				bind:keyboardBindings={buffer.keyboardBindings}
 				bind:data={popup.data}
+				bind:parentId={uniqueId}
 			/>
 		</div>
 	{/if}
-	<div class="kjv-chapter-footer {selected}">
+	<div id="_{uniqueId}-footer" class="kjv-chapter-footer {selected}">
 		<p class="text-sm m-0">
 			<strong class="font-semibold">Bible Buffer</strong>
 		</p>

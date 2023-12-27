@@ -1,0 +1,38 @@
+@import '../../../themes.scss';
+
+.kjv-chapter-goto-container {
+	@include themify($themes) {
+		border-radius: 0 0 1rem 1rem;
+		background-color: themed('kjv-goto-background-color');
+		color: themed('kjv-goto-color');
+	}
+
+	position: absolute;
+	bottom: 0;
+	height: var(--height);
+}
+
+.kjv-chapter-goto-input-container {
+	padding-left: 1rem;
+}
+
+.kjv-chapter-goto-input {
+	@include themify($themes) {
+		background-color: themed('kjv-goto-background-color');
+		border-radius: 0 0 1rem 0rem;
+		color: themed('kjv-goto-color');
+		border-color: themed('kjv-goto-border-color');
+		border-width: 0.1rem;
+		border-style: solid;
+	}
+}
+
+.kjv-chapter-goto-input:focus,
+.kjv-chapter-goto-input:hover {
+	@include themify($themes) {
+		border-color: themed(kjv-goto-border-focus-color);
+		background-color: themed(kjv-goto-border-focus-background-color);
+	}
+
+	outline: none;
+}

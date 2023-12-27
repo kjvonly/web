@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { Buffer } from '../../models/buffer.model';
-	
+
 	import { v4 as uuidv4 } from 'uuid';
 
 	export let buffer: Buffer;
