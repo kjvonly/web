@@ -88,10 +88,13 @@ $scrollbar-light: (
 	kjv-scrollbar-border-radius: 1rem,
 );
 
+$goto-light: (
+	kjv-goto-background-color: map-get($light, 'primary-variant'),
+);
 $chapter-dark: (
 );
 
-$light-theme: map-collect($light, $colors, $chapter-light, $scrollbar-light);
+$light-theme: map-collect($light, $colors, $chapter-light, $scrollbar-light, $goto-light);
 $dark-theme: map-merge($dark, $colors);
 $themes: (
 	light: $light-theme,
