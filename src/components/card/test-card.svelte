@@ -1,19 +1,22 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import { Buffer } from '../../models/buffer.model';
 	import Card from './card.svelte';
+	import Goto from '../bible/components/goto.svelte';
+	import Strongs from '../bible/components/strongs.svelte';
 	export let buffer = new Buffer();
+	let popup: any;
+
 	let items = Array(1000).keys();
 	onMount(() => {
-		//this.buff
 		buffer.bag.item = 'some item';
+        /* add in popup to test*/
+        //popup = {component: Strongs}
 	});
 </script>
 
-<Card bind:buffer={buffer}>
-	<div slot="header">
-        TestCard Header
-	</div>
+<Card bind:buffer bind:popup>
+	<div slot="header">TestCard Header</div>
 	<div slot="body">
 		TestCard body
 		{#if items}

@@ -5,7 +5,7 @@
 	import type { Buffer } from '../../models/buffer.model';
 
 	export let buffer: Buffer;
-	let popup: any;
+	export let popup: any;
 	let id: string = uuidv4();
 	let quadrant = id;
 	let headerHeight: number;
@@ -63,7 +63,7 @@
 <div id={uniqueId} class="kjv-card-quadrant">
 	<!-- card header -->
 	<div class="kjv-card-header">
-		<slot name="header"/>
+		<slot name="header" />
 	</div>
 
 	<!-- card body -->
@@ -72,9 +72,7 @@
 	</div>
 
 	<!-- card popup -->
-	
 
-	
 	{#if popup}
 		<div
 			class="popups flex flex-fill w-100"
@@ -82,16 +80,14 @@
 			style:--top={popuptop}
 			style:--maxWidth={popupWidth}
 		>
-		<slot name="popup" {popupHeight} {popupWidth} {popupHeightStyle} ></slot>
-		
-			<!-- <svelte:component
+			<svelte:component
 				this={popup.component}
 				on:popupHandler={popup.handler}
 				bind:parentHeight={popupHeight}
 				bind:keyboardBindings={buffer.keyboardBindings}
 				bind:data={popup.data}
 				bind:parentId={uniqueId}
-			/> -->
+			/>
 		</div>
 	{/if}
 
