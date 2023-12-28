@@ -7,6 +7,7 @@
 	import { paneService } from '../../../services/pane.service';
 	import VerticalSplit from './vertical-split.svelte';
 	import HorizontalSplit from './horizontal-split.svelte';
+	import TestCard from '../../../components/card/test-card.svelte';
 	export let pane: Pane;
 
 	let id = uuidv4();

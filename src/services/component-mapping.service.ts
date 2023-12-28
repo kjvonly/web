@@ -2,6 +2,7 @@ import { NullBuffer } from '../models/buffer.model';
 import type { Pane } from '../models/pane.model';
 import Chapter from '../components/bible/chapter.svelte';
 import Editor from '../components/editor/editor.svelte';
+import TestCard from '../components/card/test-card.svelte';
 
 /**
  * Component Mapping is responsible for converting the
@@ -20,6 +21,8 @@ export class ComponentMapping {
 				return Chapter;
 			case 'Editor':
 				return Editor;
+			case 'TestCard':
+				return TestCard;
 		}
 
 		return null;

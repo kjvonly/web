@@ -62,6 +62,18 @@ $dark: (
 	on-error: #000000
 );
 
+$card-light: (
+	/* header */ kjv-card-header-background-color: map-get($light, 'primary'),
+	kjv-card-header-color: map-get($light, 'on-primary'),
+	/* footer*/ kjv-card-footer-background-color: $primary-700,
+	kjv-card-footer-color: map-get($light, 'on-primary'),
+	/* verse */ kjv-card-selected-verse-background-color: $primary-50,
+
+	/* buffer */ kjv-card-selected-buffer-background-color: $secondary-800,
+
+	/* quadrant */ kjv-card-container-background-color: map-get($light, 'surface')
+);
+
 $chapter-light: (
 	/* header */ kjv-chapter-header-background-color: map-get($light, 'primary'),
 	kjv-chapter-header-color: map-get($light, 'on-primary'),
@@ -90,7 +102,14 @@ $goto-light: (
 );
 $chapter-dark: ();
 
-$light-theme: map-collect($light, $colors, $chapter-light, $scrollbar-light, $goto-light);
+$light-theme: map-collect(
+	$light,
+	$colors,
+	$card-light,
+	$chapter-light,
+	$scrollbar-light,
+	$goto-light
+);
 $dark-theme: map-merge($dark, $colors);
 $themes: (
 	light: $light-theme,
