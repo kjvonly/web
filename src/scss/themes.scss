@@ -100,15 +100,23 @@ $goto-light: (
 	kjv-goto-border-focus-color: map-get($light, 'on-primary'),
 	kjv-goto-border-focus-background-color: map-get($light, 'primary')
 );
+
+$strongs-popup-light: (
+	kjv-strongs-popup-background-color: map-get($light, 'surface'),
+	kjv-strongs-popup-color: map-get($light, 'on-surface'),
+);
 $chapter-dark: ();
 
 $light-theme: map-collect(
 	$light,
 	$colors,
-	$card-light,
-	$chapter-light,
 	$scrollbar-light,
-	$goto-light
+
+	$card-light,	
+	
+	$chapter-light,
+	$goto-light,
+	$strongs-popup-light,
 );
 $dark-theme: map-merge($dark, $colors);
 $themes: (
