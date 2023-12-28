@@ -262,9 +262,6 @@
 						</div>
 					</div>
 				{/each}
-				<span class="w-100"></span>
-				<span class="w-100"></span>
-				<span class="w-100"></span>
 			{/if}
 		</div>
 	</div>
@@ -274,67 +271,3 @@
 		</p>
 	</div>
 </Card>
-<!-- 
-<div id={uniqueId} class="kjv-chapter-quadrant">
-	<div class="kjv-chapter-header">
-		<p class="text-sm m-0">
-			{#if chapter}
-				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
-			{/if}
-		</p>
-	</div>
-
-	<div id="{uniqueId}-chapter" class="kjv-chapter">
-		{#if verses.length > 0}
-			{#each verses as v, i}
-				<div class="kjv-verse-outer">
-					<div class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}">
-						<div id="{uniqueId}{i}" class="d-flex flex-row">
-							{#each new Array(3 - v.words[0].text.length) as i}
-								<span class="invisible">0</span>
-							{/each}
-
-							<span class="kjvonly-noselect">{v.words[0].text}</span>
-
-							<span class="kjvonly-noselect">&nbsp;</span>
-							<span class="kjvonly-noselect">&nbsp;</span>
-
-							<div class="kjv-words kjvonly-noselect">
-								{#each v.words.slice(1, v.words.length) as w}
-									<span on:click={() => _strongs(w.href)} class="kjvonly-noselect"
-										><u class={w.class?.join(' ')}>{w.text}</u><u class="whitespace">&nbsp;</u
-										></span
-									>
-								{/each}
-							</div>
-						</div>
-					</div>
-				</div>
-			{/each}
-			<span class="w-100"></span>
-		{/if}
-	</div>
-	{#if popup}
-		<div
-			class="popups flex flex-fill w-100"
-			style:--height={popupHeightStyle}
-			style:--top={popuptop}
-			style:--maxWidth={popupWidth}
-		>
-			<svelte:component
-				this={popup.component}
-				on:popupHandler={popup.handler}
-				bind:parentHeight={popupHeight}
-				bind:keyboardBindings={buffer.keyboardBindings}
-				bind:data={popup.data}
-				bind:parentId={uniqueId}
-			/>
-		</div>
-	{/if}
-	<div id="_{uniqueId}-footer" class="kjv-chapter-footer {selected}">
-		<p class="text-sm m-0">
-			<strong class="font-semibold">Bible Buffer</strong>
-		</p>
-	</div>
-</div>
--->
