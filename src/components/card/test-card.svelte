@@ -4,7 +4,7 @@
 	import Card from './card.svelte';
 
 
-	let buffer = new Buffer();
+	export let buffer = new Buffer();
 	let items = Array(1000).keys();
 	onMount(() => {
 		//this.buff
@@ -12,7 +12,7 @@
 	});
 </script>
 
-<Card bind:buffer>
+<Card bind:buffer={buffer}>
 	<div slot="header" let:id={myid}>
 		<span>{myid}</span>
 	</div>

@@ -72,6 +72,9 @@
 	</div>
 
 	<!-- card popup -->
+	
+
+	
 	{#if popup}
 		<div
 			class="popups flex flex-fill w-100"
@@ -79,14 +82,16 @@
 			style:--top={popuptop}
 			style:--maxWidth={popupWidth}
 		>
-			<svelte:component
+		<slot name="popup" {popupHeight} {popupWidth} {popupHeightStyle} ></slot>
+		
+			<!-- <svelte:component
 				this={popup.component}
 				on:popupHandler={popup.handler}
 				bind:parentHeight={popupHeight}
 				bind:keyboardBindings={buffer.keyboardBindings}
 				bind:data={popup.data}
 				bind:parentId={uniqueId}
-			/>
+			/> -->
 		</div>
 	{/if}
 
