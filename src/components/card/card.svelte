@@ -63,7 +63,7 @@
 <div id={uniqueId} class="kjv-card-quadrant">
 	<!-- card header -->
 	<div class="kjv-card-header">
-		<slot name="header" {id}/>
+		<slot name="header"/>
 	</div>
 
 	<!-- card body -->
