@@ -10,25 +10,14 @@
 	import Search from './components/search.svelte';
 	import Strongs from './components/strongs.svelte';
 	import { paneService } from '../../services/pane.service';
+	import Card from '../card/card.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
-	let id: string = uuidv4();
-	let quadrant = id;
-	let headerHeight: number;
-	let footerHeight: number;
 
-	let qh: number;
-	let qb: number;
-	$: uniqueId = quadrant + '-v';
+	$: chapterId = '_kjv-chapter-' + uuidv4();
 
 	$: selectedVerse = 0;
-	$: selected = buffer.selected ? 'selected-buffer' : '';
-
-	$: popupHeight = qh / 2;
-	$: popupHeightStyle = qh / 2 + 'px';
-	$: popuptop = qb - qh / 2 + 'px';
-	var popupWidth: string;
 
 	let loaded = false;
 	let chapter: any;
@@ -54,38 +43,6 @@
 				updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
 			}
 		});
-
-		let el = document.getElementById(uniqueId);
-		let pel = el?.parentNode as HTMLElement;
-		let br = pel.getBoundingClientRect();
-		let quad = document.getElementById(uniqueId) as HTMLElement;
-		let text = document.getElementById(uniqueId + '-chapter') as HTMLElement;
-
-		quad.style.height = br.height + 'px';
-		quad.style.maxHeight = br.height + 'px';
-		text.style.height = br.height - headerHeight - footerHeight + 'px';
-		text.style.maxHeight = br.height - 60 + 'px';
-
-		qb = br.bottom;
-		qh = br.height;
-
-		popupWidth = pel.getBoundingClientRect().width + 'px';
-
-		const resizeObserver = new ResizeObserver((entries) => {
-			var br = pel.getBoundingClientRect();
-
-			quad.style.height = br.height + 'px';
-			quad.style.maxHeight = br.height + 'px';
-
-			text.style.height = br.height - 60 + 'px';
-			text.style.maxHeight = br.height - 60 + 'px';
-
-			qb = br.bottom;
-			qb = br.bottom;
-			qh = br.height;
-			popupWidth = br.width + 'px';
-		});
-		resizeObserver.observe(pel);
 	});
 
 	function enableKeyBindings() {
@@ -117,7 +74,7 @@
 			selectedVerse = 0;
 		}
 
-		scrolledIntoView(uniqueId, '0', uniqueId + '-chapter');
+		scrolledIntoView(chapterId, '0', chapterId + '-chapter');
 	}
 
 	async function updateChapterFromChapterKey(chapterKey: string) {
@@ -214,11 +171,16 @@
 	}
 
 	function _pageDown() {
-		selectedVerse = pageDown(uniqueId, verses.length - 1, verses.length - 1, uniqueId + '-chapter');
+		selectedVerse = pageDown(
+			chapterId,
+			verses.length - 1,
+			verses.length - 1,
+			chapterId + '-chapter'
+		);
 	}
 
 	function _pageUp() {
-		selectedVerse = pageUp(uniqueId, 0, uniqueId + '-chapter');
+		selectedVerse = pageUp(chapterId, 0, chapterId + '-chapter');
 	}
 
 	function _previousLine() {
@@ -226,7 +188,12 @@
 			_previousChapter();
 			return;
 		}
-		selectedVerse = previousLine(uniqueId, selectedVerse, verses.length - 1, uniqueId + '-chapter');
+		selectedVerse = previousLine(
+			chapterId,
+			selectedVerse,
+			verses.length - 1,
+			chapterId + '-chapter'
+		);
 	}
 
 	function _nextLine() {
@@ -234,7 +201,7 @@
 			_nextChapter();
 			return;
 		}
-		selectedVerse = nextLine(uniqueId, selectedVerse, verses.length, uniqueId + '-chapter');
+		selectedVerse = nextLine(chapterId, selectedVerse, verses.length, chapterId + '-chapter');
 	}
 
 	// Refactor this next piece of code. do a retry circuit breaker.
@@ -257,6 +224,57 @@
 	$: buffer && u();
 </script>
 
+<Card bind:buffer bind:popup>
+	<div slot="header">
+		<p class="text-sm m-0">
+			{#if chapter}
+				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
+			{/if}
+		</p>
+	</div>
+	<div slot="body" let:bodyHeight>
+		<div id="{chapterId}-chapter" class="kjv-chapter" style="max-height: {bodyHeight}px;">
+			{#if verses.length > 0}
+				{#each verses as v, i}
+					<div class="kjv-verse-outer">
+						<div class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}">
+							<div id="{chapterId}{i}" class="d-flex flex-row">
+								{#each new Array(3 - v.words[0].text.length) as i}
+									<span class="invisible">0</span>
+								{/each}
+
+								<span class="kjvonly-noselect">{v.words[0].text}</span>
+
+								<span class="kjvonly-noselect">&nbsp;</span>
+								<span class="kjvonly-noselect">&nbsp;</span>
+
+								<div class="kjv-words kjvonly-noselect">
+									<!-- svelte-ignore a11y-click-events-have-key-events -->
+									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									{#each v.words.slice(1, v.words.length) as w}
+										<span on:click={() => _strongs(w.href)} class="kjvonly-noselect"
+											><u class={w.class?.join(' ')}>{w.text}</u><u class="whitespace">&nbsp;</u
+											></span
+										>
+									{/each}
+								</div>
+							</div>
+						</div>
+					</div>
+				{/each}
+				<span class="w-100"></span>
+				<span class="w-100"></span>
+				<span class="w-100"></span>
+			{/if}
+		</div>
+	</div>
+	<div slot="footer">
+		<p class="text-sm m-0">
+			<strong class="font-semibold">Bible Buffer</strong>
+		</p>
+	</div>
+</Card>
+<!-- 
 <div id={uniqueId} class="kjv-chapter-quadrant">
 	<div class="kjv-chapter-header">
 		<p class="text-sm m-0">
@@ -283,8 +301,6 @@
 
 							<div class="kjv-words kjvonly-noselect">
 								{#each v.words.slice(1, v.words.length) as w}
-									<!-- svelte-ignore a11y-click-events-have-key-events -->
-									<!-- svelte-ignore a11y-no-static-element-interactions -->
 									<span on:click={() => _strongs(w.href)} class="kjvonly-noselect"
 										><u class={w.class?.join(' ')}>{w.text}</u><u class="whitespace">&nbsp;</u
 										></span
@@ -321,3 +337,4 @@
 		</p>
 	</div>
 </div>
+-->

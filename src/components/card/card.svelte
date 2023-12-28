@@ -15,7 +15,8 @@
 	let cardHeight: number;
 	let cardBottom: number;
 
-
+	let cardBodyMaxHeight: string;
+	let bodyHeight: number;
 	$: selected = buffer.selected ? 'selected-card' : '';
 
 	/* popup css */
@@ -35,6 +36,8 @@
 		card.style.maxHeight = br.height + 'px';
 		body.style.height = br.height - headerHeight - footerHeight + 'px';
 		body.style.maxHeight = br.height - 60 + 'px';
+		cardBodyMaxHeight = br.height - 60 + 'px';
+		
 
 		cardBottom = br.bottom;
 		cardHeight = br.height;
@@ -47,6 +50,7 @@
 			card.style.height = br.height + 'px';
 			card.style.maxHeight = br.height + 'px';
 
+			/* keeps footer pushed to the bottom */
 			body.style.height = br.height - 60 + 'px';
 			body.style.maxHeight = br.height - 60 + 'px';
 
@@ -68,8 +72,8 @@
 	</div>
 
 	<!-- card body -->
-	<div id="{cardId}-body" class="kjv-card">
-		<slot name="body" {buffer} />
+	<div id="{cardId}-body" bind:clientHeight={bodyHeight} class="kjv-card-body">
+		<slot name="body" {bodyHeight} />
 	</div>
 
 	<!-- card popup -->
