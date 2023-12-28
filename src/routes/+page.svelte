@@ -58,7 +58,7 @@
 		currentBuffer.set(b);
 		paneService.saveRootPane();
 		p = paneService.getRootPane();
-	});	
+	});
 
 	// opens search buffer
 	paneKeyBindingMap.set('shift+X s', () => {

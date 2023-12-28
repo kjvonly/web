@@ -2,15 +2,15 @@
 	import { onMount } from 'svelte';
 	import { Buffer } from '../../models/buffer.model';
 	import Card from './card.svelte';
-	
-    export let buffer = new Buffer();
+
+	export let buffer = new Buffer();
 	let popup: any;
 
-    let items = Array(1000).keys();
+	let items = Array(1000).keys();
 	onMount(() => {
 		buffer.bag.item = 'some item';
-        /* add in popup to test*/
-        //popup = {component: Strongs}
+		/* add in popup to test*/
+		//popup = {component: Strongs}
 	});
 </script>
 

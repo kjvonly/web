@@ -22,7 +22,7 @@ export class ComponentMapping {
 			case 'Editor':
 				return Editor;
 			case 'TestCard':
-				return TestCard
+				return TestCard;
 		}
 
 		return null;

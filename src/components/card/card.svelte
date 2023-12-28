@@ -8,7 +8,7 @@
 	export let popup: any;
 
 	let cardId = '_kjv-card-' + uuidv4();
-	
+
 	let headerHeight: number;
 	let footerHeight: number;
 
@@ -37,7 +37,6 @@
 		body.style.height = br.height - headerHeight - footerHeight + 'px';
 		body.style.maxHeight = br.height - 60 + 'px';
 		cardBodyMaxHeight = br.height - 60 + 'px';
-		
 
 		cardBottom = br.bottom;
 		cardHeight = br.height;
@@ -98,6 +97,6 @@
 
 	<!-- card footer -->
 	<div id="_{cardId}-footer" class="kjv-card-footer {selected}">
-		<slot name="footer"/>
+		<slot name="footer" />
 	</div>
 </div>
