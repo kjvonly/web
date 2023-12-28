@@ -6,52 +6,53 @@
 
 	export let buffer: Buffer;
 	export let popup: any;
-	let id: string = uuidv4();
-	let quadrant = id;
+
+	let cardId = '_kjv-card-' + uuidv4();
+	
 	let headerHeight: number;
 	let footerHeight: number;
 
-	let qh: number;
-	let qb: number;
-	$: uniqueId = quadrant + '-v';
+	let cardHeight: number;
+	let cardBottom: number;
+
 
 	$: selected = buffer.selected ? 'selected-card' : '';
 
 	/* popup css */
-	$: popupHeight = qh / 2;
-	$: popupHeightStyle = qh / 2 + 'px';
-	$: popuptop = qb - qh / 2 + 'px';
+	$: popupHeight = cardHeight / 2;
+	$: popupHeightStyle = cardHeight / 2 + 'px';
+	$: popuptop = cardBottom - cardHeight / 2 + 'px';
 	var popupWidth: string;
 
 	onMount(() => {
-		let el = document.getElementById(uniqueId);
+		let el = document.getElementById(cardId);
 		let pel = el?.parentNode as HTMLElement;
 		let br = pel.getBoundingClientRect();
-		let quad = document.getElementById(uniqueId) as HTMLElement;
-		let text = document.getElementById(uniqueId + '-card') as HTMLElement;
+		let card = document.getElementById(cardId) as HTMLElement;
+		let body = document.getElementById(cardId + '-body') as HTMLElement;
 
-		quad.style.height = br.height + 'px';
-		quad.style.maxHeight = br.height + 'px';
-		text.style.height = br.height - headerHeight - footerHeight + 'px';
-		text.style.maxHeight = br.height - 60 + 'px';
+		card.style.height = br.height + 'px';
+		card.style.maxHeight = br.height + 'px';
+		body.style.height = br.height - headerHeight - footerHeight + 'px';
+		body.style.maxHeight = br.height - 60 + 'px';
 
-		qb = br.bottom;
-		qh = br.height;
+		cardBottom = br.bottom;
+		cardHeight = br.height;
 
 		popupWidth = pel.getBoundingClientRect().width + 'px';
 
 		const resizeObserver = new ResizeObserver((entries) => {
 			var br = pel.getBoundingClientRect();
 
-			quad.style.height = br.height + 'px';
-			quad.style.maxHeight = br.height + 'px';
+			card.style.height = br.height + 'px';
+			card.style.maxHeight = br.height + 'px';
 
-			text.style.height = br.height - 60 + 'px';
-			text.style.maxHeight = br.height - 60 + 'px';
+			body.style.height = br.height - 60 + 'px';
+			body.style.maxHeight = br.height - 60 + 'px';
 
-			qb = br.bottom;
-			qb = br.bottom;
-			qh = br.height;
+			cardBottom = br.bottom;
+			cardBottom = br.bottom;
+			cardHeight = br.height;
 			popupWidth = br.width + 'px';
 		});
 		resizeObserver.observe(pel);
@@ -60,14 +61,14 @@
 
 <!-- https://learn.svelte.dev/tutorial/named-slots -->
 
-<div id={uniqueId} class="kjv-card-quadrant">
+<div id={cardId} class="kjv-card-container">
 	<!-- card header -->
 	<div class="kjv-card-header">
 		<slot name="header" />
 	</div>
 
 	<!-- card body -->
-	<div id="{uniqueId}-card" class="kjv-card">
+	<div id="{cardId}-body" class="kjv-card">
 		<slot name="body" {buffer} />
 	</div>
 
@@ -86,13 +87,13 @@
 				bind:parentHeight={popupHeight}
 				bind:keyboardBindings={buffer.keyboardBindings}
 				bind:data={popup.data}
-				bind:parentId={uniqueId}
+				bind:parentId={cardId}
 			/>
 		</div>
 	{/if}
 
 	<!-- card footer -->
-	<div id="_{uniqueId}-footer" class="kjv-card-footer {selected}">
-		<slot name="footer" {uniqueId} {id} />
+	<div id="_{cardId}-footer" class="kjv-card-footer {selected}">
+		<slot name="footer"/>
 	</div>
 </div>

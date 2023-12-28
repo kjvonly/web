@@ -9,7 +9,7 @@
 	z-index: 10000;
 }
 
-.kjv-card-quadrant {
+.kjv-card-container {
 	margin: 0px !important;
 	padding: 0px !important;
 	width: 100%;
@@ -19,7 +19,7 @@
 	overflow: hidden;
 
 	@include themify($themes) {
-		background-color: themed(kjv-card-quadrant-background-color);
+		background-color: themed(kjv-card-container-background-color);
 	}
 
 	box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5);

@@ -77,7 +77,7 @@ $card-light: (
 	kjv-card-selected-buffer-background-color: $secondary-800,
 
 	/* quadrant */
-	kjv-card-quadrant-background-color: map-get($light, 'surface')
+	kjv-card-container-background-color: map-get($light, 'surface')
 );
 
 $chapter-light: (
