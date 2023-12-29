@@ -65,7 +65,7 @@
 		}
 	}
 
-	/* search popup */ 
+	/* search popup */
 
 	function _search() {
 		disableKeybinding();
@@ -82,7 +82,6 @@
 		await updateChapterFromShortName(bookChapterStr);
 		enableKeyBindings();
 	}
-
 
 	/* goto popup */
 
@@ -159,7 +158,7 @@
 		let chapter = await db.getValue('chapters', chapterKey);
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
-		paneService.saveRootPane()
+		paneService.saveRootPane();
 	}
 
 	function updateChapter(c: any) {
