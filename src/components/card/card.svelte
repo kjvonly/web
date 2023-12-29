@@ -79,7 +79,7 @@
 
 	{#if popup}
 		<div
-			class="popups flex flex-fill w-100"
+			class="kjv-card-popup flex flex-fill w-100"
 			style:--height={popupHeightStyle}
 			style:--top={popuptop}
 			style:--maxWidth={popupWidth}

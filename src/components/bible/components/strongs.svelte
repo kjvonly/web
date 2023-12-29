@@ -1,24 +1,22 @@
 <script lang="ts">
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
-	import { scrolledIntoView } from '../../../utils/position';
 	import { bibleDB } from '../../../db/bible.db';
 
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
 	export let data: string;
+	export let parentId: string;
+
 	let strongsID = data;
 	let strongsPopupID: string = uuidv4();
 	let strongs: any;
 
 	let containerHeight: number;
-	let footerHeight: number;
 
 	const dispatch = createEventDispatcher();
 	$: popupHeight = parentHeight + 'px';
 
-	let strongsInput: string = '';
-	let selectedSuggestion: number = 0;
 	onMount(() => {
 		let el = document.getElementById('strongs-popup-' + strongsPopupID);
 		let pel = el?.parentNode as HTMLElement;
@@ -38,10 +36,14 @@
 	});
 </script>
 
-<div id="strongs-popup-{strongsPopupID}" style:--height={popupHeight} class="w-100 popup-container">
+<div
+	id="strongs-popup-{strongsPopupID}"
+	style:--height={popupHeight}
+	class="w-100 popup-container kjv-strongs-popup-container"
+>
 	<div
 		id="strongs-suggestion-{strongsPopupID}"
-		class="suggestion"
+		class="kjv-strongs-data"
 		style:--height={popupHeight}
 		tabindex="-1"
 	>
@@ -53,15 +55,11 @@
 			{@html strongs.strongsDef}
 		{/if}
 	</div>
+
+	<span class="w-200" style="visibility: hidden;">space</span>
 </div>
 
 <style>
-	.suggestion {
-		height: var(--height);
-		overflow: scroll;
-		background-color: bisque;
-	}
-
 	.popup-container {
 		height: var(--height);
 	}

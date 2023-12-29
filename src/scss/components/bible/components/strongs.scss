@@ -1,0 +1,18 @@
+@import '../../../themes.scss';
+
+.kjv-strongs-popup-container {
+	border-radius: 0 0 1rem 1rem;
+	overflow: hidden;
+}
+
+.kjv-strongs-data {
+	height: var(--height);
+	overflow-y: scroll;
+	border-radius: 0 0 1rem 1rem;
+	padding: 1rem;
+
+	@include themify($themes) {
+		background-color: themed('kjv-strongs-popup-background-color');
+		color: themed('kjv-strongs-popup-color');
+	}
+}
