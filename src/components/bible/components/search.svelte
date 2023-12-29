@@ -6,6 +6,8 @@
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
 	export let data: any;
+	export let parentId: string;
+
 	let searchID: string = uuidv4();
 
 	let containerHeight: number;

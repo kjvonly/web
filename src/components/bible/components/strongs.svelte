@@ -6,6 +6,8 @@
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
 	export let data: string;
+	export let parentId: string;
+
 	let strongsID = data;
 	let strongsPopupID: string = uuidv4();
 	let strongs: any;
