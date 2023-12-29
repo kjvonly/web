@@ -158,16 +158,12 @@
 
 	async function _nextChapter() {
 		let nc = bibleNavigationService.next(buffer.bag.currentChapterKey);
-		let chapter = await db.getValue('chapters', nc);
-		buffer.bag.currentChapterKey = nc;
-		updateChapter(chapter);
+		updateChapterFromChapterKey(nc)
 	}
 
 	async function _previousChapter() {
-		let nc = bibleNavigationService.previous(buffer.bag.currentChapterKey);
-		let chapter = await db.getValue('chapters', nc);
-		buffer.bag.currentChapterKey = nc;
-		updateChapter(chapter);
+		let pc = bibleNavigationService.previous(buffer.bag.currentChapterKey);
+		updateChapterFromChapterKey(pc)
 	}
 
 	function _pageDown() {
