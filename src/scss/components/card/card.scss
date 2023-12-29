@@ -7,11 +7,15 @@
 	max-width: var(--maxWidth);
 	position: absolute;
 	z-index: 10000;
+
 	border-top-width: 0.1rem;
+	border-top-style: solid;
+	border-radius: 0 0 1rem 1rem;
+
 	@include themify($themes) {
 		border-top-color: themed(kjv-card-popup-border-top-color);
+		background-color: themed(kjv-card-popup-background-color);
 	}
-	border-top-style: solid;
 }
 
 .kjv-card-container {
@@ -42,6 +46,7 @@
 		background-color: themed('kjv-card-header-background-color');
 		color: themed('kjv-card-header-color');
 	}
+
 	padding: 2rem;
 	align-items: center;
 	display: flex;
