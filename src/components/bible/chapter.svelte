@@ -66,6 +66,7 @@
 	}
 
 	/* search popup */ 
+
 	function _search() {
 		disableKeybinding();
 		popup = {
@@ -158,6 +159,7 @@
 		let chapter = await db.getValue('chapters', chapterKey);
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
+		paneService.saveRootPane()
 	}
 
 	function updateChapter(c: any) {
