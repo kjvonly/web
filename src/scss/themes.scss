@@ -63,7 +63,6 @@ $dark: (
 );
 
 $card-light: (
-
 	/* header */ kjv-card-header-background-color: map-get($light, 'primary'),
 	kjv-card-header-color: map-get($light, 'on-primary'),
 	/* footer*/ kjv-card-footer-background-color: $primary-700,
@@ -73,8 +72,7 @@ $card-light: (
 	/* buffer */ kjv-card-selected-buffer-background-color: $secondary-800,
 
 	/* quadrant */ kjv-card-container-background-color: map-get($light, 'surface'),
-
-	/* popup */ kjv-card-popup-border-top-color: $secondary-800,
+	/* popup */ kjv-card-popup-border-top-color: $secondary-800
 );
 
 $chapter-light: (
@@ -106,7 +104,7 @@ $goto-light: (
 
 $strongs-popup-light: (
 	kjv-strongs-popup-background-color: map-get($light, 'surface'),
-	kjv-strongs-popup-color: map-get($light, 'on-surface'),
+	kjv-strongs-popup-color: map-get($light, 'on-surface')
 );
 $chapter-dark: ();
 
@@ -114,12 +112,10 @@ $light-theme: map-collect(
 	$light,
 	$colors,
 	$scrollbar-light,
-
-	$card-light,	
-	
+	$card-light,
 	$chapter-light,
 	$goto-light,
-	$strongs-popup-light,
+	$strongs-popup-light
 );
 $dark-theme: map-merge($dark, $colors);
 $themes: (

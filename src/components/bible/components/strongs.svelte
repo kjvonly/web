@@ -36,7 +36,11 @@
 	});
 </script>
 
-<div id="strongs-popup-{strongsPopupID}" style:--height={popupHeight} class="w-100 popup-container kjv-strongs-popup-container">
+<div
+	id="strongs-popup-{strongsPopupID}"
+	style:--height={popupHeight}
+	class="w-100 popup-container kjv-strongs-popup-container"
+>
 	<div
 		id="strongs-suggestion-{strongsPopupID}"
 		class="kjv-strongs-data"
@@ -52,12 +56,10 @@
 		{/if}
 	</div>
 
-<span class="w-200" style="visibility: hidden;">space</span>
+	<span class="w-200" style="visibility: hidden;">space</span>
 </div>
 
 <style>
-
-
 	.popup-container {
 		height: var(--height);
 	}

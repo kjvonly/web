@@ -6,7 +6,7 @@
 	export let keyboardBindings: Map<string, Function>;
 	export let data: string;
 	export let parentId: string;
-	
+
 	let gotoID: string = uuidv4();
 
 	let containerHeight: number;
