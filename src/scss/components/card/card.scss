@@ -1,12 +1,18 @@
 @import '../../themes.scss';
 @import '../../common.scss';
 
-.popups {
+.kjv-card-popup {
 	height: var(--height);
 	top: var(--top);
 	max-width: var(--maxWidth);
 	position: absolute;
 	z-index: 10000;
+	border-top-width: .1rem;
+	@include themify($themes) {
+		border-top-color: themed(kjv-card-popup-border-top-color);
+	}
+	border-top-style: solid;
+
 }
 
 .kjv-card-container {
