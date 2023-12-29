@@ -65,22 +65,41 @@
 		}
 	}
 
-	function updateChapter(c: any) {
-		chapter = c;
-		let k, v: any;
-		verses = [];
-		for ([k, v] of Object.entries(c.verses)) {
-			verses.push(v);
-			selectedVerse = 0;
-		}
-
-		scrolledIntoView(chapterId, '0', chapterId + '-chapter');
+	/* search popup */ 
+	function _search() {
+		disableKeybinding();
+		popup = {
+			component: Search,
+			handler: searchHandler
+		};
 	}
 
-	async function updateChapterFromChapterKey(chapterKey: string) {
-		let chapter = await db.getValue('chapters', chapterKey);
-		buffer.bag.currentChapterKey = chapterKey;
-		updateChapter(chapter);
+	async function searchHandler(event: any) {
+		popup = null;
+
+		let bookChapterStr: string = event.detail.chapter;
+		await updateChapterFromShortName(bookChapterStr);
+		enableKeyBindings();
+	}
+
+
+	/* goto popup */
+
+	function _goto() {
+		disableKeybinding();
+		popup = {
+			component: Goto,
+			handler: gotoHandler
+		};
+	}
+
+	async function gotoHandler(event: any) {
+		popup = null;
+
+		let bookChapterStr: string = event.detail.chapter;
+		await updateChapterFromShortName(bookChapterStr);
+		enableKeyBindings();
+		paneService.saveRootPane();
 	}
 
 	async function updateChapterFromShortName(shortName: string) {
@@ -96,43 +115,7 @@
 		await updateChapterFromChapterKey(chapterKey);
 	}
 
-	async function searchHandler(event: any) {
-		popup = null;
-
-		let bookChapterStr: string = event.detail.chapter;
-		await updateChapterFromShortName(bookChapterStr);
-		enableKeyBindings();
-	}
-
-	function _search() {
-		disableKeybinding();
-		popup = {
-			component: Search,
-			handler: searchHandler
-		};
-	}
-
-	async function gotoHandler(event: any) {
-		popup = null;
-
-		let bookChapterStr: string = event.detail.chapter;
-		await updateChapterFromShortName(bookChapterStr);
-		enableKeyBindings();
-		paneService.saveRootPane();
-	}
-
-	async function strongsHandler(event: any) {
-		popup = null;
-		enableKeyBindings();
-	}
-
-	function _goto() {
-		disableKeybinding();
-		popup = {
-			component: Goto,
-			handler: gotoHandler
-		};
-	}
+	/* strongs popup */
 
 	function _strongs(hrefs: string[]) {
 		if (!hrefs || hrefs?.length < 1 || popup != null) {
@@ -156,14 +139,37 @@
 		};
 	}
 
+	async function strongsHandler(event: any) {
+		popup = null;
+		enableKeyBindings();
+	}
+
 	async function _nextChapter() {
 		let nc = bibleNavigationService.next(buffer.bag.currentChapterKey);
-		updateChapterFromChapterKey(nc)
+		updateChapterFromChapterKey(nc);
 	}
 
 	async function _previousChapter() {
 		let pc = bibleNavigationService.previous(buffer.bag.currentChapterKey);
-		updateChapterFromChapterKey(pc)
+		updateChapterFromChapterKey(pc);
+	}
+
+	async function updateChapterFromChapterKey(chapterKey: string) {
+		let chapter = await db.getValue('chapters', chapterKey);
+		buffer.bag.currentChapterKey = chapterKey;
+		updateChapter(chapter);
+	}
+
+	function updateChapter(c: any) {
+		chapter = c;
+		let k, v: any;
+		verses = [];
+		for ([k, v] of Object.entries(c.verses)) {
+			verses.push(v);
+			selectedVerse = 0;
+		}
+
+		scrolledIntoView(chapterId, '0', chapterId + '-chapter');
 	}
 
 	function _pageDown() {
