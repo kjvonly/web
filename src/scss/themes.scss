@@ -72,7 +72,8 @@ $card-light: (
 	/* buffer */ kjv-card-selected-buffer-background-color: $secondary-800,
 
 	/* quadrant */ kjv-card-container-background-color: map-get($light, 'surface'),
-	/* popup */ kjv-card-popup-border-top-color: $secondary-800
+	/* popup */ kjv-card-popup-border-top-color: $secondary-800,
+	kjv-card-popup-background-color: map-get($light, 'background' )
 );
 
 $chapter-light: (
