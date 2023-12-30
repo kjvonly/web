@@ -1,32 +1,41 @@
 <!-- https://jsfiddle.net/w33z4bo0/1/ -->
 <script lang="ts">
-	var notepad = document.getElementById('notepad');
-	notepad.addEventListener(
-		'contextmenu',
-		function (event) {
-			event.preventDefault();
-			var ctxMenu = document.getElementById('ctxMenu');
-			ctxMenu.style.display = 'block';
-			ctxMenu.style.left = event.pageX - 10 + 'px';
-			ctxMenu.style.top = event.pageY - 10 + 'px';
-		},
-		false
-	);
-	notepad.addEventListener(
-		'click',
-		function (event) {
-			var ctxMenu = document.getElementById('ctxMenu');
-			ctxMenu.style.display = '';
-			ctxMenu.style.left = '';
-			ctxMenu.style.top = '';
-		},
-		false
-	);
+	import { onMount } from 'svelte';
+
+	export let parentId: string;
+
+	onMount(() => {
+		var chapter = document.getElementById(parentId + '-chapter');
+		chapter.addEventListener(
+			'contextmenu',
+			function (event) {
+				event.preventDefault();
+				var ctxMenu = document.getElementById(parentId + '-ctxMenu');
+				ctxMenu.style.display = 'block';
+				ctxMenu.style.left = event.pageX - 10 + 'px';
+				ctxMenu.style.top = event.pageY - 10 + 'px';
+			},
+			false
+		);
+        var ctxMenu = document.getElementById(parentId + '-ctxMenu');
+		ctxMenu.addEventListener(
+			'mouseleave',
+			function (event) {				
+				ctxMenu.style.display = '';
+				ctxMenu.style.left = '';
+				ctxMenu.style.top = '';
+			},
+			false
+		);
+	});
+    function handler() {
+        alert('clicked save')
+    }
 </script>
 
-<menu id="ctxMenu">
+<menu id="{parentId}-ctxMenu" class="kjv-chapter-menu">
 	<menu title="File">
-		<menu title="Save"></menu>
+		<menu  role="none" on:click={handler} title="Save"></menu>
 		<menu title="Save As"></menu>
 		<menu title="Open"></menu>
 	</menu>
@@ -36,21 +45,11 @@
 		<menu title="Paste"></menu>
 	</menu>
 </menu>
-<div id="notepad"></div>
 
 <style>
-	#ctxMenu {
+	.kjv-chapter-menu {
 		display: none;
 		z-index: 100;
-	}
-
-    #notepad {
-		position: absolute;
-		left: 25%;
-		top: 10%;
-		width: 300px;
-		height: 300px;
-		background-color: red;
 	}
 
 	menu {
