@@ -117,7 +117,7 @@
 
 	/* strongs popup */
 
-	function _strongs(hrefs: string[]) {
+	function _strongs(e: Event, hrefs: string[]) {
 		if (!hrefs || hrefs?.length < 1 || popup != null) {
 			return;
 		}
@@ -137,6 +137,8 @@
 			handler: strongsHandler,
 			data: filterd[0]
 		};
+
+		e.stopPropagation();
 	}
 
 	async function strongsHandler(event: any) {
@@ -225,6 +227,16 @@
 		loaded = true;
 	};
 	$: buffer && u();
+
+	function innerHandleClick(e: Event, who: String) {
+		alert(who + ' clicked me')
+		e.stopPropagation()
+	}
+
+	function outerHandleClick(e: Event, who: String) {
+		alert(who + ' clicked me')
+		e.stopPropagation()
+	}	
 </script>
 
 <Card bind:buffer bind:popup>
@@ -239,8 +251,8 @@
 		<div id="{chapterId}-chapter" class="kjv-chapter" style="max-height: {bodyHeight}px;">
 			{#if verses.length > 0}
 				{#each verses as v, i}
-					<div class="kjv-verse-outer">
-						<div class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}">
+					<div role="none" on:click={(e) => outerHandleClick(e, 'outer')} class="kjv-verse-outer">
+						<div role="none" on:click={(e) => innerHandleClick(e, 'inner')} class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}">
 							<div id="{chapterId}{i}" class="d-flex flex-row">
 								{#each new Array(3 - v.words[0].text.length) as i}
 									<span class="invisible">0</span>
@@ -252,10 +264,8 @@
 								<span class="kjvonly-noselect">&nbsp;</span>
 
 								<div class="kjv-words kjvonly-noselect">
-									<!-- svelte-ignore a11y-click-events-have-key-events -->
-									<!-- svelte-ignore a11y-no-static-element-interactions -->
 									{#each v.words.slice(1, v.words.length) as w}
-										<span on:click={() => _strongs(w.href)} class="kjvonly-noselect"
+										<span role="none" on:click={(e) => _strongs(e, w.href)} class="kjvonly-noselect"
 											><u class={w.class?.join(' ')}>{w.text}</u><u class="whitespace">&nbsp;</u
 											></span
 										>
