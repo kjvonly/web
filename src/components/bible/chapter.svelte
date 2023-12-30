@@ -229,14 +229,21 @@
 	$: buffer && u();
 
 	function innerHandleClick(e: Event, who: String) {
-		alert(who + ' clicked me')
-		e.stopPropagation()
+		alert(who + ' clicked me');
+		e.stopPropagation();
 	}
 
-	function outerHandleClick(e: Event, who: String) {
-		alert(who + ' clicked me')
-		e.stopPropagation()
-	}	
+	function outerHandleClick(e: Event, verse: number) {
+		if (selectedVerses.has(verse)) {
+			selectedVerses.delete(verse);
+		} else {
+			selectedVerses.add(verse);
+		}
+		selectedVerses = selectedVerses
+		e.stopPropagation();
+	}
+	$: selectedVerses = new Set<number>();
+	
 </script>
 
 <Card bind:buffer bind:popup>
@@ -244,6 +251,9 @@
 		<p class="text-sm m-0">
 			{#if chapter}
 				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
+				{#each selectedVerses.values() as a}
+					<span>{a} &nbsp;</span>
+				{/each}
 			{/if}
 		</p>
 	</div>
@@ -251,8 +261,16 @@
 		<div id="{chapterId}-chapter" class="kjv-chapter" style="max-height: {bodyHeight}px;">
 			{#if verses.length > 0}
 				{#each verses as v, i}
-					<div role="none" on:click={(e) => outerHandleClick(e, 'outer')} class="kjv-verse-outer">
-						<div role="none" on:click={(e) => innerHandleClick(e, 'inner')} class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}">
+					<div
+						role="none"
+						on:click={(e) => outerHandleClick(e, i)}
+						class="kjv-verse-outer {selectedVerses.has(i) ? 'kjv-chapter-verses-selected' : ''}"
+					>
+						<div
+							role="none"
+							on:click={(e) => innerHandleClick(e, 'inner')}
+							class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}"
+						>
 							<div id="{chapterId}{i}" class="d-flex flex-row">
 								{#each new Array(3 - v.words[0].text.length) as i}
 									<span class="invisible">0</span>
@@ -284,3 +302,52 @@
 		</p>
 	</div>
 </Card>
+
+<style>
+	#ctxMenu{
+    display:none;
+    z-index:100;
+}
+#notepad{
+    position:absolute;
+    left:25%;
+    top:10%;
+    width:300px;
+    height:300px;
+    background-color:red;
+}
+menu {
+    position:absolute;
+    display:block;
+    left:0px;
+    top:0px;
+    height:20px;
+    width:20px;
+    padding:0;
+    margin:0;
+    border:1px solid;
+    background-color:white;
+    font-weight:normal;
+    white-space:nowrap;
+}
+menu:hover{
+    background-color:#eef;
+    font-weight:bold;
+}
+menu:hover > menu{
+    display:block;
+}
+menu > menu{
+    display:none;
+    position:relative;
+    top:-20px;
+    left:100%;
+    width:55px;
+}
+menu[title]:before{
+    content:attr(title);
+}
+menu:not([title]):before{
+    content:"\2630";
+}
+</style>

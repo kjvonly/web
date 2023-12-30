@@ -56,6 +56,14 @@ u.xref {
 	}
 }
 
+
+.kjv-chapter-verses-selected {
+	@include themify($themes) {
+		background-color: themed('kjv-chapter-verses-selected-background-color');
+		border: .01rem dotted themed(kjv-chapter-verses-selected-border-color);
+		
+	}
+}
 .kjv-chapter {
 	overflow-y: scroll;
 	width: 100%;
