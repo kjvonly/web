@@ -11,6 +11,8 @@
 	import Strongs from './components/strongs.svelte';
 	import { paneService } from '../../services/pane.service';
 	import Card from '../card/card.svelte';
+	import Menu from './components/menu.svelte';
+	import type { MenuItem } from './components/menu-item';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -117,7 +119,7 @@
 
 	/* strongs popup */
 
-	function _strongs(hrefs: string[]) {
+	function _strongs(e: Event, hrefs: string[]) {
 		if (!hrefs || hrefs?.length < 1 || popup != null) {
 			return;
 		}
@@ -137,6 +139,8 @@
 			handler: strongsHandler,
 			data: filterd[0]
 		};
+
+		e.stopPropagation();
 	}
 
 	async function strongsHandler(event: any) {
@@ -225,6 +229,54 @@
 		loaded = true;
 	};
 	$: buffer && u();
+
+	function innerHandleClick(e: Event, who: String) {
+		alert(who + ' clicked me');
+		e.stopPropagation();
+	}
+
+	function outerHandleClick(e: Event, verse: number) {
+		if (selectedVerses.has(verse)) {
+			selectedVerses.delete(verse);
+		} else {
+			selectedVerses.add(verse);
+		}
+		selectedVerses = selectedVerses;
+		e.stopPropagation();
+	}
+	$: selectedVerses = new Set<number>();
+
+	function onCopySelectedVerses() {
+		let copyText = `${chapter.bookName} ${chapter.number}\n\n`;
+		for (let s of Array.from(selectedVerses).sort()) {
+			copyText += `${verses[s].text} \n`;
+		}
+		var data = [
+			new ClipboardItem({
+				'text/plain': Promise.resolve(new Blob([copyText], { type: 'text/plain' }))
+			})
+		];
+		navigator.clipboard.write(data).then(
+			function () {
+				console.log('Copied to clipboard successfully!');
+			},
+			function () {
+				console.error('Unable to write to clipboard. :-(');
+			}
+		);
+	}
+
+	let menuData: MenuItem = {
+		title: 'root',
+		handler: () => {},
+		children: [
+			{
+				title: 'Selected',
+				handler: () => {},
+				children: [{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() }]
+			}
+		]
+	};
 </script>
 
 <Card bind:buffer bind:popup>
@@ -239,8 +291,16 @@
 		<div id="{chapterId}-chapter" class="kjv-chapter" style="max-height: {bodyHeight}px;">
 			{#if verses.length > 0}
 				{#each verses as v, i}
-					<div class="kjv-verse-outer">
-						<div class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}">
+					<div
+						role="none"
+						on:click={(e) => outerHandleClick(e, i)}
+						class="kjv-verse-outer {selectedVerses.has(i) ? 'kjv-chapter-verses-selected' : ''}"
+					>
+						<div
+							role="none"
+							on:click={(e) => innerHandleClick(e, 'inner')}
+							class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}"
+						>
 							<div id="{chapterId}{i}" class="d-flex flex-row">
 								{#each new Array(3 - v.words[0].text.length) as i}
 									<span class="invisible">0</span>
@@ -252,10 +312,8 @@
 								<span class="kjvonly-noselect">&nbsp;</span>
 
 								<div class="kjv-words kjvonly-noselect">
-									<!-- svelte-ignore a11y-click-events-have-key-events -->
-									<!-- svelte-ignore a11y-no-static-element-interactions -->
 									{#each v.words.slice(1, v.words.length) as w}
-										<span on:click={() => _strongs(w.href)} class="kjvonly-noselect"
+										<span role="none" on:click={(e) => _strongs(e, w.href)} class="kjvonly-noselect"
 											><u class={w.class?.join(' ')}>{w.text}</u><u class="whitespace">&nbsp;</u
 											></span
 										>
@@ -274,3 +332,4 @@
 		</p>
 	</div>
 </Card>
+<Menu bind:parentId={chapterId} bind:menuData></Menu>

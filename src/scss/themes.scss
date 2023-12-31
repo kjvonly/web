@@ -82,7 +82,7 @@ $chapter-light: (
 	/* footer*/ kjv-chapter-footer-background-color: $primary-700,
 	kjv-chapter-footer-color: map-get($light, 'on-primary'),
 	/* verse */ kjv-chapter-selected-verse-background-color: $primary-50,
-
+	kjv-chapter-verses-selected-border-color: map-get($light, 'secondary'),
 	/* buffer */ kjv-chapter-selected-buffer-background-color: $secondary-800,
 
 	/* quadrant */ kjv-chapter-quadrant-background-color: map-get($light, 'surface')
