@@ -1,13 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import type { MenuItem } from './menu-item';
 
 	export let item: MenuItem;
-	onMount(() => {
-		console.log(item);
-		console.log(item.title);
-		console.log(item?.children?.length);
-	});
 </script>
 
 {#if item.title === 'root'}

@@ -246,9 +246,26 @@
 	}
 	$: selectedVerses = new Set<number>();
 
-		function onCopySelectedVerses(){
-
+	function onCopySelectedVerses() {
+		let copyText = `${chapter.bookName} ${chapter.number}\n\n`;
+		for (let s of Array.from(selectedVerses).sort()) {
+			copyText += `${verses[s].text} \n`;
 		}
+		var data = [
+			new ClipboardItem({
+				'text/plain': Promise.resolve(new Blob([copyText], { type: 'text/plain' }))
+			})
+		];
+		navigator.clipboard.write(data).then(
+			function () {
+				console.log('Copied to clipboard successfully!');
+			},
+			function () {
+				console.error('Unable to write to clipboard. :-(');
+			}
+		);
+	}
+
 	let menuData: MenuItem = {
 		title: 'root',
 		handler: () => {},
@@ -256,10 +273,8 @@
 			{
 				title: 'Selected',
 				handler: () => {},
-				children: [
-					{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() },
-				]
-			},
+				children: [{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() }]
+			}
 		]
 	};
 </script>
@@ -269,9 +284,6 @@
 		<p class="text-sm m-0">
 			{#if chapter}
 				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
-				{#each selectedVerses.values() as a}
-					<span>{a} &nbsp;</span>
-				{/each}
 			{/if}
 		</p>
 	</div>
@@ -320,4 +332,4 @@
 		</p>
 	</div>
 </Card>
-<Menu bind:parentId={chapterId} bind:menuData={menuData}></Menu>
+<Menu bind:parentId={chapterId} bind:menuData></Menu>
