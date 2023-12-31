@@ -1,6 +1,5 @@
-
 export type MenuItem = {
-    title: string
-    children: MenuItem[]
-    handler: Function;
-}
+	title: string;
+	children: MenuItem[];
+	handler: Function;
+};
