@@ -12,6 +12,7 @@
 	import { paneService } from '../../services/pane.service';
 	import Card from '../card/card.svelte';
 	import Menu from './components/menu.svelte';
+	import type { MenuItem } from './components/menu-item';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -240,11 +241,27 @@
 		} else {
 			selectedVerses.add(verse);
 		}
-		selectedVerses = selectedVerses
+		selectedVerses = selectedVerses;
 		e.stopPropagation();
 	}
 	$: selectedVerses = new Set<number>();
-	
+
+		function onCopySelectedVerses(){
+
+		}
+	let menuData: MenuItem = {
+		title: 'root',
+		handler: () => {},
+		children: [
+			{
+				title: 'Selected',
+				handler: () => {},
+				children: [
+					{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() },
+				]
+			},
+		]
+	};
 </script>
 
 <Card bind:buffer bind:popup>
@@ -303,4 +320,4 @@
 		</p>
 	</div>
 </Card>
-<Menu bind:parentId={chapterId}></Menu>
+<Menu bind:parentId={chapterId} bind:menuData={menuData}></Menu>

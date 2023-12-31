@@ -6,7 +6,7 @@
 	import type { MenuItem } from './menu-item';
 
 	export let parentId: string;
-	//export let menuData: any;
+	export let menuData: MenuItem;
 
 	onMount(() => {
 		var chapter = document.getElementById(parentId + '-chapter') as HTMLElement;
@@ -40,10 +40,10 @@
 		handler: () => {},
 		children: [
 			{
-				title: 'File',
+				title: 'Selected',
 				handler: () => {},
 				children: [
-					{ children: [], title: 'Save', handler: () => handler('Save') },
+					{ children: [], title: 'Copy', handler: () => handler('Save') },
 					{ children: [], title: 'Save As', handler: () => handler('Save As') },
 					{ children: [], title: 'Open', handler: () => handler('Open') }
 				]
@@ -61,6 +61,6 @@
 	};
 </script>
 
-<menu id="{parentId}-ctxMenu" class="kjv-chapter-menu">
-	<NestedMenu bind:item={menu}></NestedMenu>
+<menu id="{parentId}-ctxMenu" class="kjv-chapter-menu text-center">
+	<NestedMenu bind:item={menuData}></NestedMenu>
 </menu>
