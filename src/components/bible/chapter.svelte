@@ -162,6 +162,7 @@
 		let chapter = await db.getValue('chapters', chapterKey);
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
+		clearSelectedVerses()
 		paneService.saveRootPane();
 	}
 
