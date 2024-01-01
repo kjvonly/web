@@ -251,6 +251,7 @@
 				'text/plain': Promise.resolve(new Blob([copyText], { type: 'text/plain' }))
 			})
 		];
+
 		navigator.clipboard.write(data).then(
 			function () {
 				console.log('Copied to clipboard successfully!');
@@ -261,6 +262,15 @@
 		);
 	}
 
+	function clearSelectedVerses(){
+		selectedVerses.clear()
+		selectedVerses = selectedVerses
+	}
+
+	function onClearSelectedVerses(){
+		clearSelectedVerses()
+	}
+
 	let menuData: MenuItem = {
 		title: 'root',
 		handler: () => {},
@@ -268,7 +278,10 @@
 			{
 				title: 'Selected',
 				handler: () => {},
-				children: [{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() }]
+				children: [
+					{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() },
+					{ children: [], title: 'Clear', handler: () => onClearSelectedVerses() }
+				]
 			}
 		]
 	};
