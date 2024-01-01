@@ -230,7 +230,7 @@
 	};
 	$: buffer && u();
 
-	function outerHandleClick(e: Event, verse: number) {
+	function verseOuterHandleClick(e: Event, verse: number) {
 		if (selectedVerses.has(verse)) {
 			selectedVerses.delete(verse);
 		} else {
@@ -288,7 +288,7 @@
 				{#each verses as v, i}
 					<div
 						role="none"
-						on:click={(e) => outerHandleClick(e, i)}
+						on:click={(e) => verseOuterHandleClick(e, i)}
 						class="kjv-verse-outer {selectedVerses.has(i) ? 'kjv-chapter-verses-selected' : ''}"
 					>
 						<div
