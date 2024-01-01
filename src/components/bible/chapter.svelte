@@ -230,11 +230,6 @@
 	};
 	$: buffer && u();
 
-	function innerHandleClick(e: Event, who: String) {
-		alert(who + ' clicked me');
-		e.stopPropagation();
-	}
-
 	function outerHandleClick(e: Event, verse: number) {
 		if (selectedVerses.has(verse)) {
 			selectedVerses.delete(verse);
@@ -298,7 +293,6 @@
 					>
 						<div
 							role="none"
-							on:click={(e) => innerHandleClick(e, 'inner')}
 							class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}"
 						>
 							<div id="{chapterId}{i}" class="d-flex flex-row">
