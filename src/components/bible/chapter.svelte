@@ -41,8 +41,14 @@
 			if (!val) {
 				return;
 			}
-			if (buffer?.bag?.currentChapterKey) {
-				updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
+
+			if (buffer.bag.currentChapterKey) {
+				updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
+			}
+
+			if (buffer.bag.selectedVerses) {
+				selectedVerses = new Set(buffer.bag.selectedVerses);
+				selectedVerses = selectedVerses;
 			}
 		});
 	});
@@ -120,6 +126,8 @@
 	/* strongs popup */
 
 	function _strongs(e: Event, hrefs: string[]) {
+		e.stopPropagation();
+
 		if (!hrefs || hrefs?.length < 1 || popup != null) {
 			return;
 		}
@@ -139,8 +147,6 @@
 			handler: strongsHandler,
 			data: filterd[0]
 		};
-
-		e.stopPropagation();
 	}
 
 	async function strongsHandler(event: any) {
@@ -158,10 +164,17 @@
 		updateChapterFromChapterKey(pc);
 	}
 
+	async function updateChapterFromChapterKeyOnMount(chapterKey: string) {
+		let chapter = await db.getValue('chapters', chapterKey);
+		buffer.bag.currentChapterKey = chapterKey;
+		updateChapter(chapter);
+	}
+
 	async function updateChapterFromChapterKey(chapterKey: string) {
 		let chapter = await db.getValue('chapters', chapterKey);
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
+		clearSelectedVerses();
 		paneService.saveRootPane();
 	}
 
@@ -211,40 +224,21 @@
 		selectedVerse = nextLine(chapterId, selectedVerse, verses.length, chapterId + '-chapter');
 	}
 
-	// Refactor this next piece of code. do a retry circuit breaker.
-	var u = () => {
-		if (loaded) {
-			return;
-		}
+	/** selected verses */
 
-		db.ready?.then((val) => {
-			if (!val) {
-				return;
-			}
-			if (buffer?.bag?.currentChapterKey) {
-				updateChapterFromChapterKey(buffer?.bag?.currentChapterKey);
-			}
-		});
+	$: selectedVerses = new Set<number>(buffer.bag.selectedVerses);
 
-		loaded = true;
-	};
-	$: buffer && u();
-
-	function innerHandleClick(e: Event, who: String) {
-		alert(who + ' clicked me');
-		e.stopPropagation();
-	}
-
-	function outerHandleClick(e: Event, verse: number) {
+	function verseOuterHandleClick(e: Event, verse: number) {
 		if (selectedVerses.has(verse)) {
 			selectedVerses.delete(verse);
 		} else {
 			selectedVerses.add(verse);
 		}
 		selectedVerses = selectedVerses;
+		buffer.bag.selectedVerses = [...selectedVerses];
+		paneService.saveRootPane();
 		e.stopPropagation();
 	}
-	$: selectedVerses = new Set<number>();
 
 	function onCopySelectedVerses() {
 		let copyText = `${chapter.bookName} ${chapter.number}\n\n`;
@@ -256,14 +250,27 @@
 				'text/plain': Promise.resolve(new Blob([copyText], { type: 'text/plain' }))
 			})
 		];
+
 		navigator.clipboard.write(data).then(
+			// TODO - add toasts here
 			function () {
-				console.log('Copied to clipboard successfully!');
+				// console.log('Copied to clipboard successfully!');
 			},
 			function () {
-				console.error('Unable to write to clipboard. :-(');
+			//	console.error('Unable to write to clipboard. :-(');
 			}
 		);
+	}
+
+	function clearSelectedVerses() {
+		selectedVerses.clear();
+		selectedVerses = selectedVerses;
+		buffer.bag.selectedVerses = [];
+		paneService.saveRootPane();
+	}
+
+	function onClearSelectedVerses() {
+		clearSelectedVerses();
 	}
 
 	let menuData: MenuItem = {
@@ -273,7 +280,10 @@
 			{
 				title: 'Selected',
 				handler: () => {},
-				children: [{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() }]
+				children: [
+					{ children: [], title: 'Copy', handler: () => onCopySelectedVerses() },
+					{ children: [], title: 'Clear', handler: () => onClearSelectedVerses() }
+				]
 			}
 		]
 	};
@@ -293,14 +303,10 @@
 				{#each verses as v, i}
 					<div
 						role="none"
-						on:click={(e) => outerHandleClick(e, i)}
+						on:click={(e) => verseOuterHandleClick(e, i)}
 						class="kjv-verse-outer {selectedVerses.has(i) ? 'kjv-chapter-verses-selected' : ''}"
 					>
-						<div
-							role="none"
-							on:click={(e) => innerHandleClick(e, 'inner')}
-							class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}"
-						>
+						<div role="none" class="kjv-verse-inner {i === selectedVerse ? 'selected' : ''}">
 							<div id="{chapterId}{i}" class="d-flex flex-row">
 								{#each new Array(3 - v.words[0].text.length) as i}
 									<span class="invisible">0</span>
