@@ -1,0 +1,16 @@
+@import '../themes.scss';
+
+.main-menu-item {
+    @include themify($themes) {
+        background-color: themed('primary');    
+        border: .15rem solid themed('on-primary');
+        color: themed('on-primary');
+	}
+
+    > svg  {
+        @include themify($themes) {
+            fill: themed('on-primary') !important;        
+        }    
+    }
+ 
+}

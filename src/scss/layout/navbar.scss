@@ -65,6 +65,12 @@
 .bars {
 	background: none;
 	border: none;
+
+	>svg {
+		@include themify($themes) {
+			color: themed('on-primary');
+		}
+	}
 }
 
 
@@ -74,7 +80,7 @@ aside {
 	transition: all .5s;
 	height: 100%;
 	width: 300px;
-	padding: 20px;
+	padding: none;
 	z-index: 100000;
 
 	@include themify($themes) {
