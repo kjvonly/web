@@ -9,7 +9,9 @@
 	<div class="row w-100">
 		<div class="d-flex flex-row align-items-center justify-content-between w-100">
 			<div class="d-flex flex-row align-items-center">
-				<Icon data={bars} scale="2"></Icon>
+				<button on:click={() => alert('bars clicked')} class="bars">
+					<Icon data={bars} scale="2"></Icon>
+				</button>
 				<div class="title"><span class="font-weight-bold">KJV</span>only</div>
 			</div>
 			<div>
