@@ -2,7 +2,9 @@
 	import { onMount } from 'svelte';
 	import { keydownStore } from '../services/keydown.service';
 	import Navbar from '../theme/layout/navbar.svelte';
+	import MainMenu from '../menus/main-menu.svelte'
 
+	let menu = MainMenu
 	// Import our custom CSS
 	import '../scss/styles.scss';
 
@@ -13,7 +15,7 @@
 </script>
 
 <div class="layout">
-	<Navbar></Navbar>
+	<Navbar bind:sidebar={menu}></Navbar>
 	<slot />
 </div>
 
