@@ -3,13 +3,20 @@
 	import bars from 'svelte-awesome/icons/bars';
 
 	import logo from '$lib/assets/cross.svg';
+	import Sidebar from './sidebar.svelte';
+
+	export let sidebar: any
+
+	let active = false;
 </script>
 
 <div class="kjv-navbar w-100">
 	<div class="row w-100">
 		<div class="d-flex flex-row align-items-center justify-content-between w-100">
 			<div class="d-flex flex-row align-items-center">
-				<Icon data={bars} scale="2"></Icon>
+				<button on:click={() => (active = !active)} class="bars">
+					<Icon data={bars} scale="2"></Icon>
+				</button>
 				<div class="title"><span class="font-weight-bold">KJV</span>only</div>
 			</div>
 			<div>
@@ -25,3 +32,4 @@
 		</div>
 	</div>
 </div>
+<Sidebar bind:active={active} bind:component={sidebar}></Sidebar>

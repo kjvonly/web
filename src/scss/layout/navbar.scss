@@ -22,12 +22,13 @@
 	-webkit-border-radius: 1.5rem;
 	-moz-border-radius: 1.5rem;
 	border-radius: 1.5rem;
+
 	@include themify($themes) {
 		background: themed('secondary-800');
 	}
 }
 
-#user > span {
+#user>span {
 	justify-content: center;
 	align-content: center;
 	display: flex;
@@ -40,6 +41,7 @@
 	@include themify($themes) {
 		fill: themed('secondary-800');
 	}
+
 	height: 3rem;
 	margin-left: 0.5rem;
 	margin-right: 0.5rem;
@@ -48,11 +50,45 @@
 .title {
 	margin-left: 1rem;
 	margin-right: 1rem;
+
 	span {
 		font-weight: bold;
+
 		@include themify($themes) {
 			color: themed('secondary-800');
 		}
 	}
+
 	font-size: 1.75rem;
+}
+
+.bars {
+	background: none;
+	border: none;
+
+	>svg {
+		@include themify($themes) {
+			color: themed('on-primary');
+		}
+	}
+}
+
+
+aside {
+	position: absolute;
+	left: -500px;
+	transition: all .5s;
+	height: 100%;
+	width: 300px;
+	padding: none;
+	z-index: 100000;
+
+	@include themify($themes) {
+		border: 1px solid themed('on-primary');
+		background-color: themed('primary');
+	}
+}
+
+.active {
+	left: 0px
 }
