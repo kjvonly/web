@@ -13,9 +13,12 @@
 	import Card from '../card/card.svelte';
 	import Menu from './components/menu.svelte';
 	import type { MenuItem } from './components/menu-item';
+	import { SwipeService } from '../../services/swipe.service';
 
 	export let buffer: Buffer;
 	let popup: any;
+
+	let swipeService = new SwipeService(_previousChapter, _nextChapter);
 
 	$: chapterId = '_kjv-chapter-' + uuidv4();
 
@@ -51,6 +54,13 @@
 				selectedVerses = selectedVerses;
 			}
 		});
+
+		document
+			.querySelector('div#' + chapterId + '-chapter')
+			.addEventListener('touchstart', swipeService.handleTouchStart, false);
+		document
+			.querySelector('div#' + chapterId + '-chapter')
+			.addEventListener('touchmove', swipeService.handleTouchMove, false);
 	});
 
 	function enableKeyBindings() {
@@ -257,7 +267,7 @@
 				// console.log('Copied to clipboard successfully!');
 			},
 			function () {
-			//	console.error('Unable to write to clipboard. :-(');
+				//	console.error('Unable to write to clipboard. :-(');
 			}
 		);
 	}
