@@ -14,6 +14,10 @@
 	import Menu from './components/menu.svelte';
 	import type { MenuItem } from './components/menu-item';
 	import { SwipeService } from '../../services/swipe.service';
+	import Icon from 'svelte-awesome';
+	import mapPin from 'svelte-awesome/icons/mapPin';
+
+
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -300,12 +304,19 @@
 </script>
 
 <Card bind:buffer bind:popup>
-	<div slot="header">
-		<p class="text-sm m-0">
+	<div slot="header" class="w-100">
+		<div class="d-flex  flex-row ">
+		<p class="d-flex align-items-center m-0">
 			{#if chapter}
 				<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
 			{/if}
 		</p>
+		<span class="flex-fill"></span>
+
+		<div on:click={() => _goto()}  class="p-3 d-flex flex-row align-items-center">
+			<Icon class="main-menu-item-icon" data={mapPin} scale={1} ></Icon>
+		</div>
+	</div>
 	</div>
 	<div slot="body" let:bodyHeight>
 		<div id="{chapterId}-chapter" class="kjv-chapter" style="max-height: {bodyHeight}px;">
