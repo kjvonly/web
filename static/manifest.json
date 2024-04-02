@@ -1,0 +1,15 @@
+{
+    "name": "KJVonly",
+    "short_name": "KJVonly",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "KJV bible",
+    "icons": [
+        {
+            "src": "icons/cross.svg",
+            "sizes": "any"
+          }
+    ]
+  }
+  
