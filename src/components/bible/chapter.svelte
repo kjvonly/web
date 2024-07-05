@@ -291,14 +291,8 @@
 			}
 		]
 	};
-
-	async function testAPI() {
-		let chapter = await chapterService.getChapter('1_1');
-		console.log(chapter);
-	}
 </script>
 
-<button on:click={(e) => testAPI()}> click </button>
 <Card bind:buffer bind:popup>
 	<div slot="header" class="w-100">
 		<div class="d-flex flex-row">
