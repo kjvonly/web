@@ -5,6 +5,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import type { Buffer } from '../../models/buffer.model';
 	import { bibleDB } from '../../db/bible.db';
+	import { chapterService } from '../../api/chapters.service'
 	import { bibleNavigationService } from '../../services/bible-navigation.service';
 	import Goto from './components/goto.svelte';
 	import Search from './components/search.svelte';
@@ -16,6 +17,7 @@
 	import { SwipeService } from '../../services/swipe.service';
 	import Icon from 'svelte-awesome';
 	import mapPin from 'svelte-awesome/icons/mapPin';
+	import { api } from '../../api/api';
 
 
 
@@ -303,8 +305,14 @@
 			}
 		]
 	};
-</script>
 
+	async function testAPI(){
+		let chapter = await chapterService.getChapter("1_1")
+		console.log(chapter)
+	}
+
+</script>
+<button on:click={(e) => testAPI()}> click </button>
 <Card bind:buffer bind:popup>
 	<div slot="header" class="w-100">
 		<div class="d-flex  flex-row ">
