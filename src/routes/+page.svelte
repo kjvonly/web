@@ -84,6 +84,7 @@
 	}
 
 	onMount(() => {
+		/* This pulls the chatper and strongs data from api and stores in indexdb for offline use. */
 		bibleDB.init();
 		paneStore.useLocalStorage();
 		paneStore.subscribe((pane) => {

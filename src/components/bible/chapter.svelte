@@ -180,12 +180,14 @@
 
 	async function updateChapterFromChapterKeyOnMount(chapterKey: string) {
 		let chapter = await db.getValue('chapters', chapterKey);
+		// Add api call if getvalue does not return chapter
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
 	}
 
 	async function updateChapterFromChapterKey(chapterKey: string) {
 		let chapter = await db.getValue('chapters', chapterKey);
+		// Add api call if getvalue does not return chapter
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
 		clearSelectedVerses();
