@@ -9,7 +9,7 @@ onmessage = async () => {
 	let v = db.getValue('chapters', 'booknames');
 	v.then((v) => {
 		if (v === undefined) {
-			fetch(location.origin + '/api/all').then((res) => {
+			fetch(location.origin + '/api/chapters/all').then((res) => {
 				res.json().then((json) => {
 					let myMap = new Map<string, any>(Object.entries(json));
 					myMap.forEach((value: any, key: string) => {
@@ -18,13 +18,13 @@ onmessage = async () => {
 					});
 				});
 			});
-			fetch(location.origin + '/api/booknames').then((res) => {
+			fetch(location.origin + '/api/chapters/booknames').then((res) => {
 				res.json().then((json) => {
 					json['id'] = 'booknames';
 					db.putValue('chapters', json);
 				});
 			});
-			fetch(location.origin + '/api/strongs').then((res) => {
+			fetch(location.origin + '/api/strongs/all').then((res) => {
 				res.json().then((json) => {
 					let myMap = new Map<string, any>(Object.entries(json));
 					myMap.forEach((value: any, key: string) => {
