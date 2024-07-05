@@ -9,7 +9,7 @@ export class BibleDB extends IndexedDb {
 	constructor() {
 		super('bible');
 	}
-	delay = (ms) => new Promise((res) => setTimeout(res, ms));
+	delay = (ms: any) => new Promise((res) => setTimeout(res, ms));
 
 
 	async init() {
@@ -24,11 +24,12 @@ export class BibleDB extends IndexedDb {
 		 */
 
 		let val = await this.createObjectStore(['chapters']);
+
 		if (!val) {
 			return;
 		}
 
-		return
+
 		let v = await this.getValue('chapters', 'booknames');
 
 		if (v === undefined) {
