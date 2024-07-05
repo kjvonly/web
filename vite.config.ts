@@ -18,7 +18,7 @@ export default defineConfig({
 		},
 		proxy: {
 			'^/api/.*': {
-				target: 'http://kjvonly-dev-server:5000',
+				target: 'http://kjvonly-nginx:5000',
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000
 			}

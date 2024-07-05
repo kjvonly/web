@@ -9,13 +9,26 @@ export class BibleDB extends IndexedDb {
 	constructor() {
 		super('bible');
 	}
-	delay = (ms) => new Promise((res) => setTimeout(res, ms));
+	delay = (ms: any) => new Promise((res) => setTimeout(res, ms));
+
 
 	async init() {
+		/**
+		 * This is called on app startup in +page.svelte.
+		 *
+		 * TODO - need to verify data was stored successfully
+		 * 1. Crates indexdb chapters
+		 * 2. if chapters not stored kickoff kjvdata.worker
+		 * 3. verify data was loaded.
+		 *
+		 */
+
 		let val = await this.createObjectStore(['chapters']);
+
 		if (!val) {
 			return;
 		}
+
 
 		let v = await this.getValue('chapters', 'booknames');
 
