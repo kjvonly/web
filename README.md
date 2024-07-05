@@ -17,12 +17,7 @@ make all
 ```
 # assuming data repo is at ../data
 
-mkdir ../bible-data
-cp ../data/json.gz/all.json.gz ../bible-data/all.json.gz
-cp ../data/json.gz/all.json.gz ../bible-data/booknames.json.gz
-cp ../data/strongs.json.gz/all.json.gz ../bible-data/strongs.json.gz
-
-docker run -d -p 5000:80 -v $PWD/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z -v $PWD/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z -v $PWD/../bible-data:/data:Z --name nginx nginx-test:latest
+docker run -d -p 5000:80 -v $PWD/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z -v $PWD/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z -v $PWD/../data:/data:z --name nginx nginx:latest
 ```
 
 
