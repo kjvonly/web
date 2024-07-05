@@ -1,5 +1,6 @@
 import book from 'svelte-awesome/icons/book';
 import { bibleDB } from '../db/bible.db';
+import { chapterService } from '../api/chapters.service';
 
 var chapters: string[] = [
 	'1_1',
@@ -1197,14 +1198,11 @@ export class BibleNavigationService {
 	chapterList: string[];
 	bookNames: any;
 	constructor() {
-		bibleDB.ready.then((val) => {
-			if (!val) {
-				return;
-			}
-			bibleDB.getValue('chapters', 'booknames').then((data) => {
-				this.bookNames = data;
-			});
+		chapterService.getChapter("booknames").then((data: any) => {
+			this.bookNames = data;
 		});
+
+
 		this.chapterList = chapters;
 	}
 

@@ -28,6 +28,7 @@ export class BibleDB extends IndexedDb {
 			return;
 		}
 
+		return
 		let v = await this.getValue('chapters', 'booknames');
 
 		if (v === undefined) {
