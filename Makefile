@@ -20,12 +20,19 @@ all: web
 
 web:
 	docker build \
-		-f Dockerfile \
+		-f zarf/containers/nginx/nginx.dockerfile \
 		-t $(SERVICE_IMAGE) \
 		--build-arg BUILD_REF=$(VERSION) \
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
 		.
-
+run-web:
+	docker rm -f kjvonly-web && \
+	docker run -d -p 5000:80 \
+	-v $(PWD)/../data:/data:z \
+	-v $(PWD)/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z \
+	-v $(PWD)/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z \
+	--name kjvonly-web \
+	kjvonly/web:0.0.1
 
 local_push:
 	docker tag $(SERVICE_IMAGE) $(LOCAL_SERVICE_IMAGE)
