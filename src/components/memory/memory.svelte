@@ -10,7 +10,15 @@
 	let verse = '';
 	let a = '/api/media/verses/01_Genesis_001_002';
 	let bookNames: any = {};
-	$: verses = [];
+	let verses = [];
+	$: searchVerses = [];
+	let search = '';
+
+	function onChange() {
+		searchVerses = verses.filter((v) => {
+			return v["bcv"].toLowerCase().includes(search.toLowerCase());
+		});
+	}
 
 	function compareNumbers(a, b) {
 		return a - b;
@@ -57,6 +65,7 @@
 		});
 
 		verses = verses;
+		searchVerses = [...verses];
 		console.log(verses);
 	}
 
@@ -87,8 +96,10 @@
 		</div>
 	</div>
 	<div slot="body" let:bodyHeight>
-		<div class="kjv-verse-list" style="max-height: 300px">
-			{#each verses as v, i}
+		<div class="kjv-verse-list" style="max-height: {bodyHeight}px">
+			<input bind:value={search} />
+			<button on:click={onChange}>Search</button>
+			{#each searchVerses as v, i}
 				<div class="m-3">
 					<span on:click={verseSelected(v)}>{v['bcv']}</span>
 				</div>
