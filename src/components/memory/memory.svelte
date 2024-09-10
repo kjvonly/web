@@ -53,10 +53,15 @@
 					let audioBookId = booknamesById[bookId];
 					let audioBookIdFormatted = String(audioBookId).padStart(2, '0');
 					let bookNameFormatted = bookName;
+                    let mp3BookNameFormatted = bookName;
+                    mp3BookNameFormatted = mp3BookNameFormatted.replace("1 ", "I_")
+                    mp3BookNameFormatted = mp3BookNameFormatted.replace("2 ", "II_")
+                    mp3BookNameFormatted = mp3BookNameFormatted.replace("3 ", "III_")
+                    
 					let chapterNumberFormatted = String(chapter).padStart(3, '0');
 					let verseNumberFormatted = String(verseNumber + 1).padStart(3, '0');
 
-					let mp3FileName = `${audioBookIdFormatted}_${bookNameFormatted}_${chapterNumberFormatted}_${verseNumberFormatted}`;
+					let mp3FileName = `${audioBookIdFormatted}_${mp3BookNameFormatted}_${chapterNumberFormatted}_${verseNumberFormatted}`;
 					let displayBCV = `${bookNameFormatted} ${chapter}:${verseNumber + 1}`;
 					let verse = { filename: mp3FileName, bcv: displayBCV };
 					verses.push(verse);
