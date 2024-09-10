@@ -8,14 +8,13 @@
 	let popup: any;
 
 	let verse = '';
-	let a = '/api/media/verses/01_Genesis_001_002';
 	let bookNames: any = {};
-	let verses = [];
+	let verses: any = [];
 	$: searchVerses = [];
 	let search = '';
 
 	function onChange() {
-		searchVerses = verses.filter((v) => {
+		searchVerses = verses.filter((v: any) => {
 			return v["bcv"].toLowerCase().includes(search.toLowerCase());
 		});
 	}
@@ -33,7 +32,7 @@
 		for (const [i, value] of booksByIds.sort(compareNumbers).entries()) {
 			booknamesById[value] = i + 1;
 		}
-		console.log(booknamesById);
+
 		let bcvc = bookNames['bookchapterversecountById'];
 		let bookIds: number[] = [];
 
@@ -71,7 +70,6 @@
 
 		verses = verses;
 		searchVerses = [...verses];
-		console.log(verses);
 	}
 
 	onMount(() => {

@@ -19,6 +19,7 @@
 				currentBuffer.set(b);
 				paneService.saveRootPane();
 				active = false;
+				break
 			case 'memory':
 				b.componentName = 'Memory';
 				b.component = Memory;
@@ -26,6 +27,7 @@
 				currentBuffer.set(b);
 				paneService.saveRootPane();
 				active = false
+				break
 		}
 	}
 </script>
