@@ -7,6 +7,6 @@
 
 <aside class={active ? 'active' : ''}>
 	{#if component}
-		<svelte:component this={component}></svelte:component>
+		<svelte:component bind:active={active} this={component}></svelte:component>
 	{/if}
 </aside>
