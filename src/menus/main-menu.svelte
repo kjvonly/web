@@ -6,15 +6,28 @@
 	import { Buffer } from '../models/buffer.model';
 	import Chapter from '../components/bible/chapter.svelte';
 	import { currentBuffer } from '../services/current-buffer.service';
+	import Memory from '../components/memory/memory.svelte';
+	export let active: boolean;
+
 	function onClick(m: any): void {
+		let b = new Buffer();
 		switch (m.name) {
 			case 'bible':
-				let b = new Buffer();
 				b.componentName = 'Chapter';
 				b.component = Chapter;
 				paneService.setBuffer(b);
 				currentBuffer.set(b);
 				paneService.saveRootPane();
+				active = false;
+				break
+			case 'memory':
+				b.componentName = 'Memory';
+				b.component = Memory;
+				paneService.setBuffer(b);
+				currentBuffer.set(b);
+				paneService.saveRootPane();
+				active = false
+				break
 		}
 	}
 </script>

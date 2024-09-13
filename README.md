@@ -17,7 +17,7 @@ make all
 ```
 # assuming data repo is at ../data
 
-docker run -d -p 5000:80 -v $PWD/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z -v $PWD/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z -v $PWD/../data:/data:z --name nginx nginx:latest
+docker run -d -p 5000:80 -v $PWD/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z -v $PWD/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z -v $PWD/../data:/data:z -v $HOME/bible/verses:/media/verses:Z --name nginx nginx:latest
 ```
 
 

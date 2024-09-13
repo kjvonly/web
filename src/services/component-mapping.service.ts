@@ -1,6 +1,7 @@
 import { NullBuffer } from '../models/buffer.model';
 import type { Pane } from '../models/pane.model';
 import Chapter from '../components/bible/chapter.svelte';
+import Memory from '../components/memory/memory.svelte';
 import Editor from '../components/editor/editor.svelte';
 import TestCard from '../components/card/test-card.svelte';
 
@@ -19,6 +20,8 @@ export class ComponentMapping {
 		switch (componentName) {
 			case 'Chapter':
 				return Chapter;
+			case 'Memory':
+				return Memory;
 			case 'Editor':
 				return Editor;
 			case 'TestCard':

@@ -13,6 +13,7 @@
 	import { bibleDB } from '../db/bible.db';
 	import Search from '../components/search/search.svelte';
 	import TestCard from '../components/card/test-card.svelte';
+	import Memory from '../components/memory/memory.svelte';
 
 	let p: Pane;
 
@@ -49,7 +50,18 @@
 		p = paneService.getRootPane();
 	});
 
-	// opens bible buffer
+	// opens memory buffer
+	paneKeyBindingMap.set('shift+X m', () => {
+		let b = new Buffer();
+		b.componentName = 'Memory';
+		b.component = Memory;
+		paneService.setBuffer(b);
+		currentBuffer.set(b);
+		paneService.saveRootPane();
+		p = paneService.getRootPane();
+	});
+
+	// opens test buffer
 	paneKeyBindingMap.set('shift+X t', () => {
 		let b = new Buffer();
 		b.componentName = 'TestCard';
