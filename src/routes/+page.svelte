@@ -126,10 +126,8 @@
 		display: flex;
 	}
 
-	@include media-breakpoint-up(md) {
-		.container-fluid {
-			height: 100vh;
-		}
+	.container-fluid {
+		height: 100vh;
 	}
 
 	@include media-breakpoint-up(lg) {

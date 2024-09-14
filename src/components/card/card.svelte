@@ -97,6 +97,6 @@
 
 	<!-- card footer -->
 	<div id="_{cardId}-footer" class="kjv-card-footer {selected}">
-		<slot name="footer" />
+		<slot name="footer" />	
 	</div>
 </div>

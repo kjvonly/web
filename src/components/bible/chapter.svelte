@@ -33,6 +33,9 @@
 
 	let key: string;
 
+	// Initial state
+	let scrollPos = 0;
+
 	afterUpdate(() => {
 		if (key !== buffer.key) {
 			key = buffer.key;
@@ -50,11 +53,25 @@
 			selectedVerses = selectedVerses;
 		}
 
-		document.querySelector('div#' + chapterId + '-chapter')
-			?.addEventListener('touchstart', swipeService.handleTouchStart, false);
-		document
-			.querySelector('div#' + chapterId + '-chapter')
-			?.addEventListener('touchmove', swipeService.handleTouchMove, false);
+		let kjvChapter = document.querySelector('div#' + chapterId + '-chapter');
+
+		kjvChapter?.addEventListener('touchstart', swipeService.handleTouchStart, false);
+
+		kjvChapter?.addEventListener('touchmove', swipeService.handleTouchMove, false);
+
+		// adding scroll event
+		kjvChapter?.addEventListener('scroll', function (event) {
+			// detects new state and compares it with the new one
+			if (kjvChapter.scrollTop < scrollPos){
+				console.log("SCROLLING UP", scrollPos, kjvChapter.getBoundingClientRect().top, kjvChapter.scrollTop)
+			}
+			else {
+				console.log("SCROLLING DOWN", scrollPos, kjvChapter.getBoundingClientRect().top,  kjvChapter.scrollTop) 
+			}
+			
+			// saves the new position for iteration.
+			scrollPos = kjvChapter.scrollTop;
+		});
 	});
 
 	function enableKeyBindings() {
