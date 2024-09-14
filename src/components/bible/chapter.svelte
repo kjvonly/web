@@ -17,6 +17,7 @@
 	import Icon from 'svelte-awesome';
 	import mapPin from 'svelte-awesome/icons/mapPin';
 	import { api } from '../../api/api';
+	import MobileMenu from '../../menus/mobile-menu.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -360,10 +361,8 @@
 			{/if}
 		</div>
 	</div>
-	<div slot="footer">
-		<p class="text-sm m-0">
-			<strong class="font-semibold">Bible Buffer</strong>
-		</p>
+	<div class="w-100" slot="footer">
+		<MobileMenu></MobileMenu>
 	</div>
 </Card>
 <Menu bind:parentId={chapterId} bind:menuData></Menu>

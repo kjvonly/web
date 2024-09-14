@@ -7,34 +7,43 @@
 	import Chapter from '../components/bible/chapter.svelte';
 	import { currentBuffer } from '../services/current-buffer.service';
 	import Memory from '../components/memory/memory.svelte';
-	export let active: boolean;
 
 	function onClick(m: any): void {
 		let b = new Buffer();
 		switch (m.name) {
+			case 'home':
+				b.componentName = 'home';
+				b.component = Chapter;
+				paneService.setBuffer(b);
+				currentBuffer.set(b);
+				paneService.saveRootPane();
+				break
 			case 'bible':
 				b.componentName = 'Chapter';
 				b.component = Chapter;
 				paneService.setBuffer(b);
 				currentBuffer.set(b);
 				paneService.saveRootPane();
-				active = false;
-				break;
+				break
 			case 'memory':
 				b.componentName = 'Memory';
 				b.component = Memory;
 				paneService.setBuffer(b);
 				currentBuffer.set(b);
 				paneService.saveRootPane();
-				active = false;
-				break;
+				break
 		}
 	}
 </script>
 
-{#each menu as m}
-	<div on:click={() => onClick(m)} class="main-menu-item p-3 d-flex flex-row align-items-center">
-		<Icon class="main-menu-item-icon" data={m.icon} scale={2}></Icon>
-		<p class="p-0 ms-2 me-0 mb-0 mt-0 text-centr">{m.name}</p>
-	</div>
-{/each}
+<div class="d-flex flex-row justify-content-between w-100">
+	{#each menu as m}
+		<div
+			on:click={() => onClick(m)}
+			class="mobile-menu-item p-2 d-flex flex-column align-items-center"
+		>
+			<Icon class="mobile-menu-item-icon" data={m.icon} scale={2}></Icon>
+			<p class="m-0 text-center">{m.name}</p>
+		</div>
+	{/each}
+</div>
