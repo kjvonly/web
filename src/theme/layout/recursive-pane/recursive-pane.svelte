@@ -45,10 +45,10 @@
 		})();
 	});
 
-	$: panePadding = _pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
+	$: panePadding = _pane && _pane.split === PaneSplit.Null ? 'pane-pad' : '';
 </script>
 
-<div id="_{id}-pane" class="pane" style={panePadding}>
+<div id="_{id}-pane" class="pane {panePadding}">
 	{#if _pane && _pane.split === PaneSplit.Null}
 		<div id="_{id}-buffer-pane" class="w-100">
 			{#if !(_pane.buffer instanceof NullBuffer)}

@@ -1,17 +1,24 @@
 @import '../themes.scss';
 
-.kjv-navbar {
-	height: 4.75rem;
-	padding: 1.25rem;
-	width: 100%;
-	color: white;
-	align-items: center;
-	display: flex;
 
-	@include themify($themes) {
-		background-color: themed('primary');
+@include media-breakpoint-up(md) {
+	.kjv-navbar {
+		height: 4.75rem;
+		padding: 1.25rem;
+		width: 100%;
+
+		color: white;
+		align-items: center;
+		display: flex;
+
+		@include themify($themes) {
+			background-color: themed('primary');
+		}
 	}
 }
+
+@include media-breakpoint-up(xl) {}
+
 
 #user {
 	width: 3rem;

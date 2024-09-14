@@ -105,7 +105,7 @@
 	});
 </script>
 
-<div class="container-fluid">
+<div class="container-fluid p-0">
 	<div class="h-100">
 		<div id="_root-pane" class="h-100">
 			{#if p}
@@ -125,9 +125,20 @@
 	#_root-pane {
 		display: flex;
 	}
+
+	@include media-breakpoint-up(md) {
+		.container-fluid {
+			height: 100vh;
+		}
+	}
+
+	@include media-breakpoint-up(lg) {
+		.container-fluid {
+			height: calc(100vh - 4.75rem);
+		}
+	}
+
 	.container-fluid {
-		height: calc(100vh - 4.75rem);
-		/* height: 100vh; */
 		overflow: hidden;
 
 		@include themify($themes) {

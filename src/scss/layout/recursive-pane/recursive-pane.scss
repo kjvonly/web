@@ -1,5 +1,11 @@
 @import '../../themes.scss';
 
+@include media-breakpoint-up(lg){
+	.pane-pad {
+		padding: 1rem;
+	}
+}
+
 .pane {
 	height: 100%;
 	width: 100%;

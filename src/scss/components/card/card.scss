@@ -1,77 +1,163 @@
 @import '../../themes.scss';
 @import '../../common.scss';
 
-.kjv-card-popup {
-	height: var(--height);
-	top: var(--top);
-	max-width: var(--maxWidth);
-	position: absolute;
-	z-index: 10000;
 
-	border-top-width: 0.1rem;
-	border-top-style: solid;
-	border-radius: 0 0 1rem 1rem;
 
-	@include themify($themes) {
-		border-top-color: themed(kjv-card-popup-border-top-color);
-		background-color: themed(kjv-card-popup-background-color);
-	}
-}
-
-.kjv-card-container {
-	margin: 0px !important;
-	padding: 0px !important;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	border-radius: 1rem;
-	overflow: hidden;
-
-	@include themify($themes) {
-		background-color: themed(kjv-card-container-background-color);
-	}
-
-	box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5);
-}
-
-.kjv-card-body {
-	overflow: hidden;
-	width: 100%;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-}
 
 .kjv-card-header {
-	@include themify($themes) {
-		background-color: themed('kjv-card-header-background-color');
-		color: themed('kjv-card-header-color');
-	}
-
-	padding: 2rem;
-	align-items: center;
-	display: flex;
-	height: 30px !important;
-
 	@extend %kjvonly-noselect;
 }
 
 .kjv-card-footer {
-	@include themify($themes) {
-		background-color: themed('kjv-card-footer-background-color');
-		color: themed('kjv-card-footer-color');
-	}
-
-	padding: 2rem;
-	height: 30px !important;
-	align-items: center;
-	display: flex;
 
 	@extend %kjvonly-noselect;
 }
 
-.selected-card {
-	@include themify($themes) {
-		background-color: themed('kjv-card-selected-buffer-background-color');
-		color: themed('on-primary');
+
+@include media-breakpoint-up(md) {
+	.kjv-card-popup {
+		height: var(--height);
+		top: var(--top);
+		max-width: var(--maxWidth);
+		position: absolute;
+		z-index: 10000;
+
+		border-top-width: 0.1rem;
+		border-top-style: solid;
+
+		@include themify($themes) {
+			border-top-color: themed(kjv-card-popup-border-top-color);
+			background-color: themed(kjv-card-popup-background-color);
+		}
+	}
+
+	.kjv-card-container {
+		margin: 0px !important;
+		padding: 0px !important;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+
+		@include themify($themes) {
+			background-color: themed(kjv-card-container-background-color);
+		}
+
+	}
+
+	.kjv-card-body {
+		overflow: hidden;
+		width: 100%;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.kjv-card-header {
+		@include themify($themes) {
+			background-color: themed('kjv-card-header-background-color');
+			color: themed('kjv-card-header-color');
+		}
+
+		padding: 2rem;
+		align-items: center;
+		display: flex;
+		height: 30px !important;
+
+	}
+
+	.kjv-card-footer {
+		@include themify($themes) {
+			background-color: themed('kjv-card-footer-background-color');
+			color: themed('kjv-card-footer-color');
+		}
+
+		padding: 2rem;
+		height: 30px !important;
+		align-items: center;
+		display: flex;
+	}
+
+	.selected-card {
+		@include themify($themes) {
+			background-color: themed('kjv-card-selected-buffer-background-color');
+			color: themed('on-primary');
+		}
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.kjv-card-popup {
+		height: var(--height);
+		top: var(--top);
+		max-width: var(--maxWidth);
+		position: absolute;
+		z-index: 10000;
+
+		border-top-width: 0.1rem;
+		border-top-style: solid;
+		border-radius: 0 0 1rem 1rem;
+
+		@include themify($themes) {
+			border-top-color: themed(kjv-card-popup-border-top-color);
+			background-color: themed(kjv-card-popup-background-color);
+		}
+	}
+
+	.kjv-card-container {
+		margin: 0px !important;
+		padding: 0px !important;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		border-radius: 1rem;
+		overflow: hidden;
+
+		@include themify($themes) {
+			background-color: themed(kjv-card-container-background-color);
+		}
+
+		box-shadow: 0.5rem 0.5rem 0.5rem rgba(0, 0, 0, 0.5);
+	}
+
+	.kjv-card-body {
+		overflow: hidden;
+		width: 100%;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.kjv-card-header {
+		@include themify($themes) {
+			background-color: themed('kjv-card-header-background-color');
+			color: themed('kjv-card-header-color');
+		}
+
+		padding: 2rem;
+		align-items: center;
+		display: flex;
+		height: 30px !important;
+
+		@extend %kjvonly-noselect;
+	}
+
+	.kjv-card-footer {
+		@include themify($themes) {
+			background-color: themed('kjv-card-footer-background-color');
+			color: themed('kjv-card-footer-color');
+		}
+
+		padding: 2rem;
+		height: 30px !important;
+		align-items: center;
+		display: flex;
+
+		@extend %kjvonly-noselect;
+	}
+
+	.selected-card {
+		@include themify($themes) {
+			background-color: themed('kjv-card-selected-buffer-background-color');
+			color: themed('on-primary');
+		}
 	}
 }
