@@ -15,9 +15,7 @@
 	import type { MenuItem } from './components/menu-item';
 	import { SwipeService } from '../../services/swipe.service';
 	import Icon from 'svelte-awesome';
-	import mapPin from 'svelte-awesome/icons/mapPin';
 	import { volumeUp, font, search } from 'svelte-awesome/icons';
-	import { api } from '../../api/api';
 	import MobileMenu from '../../menus/mobile-menu.svelte';
 
 	export let buffer: Buffer;
@@ -29,7 +27,6 @@
 
 	$: selectedVerse = 0;
 
-	let loaded = false;
 	let chapter: any;
 	let verses: any[] = [];
 
@@ -37,6 +34,7 @@
 
 	// Initial state
 	let scrollPos = 0;
+	$: isReading = false;
 
 	afterUpdate(() => {
 		if (key !== buffer.key) {
@@ -46,6 +44,7 @@
 	});
 
 	onMount(() => {
+		console.log("chapter svelte")
 		if (buffer.bag.currentChapterKey) {
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		}
@@ -65,19 +64,11 @@
 		kjvChapter?.addEventListener('scroll', function (event) {
 			// detects new state and compares it with the new one
 			if (kjvChapter.scrollTop < scrollPos) {
-				console.log(
-					'SCROLLING UP',
-					scrollPos,
-					kjvChapter.getBoundingClientRect().top,
-					kjvChapter.scrollTop
-				);
+				isReading = false;
 			} else {
-				console.log(
-					'SCROLLING DOWN',
-					scrollPos,
-					kjvChapter.getBoundingClientRect().top,
-					kjvChapter.scrollTop
-				);
+				if(kjvChapter.scrollTop > 150){
+					isReading = true;
+				}
 			}
 
 			// saves the new position for iteration.
@@ -322,26 +313,44 @@
 </script>
 
 <Card bind:buffer bind:popup>
-	<div slot="header" class="kjv-chapter-header h-100 w-100">
-		<div class="d-flex flex-row h-100">
-			<div class="kjv-chapter-header-book-chapter  d-flex align-items-center  m-0 ps-2">
-				{#if chapter}
-					<div on:click={() => _goto()}>
-						<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
-					</div>
-				{/if}
-			</div>
-			<span class="flex-fill"></span>
-
-			<div class="d-flex flex-row justify-content-between">
-				<div class="me-4 d-flex align-items-center">
-					<Icon data={volumeUp}></Icon>
+	<div slot="header" class="h-100 w-100">
+		{#if !isReading}
+		<div class="kjv-chapter-header h-100 w-100">
+			<div class="d-flex flex-row h-100">
+				<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
+					{#if chapter}
+						<div on:click={() => _goto()}>
+							<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+						</div>
+					{/if}
 				</div>
-				<div class="me-4 d-flex align-items-center"><Icon data={font}></Icon></div>
-				<div class="me-2 d-flex align-items-center"><Icon data={search}></Icon></div>
+				<span class="flex-fill"></span>
+
+				<div class="d-flex flex-row justify-content-between">
+					<div class="me-4 d-flex align-items-center">
+						<Icon data={volumeUp}></Icon>
+					</div>
+					<div class="me-4 d-flex align-items-center"><Icon data={font}></Icon></div>
+					<div class="me-2 d-flex align-items-center"><Icon data={search}></Icon></div>
+				</div>
 			</div>
 		</div>
+		{:else}
+		<div class="kjv-chapter-header-shrunk h-100 w-100">
+			<div class="d-flex flex-row h-100">
+				<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
+					{#if chapter}
+						<div on:click={() => _goto()}>
+							<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+						</div>
+					{/if}
+				</div>
+				<span class="flex-fill"></span>
+			</div>
+		</div>
+		{/if}
 	</div>
+
 	<div slot="body" let:bodyHeight>
 		<div id="{chapterId}-chapter" class="kjv-chapter" style="max-height: {bodyHeight}px;">
 			{#if verses.length > 0}

@@ -48,8 +48,8 @@
 .kjv-card-body {
 	overflow: hidden;
 	width: 100%;
-	margin-top: 1rem;
-	margin-bottom: 1rem;
+	// margin-top: 1rem;
+	// margin-bottom: 1rem;
 }
 
 .kjv-card-header {
@@ -60,7 +60,7 @@
 	
 	align-items: center;
 	display: flex;
-	height: 5vh !important;
+
 	width: 100%;
 }
 
@@ -69,8 +69,6 @@
 		background-color: themed('kjv-card-footer-background-color');
 		color: themed('kjv-card-footer-color');
 	}
-
-	height: 10vh !important;
 	width: 100%;
 	align-items: center;
 	display: flex;

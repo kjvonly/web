@@ -87,6 +87,15 @@ u.xref {
 		border-bottom: thin solid themed('kjv-chapter-header-border-bottom-color');
 	}
 	font-size: 1em;
+	height: 5vh !important;
+}
+
+.kjv-chapter-header-shrunk {
+	@include themify($themes) {
+		border-bottom: thin solid themed('kjv-chapter-header-border-bottom-color');
+	}
+	font-size: 1em;
+	height: 2.5vh !important;
 }
 
 .kjv-chapter-footer {
@@ -94,6 +103,7 @@ u.xref {
 		border-top: thin solid themed('kjv-chapter-header-border-bottom-color');
 	}
 	font-size: 1em;
+	height: 10vh !important;
 }
 
 .selected-buffer {
