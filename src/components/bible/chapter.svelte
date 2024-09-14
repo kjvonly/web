@@ -44,7 +44,7 @@
 	});
 
 	onMount(() => {
-		console.log("chapter svelte")
+		console.log('chapter svelte');
 		if (buffer.bag.currentChapterKey) {
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		}
@@ -66,7 +66,7 @@
 			if (kjvChapter.scrollTop < scrollPos) {
 				isReading = false;
 			} else {
-				if(kjvChapter.scrollTop > 150){
+				if (kjvChapter.scrollTop > 150) {
 					isReading = true;
 				}
 			}
@@ -315,39 +315,39 @@
 <Card bind:buffer bind:popup>
 	<div slot="header" class="h-100 w-100">
 		{#if !isReading}
-		<div class="kjv-chapter-header h-100 w-100">
-			<div class="d-flex flex-row h-100">
-				<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
-					{#if chapter}
-						<div on:click={() => _goto()}>
-							<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
-						</div>
-					{/if}
-				</div>
-				<span class="flex-fill"></span>
-
-				<div class="d-flex flex-row justify-content-between">
-					<div class="me-4 d-flex align-items-center">
-						<Icon data={volumeUp}></Icon>
+			<div class="kjv-chapter-header h-100 w-100">
+				<div class="d-flex flex-row h-100">
+					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
+						{#if chapter}
+							<div on:click={() => _goto()}>
+								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+							</div>
+						{/if}
 					</div>
-					<div class="me-4 d-flex align-items-center"><Icon data={font}></Icon></div>
-					<div class="me-2 d-flex align-items-center"><Icon data={search}></Icon></div>
-				</div>
-			</div>
-		</div>
-		{:else}
-		<div class="kjv-chapter-header-shrunk h-100 w-100">
-			<div class="d-flex flex-row h-100">
-				<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
-					{#if chapter}
-						<div on:click={() => _goto()}>
-							<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+					<span class="flex-fill"></span>
+
+					<div class="d-flex flex-row justify-content-between">
+						<div class="me-4 d-flex align-items-center">
+							<Icon data={volumeUp}></Icon>
 						</div>
-					{/if}
+						<div class="me-4 d-flex align-items-center"><Icon data={font}></Icon></div>
+						<div class="me-2 d-flex align-items-center"><Icon data={search}></Icon></div>
+					</div>
 				</div>
-				<span class="flex-fill"></span>
 			</div>
-		</div>
+		{:else}
+			<div class="kjv-chapter-header-shrunk h-100 w-100">
+				<div class="d-flex flex-row h-100">
+					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
+						{#if chapter}
+							<div on:click={() => _goto()}>
+								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+							</div>
+						{/if}
+					</div>
+					<span class="flex-fill"></span>
+				</div>
+			</div>
 		{/if}
 	</div>
 
@@ -386,8 +386,12 @@
 			{/if}
 		</div>
 	</div>
-	<div class="kjv-chapter-footer w-100" slot="footer">
-		<MobileMenu></MobileMenu>
+	<div class="w-100" slot="footer">
+		{#if !isReading}
+			<div class="kjv-chapter-footer">
+				<MobileMenu></MobileMenu>
+			</div>
+		{/if}
 	</div>
 </Card>
 <Menu bind:parentId={chapterId} bind:menuData></Menu>
