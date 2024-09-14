@@ -57,11 +57,10 @@
 		background-color: themed('kjv-card-header-background-color');
 		color: themed('kjv-card-header-color');
 	}
-
-	padding: 2rem;
+	
 	align-items: center;
 	display: flex;
-	height: 30px !important;
+	height: 10vh !important;
 	width: 100%;
 
 }
@@ -72,11 +71,11 @@
 		color: themed('kjv-card-footer-color');
 	}
 
-	padding: 2rem;
-	height: 30px !important;
+	height: 10vh !important;
 	width: 100%;
 	align-items: center;
 	display: flex;
+	font-size: medium;
 }
 
 .selected-card {

@@ -42,7 +42,7 @@
 			on:click={() => onClick(m)}
 			class="mobile-menu-item p-2 d-flex flex-column align-items-center"
 		>
-			<Icon class="mobile-menu-item-icon" data={m.icon} scale={2}></Icon>
+			<Icon class="mobile-menu-item-icon" data={m.icon}></Icon>
 			<p class="m-0 text-center">{m.name}</p>
 		</div>
 	{/each}

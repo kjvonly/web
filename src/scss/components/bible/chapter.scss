@@ -95,20 +95,6 @@ u.xref {
 	@extend %kjvonly-noselect;
 }
 
-.kjv-chapter-footer {
-	@include themify($themes) {
-		background-color: themed('kjv-chapter-footer-background-color');
-		color: themed('kjv-chapter-footer-color');
-	}
-
-	padding: 2rem;
-	height: 30px !important;
-	align-items: center;
-	display: flex;
-
-	@extend %kjvonly-noselect;
-}
-
 .selected-buffer {
 	@include themify($themes) {
 		background-color: themed('kjv-chapter-selected-buffer-background-color');
