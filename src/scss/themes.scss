@@ -63,29 +63,41 @@ $dark: (
 );
 
 $card-light: (
-	/* header */ kjv-card-header-background-color: map-get($light, 'primary'),
-	kjv-card-header-color: map-get($light, 'on-primary'),
-	/* footer*/ kjv-card-footer-background-color: $primary-700,
+	/* header */
+	kjv-card-header-background-color: map-get($light, 'background'),
+	kjv-card-header-color: map-get($light, 'on-background'),
+	/* footer*/
+	kjv-card-footer-background-color: map-get($light, 'background'),
 	kjv-card-footer-color: map-get($light, 'on-primary'),
-	/* verse */ kjv-card-selected-verse-background-color: $primary-50,
+	/* verse */
+	kjv-card-selected-verse-background-color: $primary-50,
 
-	/* buffer */ kjv-card-selected-buffer-background-color: $secondary-800,
+	/* buffer */
+	kjv-card-selected-buffer-background-color: $secondary-800,
 
-	/* quadrant */ kjv-card-container-background-color: map-get($light, 'surface'),
-	/* popup */ kjv-card-popup-border-top-color: $secondary-800,
+	/* quadrant */
+	kjv-card-container-background-color: map-get($light, 'surface'),
+	/* popup */
+	kjv-card-popup-border-top-color: $secondary-800,
 	kjv-card-popup-background-color: map-get($light, 'background')
 );
 
 $chapter-light: (
-	/* header */ kjv-chapter-header-background-color: map-get($light, 'primary'),
+	/* header */
+	kjv-chapter-header-background-color: map-get($light, 'primary'),
 	kjv-chapter-header-color: map-get($light, 'on-primary'),
-	/* footer*/ kjv-chapter-footer-background-color: $primary-700,
+	kjv-chapter-header-border-bottom-color: map-get($light, 'on-background'),
+	/* footer*/
+	kjv-chapter-footer-background-color: $primary-700,
 	kjv-chapter-footer-color: map-get($light, 'on-primary'),
-	/* verse */ kjv-chapter-selected-verse-background-color: $primary-50,
+	/* verse */
+	kjv-chapter-selected-verse-background-color: $primary-50,
 	kjv-chapter-verses-selected-border-color: map-get($light, 'secondary'),
-	/* buffer */ kjv-chapter-selected-buffer-background-color: $secondary-800,
+	/* buffer */
+	kjv-chapter-selected-buffer-background-color: $secondary-800,
 
-	/* quadrant */ kjv-chapter-quadrant-background-color: map-get($light, 'surface')
+	/* quadrant */
+	kjv-chapter-quadrant-background-color: map-get($light, 'surface')
 );
 
 $scrollbar-light: (
@@ -107,17 +119,16 @@ $strongs-popup-light: (
 	kjv-strongs-popup-background-color: map-get($light, 'surface'),
 	kjv-strongs-popup-color: map-get($light, 'on-surface')
 );
-$chapter-dark: ();
-
-$light-theme: map-collect(
-	$light,
-	$colors,
-	$scrollbar-light,
-	$card-light,
-	$chapter-light,
-	$goto-light,
-	$strongs-popup-light
+$chapter-dark: (
 );
+
+$light-theme: map-collect($light,
+		$colors,
+		$scrollbar-light,
+		$card-light,
+		$chapter-light,
+		$goto-light,
+		$strongs-popup-light);
 $dark-theme: map-merge($dark, $colors);
 $themes: (
 	light: $light-theme,
@@ -129,22 +140,20 @@ $theme-map: null;
 @mixin themify($themes: $themes) {
 	@each $theme, $map in $themes {
 		.#{$theme}-theme & {
-			$theme-map: () !global;
+			$theme-map: (
+				) !global;
 
 			@each $key, $submap in $map {
-				$value: map-get(map-get($themes, $theme), '#{$key}');
-				$theme-map: map-merge(
-					$theme-map,
-					(
-						$key: $value
-					)
-				) !global;
-			}
-
-			@content;
-			$theme-map: null !global;
+				$value: map-get(map-get($themes, $theme), '#{$key}'
+				);
+			$theme-map: map-merge($theme-map,
+					($key: $value)) !global;
 		}
+
+		@content;
+		$theme-map: null !global;
 	}
+}
 }
 
 @function themed($key) {

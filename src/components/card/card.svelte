@@ -96,7 +96,8 @@
 	{/if}
 
 	<!-- card footer -->
-	<div id="_{cardId}-footer" class="kjv-card-footer {selected}">
+	<!-- <div id="_{cardId}-footer" class="kjv-card-footer {selected}"></div>  -->
+	<div id="_{cardId}-footer" class="kjv-card-footer">
 		<slot name="footer" />	
 	</div>
 </div>

@@ -1,8 +1,7 @@
-import { lightbulbO, home, search, bars } from 'svelte-awesome/icons';
-import Chapter  from '../components/bible/chapter.svelte'
-import book from 'svelte-awesome/icons/book';
+import { heart, home, search, bars, book } from 'svelte-awesome/icons';
+import Chapter from '../components/bible/chapter.svelte'
 import Memory from '../components/memory/memory.svelte';
-export let  menu = [
+export let menu = [
     {
         name: "home",
         icon: home,
@@ -15,7 +14,7 @@ export let  menu = [
     },
     {
         name: "memory",
-        icon: lightbulbO,
+        icon: heart,
         component: Memory
     },
     {

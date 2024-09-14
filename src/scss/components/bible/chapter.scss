@@ -84,15 +84,16 @@ u.xref {
 
 .kjv-chapter-header {
 	@include themify($themes) {
-		background-color: themed('kjv-chapter-header-background-color');
-		color: themed('kjv-chapter-header-color');
+		border-bottom: thin solid themed('kjv-chapter-header-border-bottom-color');
 	}
-	padding: 2rem;
-	align-items: center;
-	display: flex;
-	height: 30px !important;
+	font-size: 1em;
+}
 
-	@extend %kjvonly-noselect;
+.kjv-chapter-footer {
+	@include themify($themes) {
+		border-top: thin solid themed('kjv-chapter-header-border-bottom-color');
+	}
+	font-size: 1em;
 }
 
 .selected-buffer {

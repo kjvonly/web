@@ -16,6 +16,7 @@
 	import { SwipeService } from '../../services/swipe.service';
 	import Icon from 'svelte-awesome';
 	import mapPin from 'svelte-awesome/icons/mapPin';
+	import { volumeUp, font, search } from 'svelte-awesome/icons';
 	import { api } from '../../api/api';
 	import MobileMenu from '../../menus/mobile-menu.svelte';
 
@@ -63,13 +64,22 @@
 		// adding scroll event
 		kjvChapter?.addEventListener('scroll', function (event) {
 			// detects new state and compares it with the new one
-			if (kjvChapter.scrollTop < scrollPos){
-				console.log("SCROLLING UP", scrollPos, kjvChapter.getBoundingClientRect().top, kjvChapter.scrollTop)
+			if (kjvChapter.scrollTop < scrollPos) {
+				console.log(
+					'SCROLLING UP',
+					scrollPos,
+					kjvChapter.getBoundingClientRect().top,
+					kjvChapter.scrollTop
+				);
+			} else {
+				console.log(
+					'SCROLLING DOWN',
+					scrollPos,
+					kjvChapter.getBoundingClientRect().top,
+					kjvChapter.scrollTop
+				);
 			}
-			else {
-				console.log("SCROLLING DOWN", scrollPos, kjvChapter.getBoundingClientRect().top,  kjvChapter.scrollTop) 
-			}
-			
+
 			// saves the new position for iteration.
 			scrollPos = kjvChapter.scrollTop;
 		});
@@ -312,17 +322,23 @@
 </script>
 
 <Card bind:buffer bind:popup>
-	<div slot="header" class="w-100">
-		<div class="d-flex flex-row">
-			<p class="d-flex align-items-center m-0">
+	<div slot="header" class="kjv-chapter-header h-100 w-100">
+		<div class="d-flex flex-row h-100">
+			<div class="kjv-chapter-header-book-chapter  d-flex align-items-center  m-0 ps-2">
 				{#if chapter}
-					<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
+					<div on:click={() => _goto()}>
+						<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+					</div>
 				{/if}
-			</p>
+			</div>
 			<span class="flex-fill"></span>
 
-			<div on:click={() => _goto()} class="p-3 d-flex flex-row align-items-center">
-				<Icon class="main-menu-item-icon" data={mapPin} scale={1}></Icon>
+			<div class="d-flex flex-row justify-content-between">
+				<div class="me-4 d-flex align-items-center">
+					<Icon data={volumeUp}></Icon>
+				</div>
+				<div class="me-4 d-flex align-items-center"><Icon data={font}></Icon></div>
+				<div class="me-2 d-flex align-items-center"><Icon data={search}></Icon></div>
 			</div>
 		</div>
 	</div>
@@ -361,7 +377,7 @@
 			{/if}
 		</div>
 	</div>
-	<div class="w-100" slot="footer">
+	<div class="kjv-chapter-footer w-100" slot="footer">
 		<MobileMenu></MobileMenu>
 	</div>
 </Card>
