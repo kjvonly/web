@@ -1,7 +1,5 @@
 import { writable } from 'svelte/store';
 import { NullPane, Pane, PaneJson } from '../models/pane.model';
-import { Buffer } from '../models/buffer.model';
-import Chapter from '../components/bible/chapter.svelte';
 
 let storeName: string = 'paneStore';
 

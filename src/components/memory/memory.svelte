@@ -92,12 +92,14 @@
 			bookNames = data;
 			renderBookChapterVerses();
 
-			if (buffer && buffer.bag && buffer.bag.selectedVerses){
-			selectedVerses = buffer.bag.selectedVerses
-		}
-		
+			if (buffer && buffer.bag && buffer.bag.selectedVerses) {
+				selectedVerses = buffer.bag.selectedVerses;
+				selectedVerses.forEach(verseIdx => {
+					verses[verseIdx].checked = true
+				})
+				playSelectedVerses()
+			}
 		});
-
 
 		audioElement = document.querySelector('audio');
 		if (audioElement != null) {
@@ -105,10 +107,6 @@
 				setTimeout(() => {
 					playSelectedVerses();
 				}, 2000);
-			});
-
-			audioElement.addEventListener('play', function () {
-				console.log("it's go time");
 			});
 		}
 	});
@@ -121,7 +119,7 @@
 	function playSelectedVerses() {
 		if (audioElement?.paused) {
 			currentAudioVerseIdx = currentAudioVerseIdx + 1;
-			if ((selectedVerses.length - 1) < currentAudioVerseIdx) {
+			if (selectedVerses.length - 1 < currentAudioVerseIdx) {
 				currentAudioVerseIdx = 0;
 			}
 		} else {
@@ -147,7 +145,7 @@
 
 		if (!found) {
 			selectedVerses.push(verseIdx);
-			playSelectedVerses()
+			playSelectedVerses();
 		}
 
 		if (index != -1) {
@@ -157,7 +155,7 @@
 		selectedVerses = selectedVerses;
 		searchVerses = searchVerses;
 
-		buffer.bag.selectedVerses = selectedVerses
+		buffer.bag.selectedVerses = selectedVerses;
 		paneService.saveRootPane();
 	}
 
@@ -168,7 +166,7 @@
 		selectedVerses = selectedVerses;
 		searchVerses = searchVerses;
 
-		buffer.bag.selectedVerses = selectedVerses
+		buffer.bag.selectedVerses = selectedVerses;
 		paneService.saveRootPane();
 	}
 </script>
