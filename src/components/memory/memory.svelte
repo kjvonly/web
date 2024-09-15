@@ -91,42 +91,45 @@
 					audioElement.play();
 				}, 2000);
 			});
+
+			audioElement.addEventListener('play', function () {
+				console.log("it's go time");
+			});
 		}
 	});
-	function verseSelected(searchVerseIdx :number) {
-		//verse = '/api/media/verses/' + v['filename'];
+	function verseSelected(searchVerseIdx: number) {
 
-		searchVerses[searchVerseIdx]["checked"] = !searchVerses[searchVerseIdx]["checked"]
+		searchVerses[searchVerseIdx]['checked'] = !searchVerses[searchVerseIdx]['checked'];
 
-		let found = false
+		let found = false;
 		let index = -1;
 		selectedVerses.forEach((sv: any, idx: number) => {
 			if (sv == searchVerseIdx) {
-				found = true
+				found = true;
 				index = idx;
 			}
-		})
+		});
 
 		if (!found) {
-			selectedVerses.push(searchVerseIdx)
+			selectedVerses.push(searchVerseIdx);
+			verse = '/api/media/verses/' + searchVerses[searchVerseIdx]['filename'];
 		}
 
-		if (index != -1){
-			selectedVerses.splice(index,1)
+		if (index != -1) {
+			selectedVerses.splice(index, 1);
 		}
 
-		selectedVerses = selectedVerses
-		searchVerses = searchVerses
-		console.log(selectedVerses)
+		selectedVerses = selectedVerses;
+		searchVerses = searchVerses;
 	}
 
-	function playlistVerseSelected(idx: number){
-		let searchVerseIdx = selectedVerses[idx]
-		searchVerses[searchVerseIdx]["checked"] = false
+	function playlistVerseSelected(idx: number) {
+		let searchVerseIdx = selectedVerses[idx];
+		searchVerses[searchVerseIdx]['checked'] = false;
 
-		selectedVerses.splice(idx,1)
-		selectedVerses = selectedVerses
-		searchVerses = searchVerses
+		selectedVerses.splice(idx, 1);
+		selectedVerses = selectedVerses;
+		searchVerses = searchVerses;
 	}
 </script>
 
@@ -147,15 +150,27 @@
 			<div class="row">
 				<div class="col-6">
 					{#each searchVerses as v, idx}
-						<div  class="d-flex flex-row">
-							<input on:change={() => verseSelected(idx)} type="checkbox" class="pe-2" bind:value={searchVerses[idx]['checked']}  bind:checked={searchVerses[idx]['checked']} /> <span>{v['bcv']}</span>
+						<div class="d-flex flex-row">
+							<input
+								on:change={() => verseSelected(idx)}
+								type="checkbox"
+								class="pe-2"
+								bind:value={searchVerses[idx]['checked']}
+								bind:checked={searchVerses[idx]['checked']}
+							/> <span>{v['bcv']}</span>
 						</div>
 					{/each}
 				</div>
 				<div class="col-6">
 					{#each selectedVerses as searchVerseIdx, idx}
 						<div class="d-flex flex-row">
-							<input on:click={() => playlistVerseSelected(idx)} type="checkbox" class="pe-2" bind:checked={searchVerses[searchVerseIdx]['checked'] } bind:value={searchVerses[searchVerseIdx]['checked']} /> <span>{searchVerses[searchVerseIdx]['bcv']}</span>
+							<input
+								on:click={() => playlistVerseSelected(idx)}
+								type="checkbox"
+								class="pe-2"
+								bind:checked={searchVerses[searchVerseIdx]['checked']}
+								bind:value={searchVerses[searchVerseIdx]['checked']}
+							/> <span>{searchVerses[searchVerseIdx]['bcv']}</span>
 						</div>
 					{/each}
 				</div>
