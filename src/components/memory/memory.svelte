@@ -20,9 +20,13 @@
 	let search = '';
 
 	function onChange() {
-		searchVerses = verses.filter((v: any) => {
-			return v['bcv'].toLowerCase().includes(search.toLowerCase());
+		let tmpSearchVerses: any = [];
+		verses.forEach((v: any, idx: number) => {
+			if (v['bcv'].toLowerCase().includes(search.toLowerCase())) {
+				tmpSearchVerses.push(idx);
+			}
 		});
+		searchVerses = tmpSearchVerses;
 	}
 
 	function compareNumbers(a, b) {
@@ -75,8 +79,12 @@
 		});
 
 		verses = verses;
-		searchVerses = [...verses];
+		searchVerses = verses.map((v, idx) => {
+			return idx;
+		});
 	}
+
+	let audioElement: HTMLAudioElement | null;
 
 	onMount(() => {
 		chapterService.getChapter('booknames').then((data: any) => {
@@ -84,11 +92,11 @@
 			renderBookChapterVerses();
 		});
 
-		const audioElement = document.querySelector('audio');
+		audioElement = document.querySelector('audio');
 		if (audioElement != null) {
 			audioElement.addEventListener('ended', () => {
 				setTimeout(() => {
-					audioElement.play();
+					playSelectedVerses();
 				}, 2000);
 			});
 
@@ -97,22 +105,43 @@
 			});
 		}
 	});
-	function verseSelected(searchVerseIdx: number) {
 
-		searchVerses[searchVerseIdx]['checked'] = !searchVerses[searchVerseIdx]['checked'];
+	function getAudioApiPath(verseIdx: number) {
+		return '/api/media/verses/' + verses[verseIdx]['filename'];
+	}
+
+	let currentAudioVerseIdx: number = 0;
+	function playSelectedVerses() {
+		console.log(audioElement?.paused)
+		if (audioElement?.paused) {
+			currentAudioVerseIdx = currentAudioVerseIdx + 1;
+			if ((selectedVerses.length - 1) < currentAudioVerseIdx) {
+				currentAudioVerseIdx = 0;
+			}
+		} else {
+			currentAudioVerseIdx = 0;
+		}
+
+		let verseIdx = selectedVerses[currentAudioVerseIdx];
+		verse = getAudioApiPath(verseIdx);
+		audioElement?.play();
+	}
+
+	function verseSelected(verseIdx: number) {
+		verses[verseIdx]['checked'] = !verses[verseIdx]['checked'];
 
 		let found = false;
 		let index = -1;
 		selectedVerses.forEach((sv: any, idx: number) => {
-			if (sv == searchVerseIdx) {
+			if (sv == verseIdx) {
 				found = true;
 				index = idx;
 			}
 		});
 
 		if (!found) {
-			selectedVerses.push(searchVerseIdx);
-			verse = '/api/media/verses/' + searchVerses[searchVerseIdx]['filename'];
+			selectedVerses.push(verseIdx);
+			playSelectedVerses()
 		}
 
 		if (index != -1) {
@@ -121,11 +150,12 @@
 
 		selectedVerses = selectedVerses;
 		searchVerses = searchVerses;
+
+
 	}
 
-	function playlistVerseSelected(idx: number) {
-		let searchVerseIdx = selectedVerses[idx];
-		searchVerses[searchVerseIdx]['checked'] = false;
+	function playlistVerseSelected(verseIdx: number, idx: number) {
+		verses[verseIdx]['checked'] = false;
 
 		selectedVerses.splice(idx, 1);
 		selectedVerses = selectedVerses;
@@ -139,7 +169,7 @@
 			<audio controls autoplay src={verse}></audio>
 		</div>
 	</div>
-	<div slot="body" let:bodyHeight>
+	<div slot="body" class="h-100 w-100" let:bodyHeight>
 		<div id="{memoryId}-search" bind:clientHeight={searchHeight}>
 			<div class="p-2">
 				<input bind:value={search} />
@@ -149,28 +179,26 @@
 		<div class="kjv-memory-verse-list p-3" style="max-height: {bodyHeight - searchHeight}px">
 			<div class="row">
 				<div class="col-6">
-					{#each searchVerses as v, idx}
+					{#each searchVerses as verseIdx}
 						<div class="d-flex flex-row">
 							<input
-								on:change={() => verseSelected(idx)}
+								on:change={() => verseSelected(verseIdx)}
 								type="checkbox"
-								class="pe-2"
-								bind:value={searchVerses[idx]['checked']}
-								bind:checked={searchVerses[idx]['checked']}
-							/> <span>{v['bcv']}</span>
+								bind:value={verses[verseIdx]['checked']}
+								bind:checked={verses[verseIdx]['checked']}
+							/> <span class="ps-2">{verses[verseIdx]['bcv']}</span>
 						</div>
 					{/each}
 				</div>
 				<div class="col-6">
-					{#each selectedVerses as searchVerseIdx, idx}
+					{#each selectedVerses as verseIdx, idx}
 						<div class="d-flex flex-row">
 							<input
-								on:click={() => playlistVerseSelected(idx)}
+								on:click={() => playlistVerseSelected(verseIdx, idx)}
 								type="checkbox"
-								class="pe-2"
-								bind:checked={searchVerses[searchVerseIdx]['checked']}
-								bind:value={searchVerses[searchVerseIdx]['checked']}
-							/> <span>{searchVerses[searchVerseIdx]['bcv']}</span>
+								bind:checked={verses[verseIdx]['checked']}
+								bind:value={verses[verseIdx]['checked']}
+							/> <span class="ps-2">{verses[verseIdx]['bcv']}</span>
 						</div>
 					{/each}
 				</div>
