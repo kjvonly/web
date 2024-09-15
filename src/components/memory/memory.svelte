@@ -94,10 +94,10 @@
 
 			if (buffer && buffer.bag && buffer.bag.selectedVerses) {
 				selectedVerses = buffer.bag.selectedVerses;
-				selectedVerses.forEach(verseIdx => {
-					verses[verseIdx].checked = true
-				})
-				playSelectedVerses()
+				selectedVerses.forEach((verseIdx) => {
+					verses[verseIdx].checked = true;
+				});
+				playSelectedVerses();
 			}
 		});
 
@@ -117,12 +117,8 @@
 
 	let currentAudioVerseIdx: number = 0;
 	function playSelectedVerses() {
-		if (audioElement?.paused) {
-			currentAudioVerseIdx = currentAudioVerseIdx + 1;
-			if (selectedVerses.length - 1 < currentAudioVerseIdx) {
-				currentAudioVerseIdx = 0;
-			}
-		} else {
+		currentAudioVerseIdx = currentAudioVerseIdx + 1;
+		if (selectedVerses.length - 1 < currentAudioVerseIdx) {
 			currentAudioVerseIdx = 0;
 		}
 
