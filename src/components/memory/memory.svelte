@@ -5,6 +5,7 @@
 	import { chapterService } from '../../api/chapters.service';
 	import MobileMenu from '../../menus/mobile-menu.svelte';
 	import { v4 as uuidv4 } from 'uuid';
+	import { paneService } from '../../services/pane.service';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -90,7 +91,13 @@
 		chapterService.getChapter('booknames').then((data: any) => {
 			bookNames = data;
 			renderBookChapterVerses();
+
+			if (buffer && buffer.bag && buffer.bag.selectedVerses){
+			selectedVerses = buffer.bag.selectedVerses
+		}
+		
 		});
+
 
 		audioElement = document.querySelector('audio');
 		if (audioElement != null) {
@@ -112,7 +119,6 @@
 
 	let currentAudioVerseIdx: number = 0;
 	function playSelectedVerses() {
-		console.log(audioElement?.paused)
 		if (audioElement?.paused) {
 			currentAudioVerseIdx = currentAudioVerseIdx + 1;
 			if ((selectedVerses.length - 1) < currentAudioVerseIdx) {
@@ -151,7 +157,8 @@
 		selectedVerses = selectedVerses;
 		searchVerses = searchVerses;
 
-
+		buffer.bag.selectedVerses = selectedVerses
+		paneService.saveRootPane();
 	}
 
 	function playlistVerseSelected(verseIdx: number, idx: number) {
@@ -160,6 +167,9 @@
 		selectedVerses.splice(idx, 1);
 		selectedVerses = selectedVerses;
 		searchVerses = searchVerses;
+
+		buffer.bag.selectedVerses = selectedVerses
+		paneService.saveRootPane();
 	}
 </script>
 
