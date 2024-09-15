@@ -331,7 +331,7 @@
 					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
 						{#if chapter}
 							<div on:click={() => _goto()}>
-								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+								<span class="font-semibold">{chapter.bookName} {chapter.number} {scrollPos}</span>
 							</div>
 						{/if}
 					</div>
@@ -352,7 +352,7 @@
 					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
 						{#if chapter}
 							<div on:click={() => _goto()}>
-								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+								<span class="font-semibold">{chapter.bookName} {chapter.number} {scrollPos}</span>
 							</div>
 						{/if}
 					</div>
