@@ -100,8 +100,21 @@ $chapter-light: (
 	kjv-chapter-quadrant-background-color: map-get($light, 'surface')
 );
 
+$memory-light: (
+/* header */
+kjv-memory-header-background-color: map-get($light, 'primary'),
+kjv-memory-header-color: map-get($light, 'on-primary'),
+kjv-memory-header-border-bottom-color: map-get($light, 'on-background'),
+/* footer*/
+kjv-memory-footer-background-color: $primary-700,
+kjv-memory-footer-color: map-get($light, 'on-primary'),
+/* verse */
+kjv-memory-selected-verse-background-color: $primary-50,
+kjv-memory-verses-selected-border-color: map-get($light, 'secondary'),
+);
+
 $scrollbar-light: (
-	kjv-scrollbar-width: 0.5rem,
+	kjv-scrollbar-width: 0rem,
 	kjv-scrollbar-track-color: 'transparent',
 	kjv-scrollbar-background-color: map-get($light, 'primary-variant'),
 	kjv-scrollbar-border-radius: 1rem
@@ -127,6 +140,7 @@ $light-theme: map-collect($light,
 		$scrollbar-light,
 		$card-light,
 		$chapter-light,
+		$memory-light,
 		$goto-light,
 		$strongs-popup-light);
 $dark-theme: map-merge($dark, $colors);

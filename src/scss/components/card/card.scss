@@ -134,7 +134,7 @@
 		display: flex;
 		height: 30px !important;
 
-		@extend %kjvonly-noselect;
+		// @extend %kjvonly-noselect;
 	}
 
 	.kjv-card-footer {
@@ -148,7 +148,7 @@
 		align-items: center;
 		display: flex;
 
-		@extend %kjvonly-noselect;
+		// @extend %kjvonly-noselect;
 	}
 
 	.selected-card {

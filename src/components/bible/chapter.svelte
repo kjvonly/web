@@ -47,6 +47,9 @@
 		console.log('chapter svelte');
 		if (buffer.bag.currentChapterKey) {
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
+		} else {
+			buffer.bag.currentChapterKey = '1_1'
+			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		}
 
 		if (buffer.bag.selectedVerses) {
@@ -64,7 +67,9 @@
 		kjvChapter?.addEventListener('scroll', function (event) {
 			// detects new state and compares it with the new one
 			if (kjvChapter.scrollTop < scrollPos) {
-				isReading = false;
+				if (kjvChapter.scrollTop < 150) {	
+					isReading = false;
+				}
 			} else {
 				if (kjvChapter.scrollTop > 150) {
 					isReading = true;
@@ -388,7 +393,7 @@
 	</div>
 	<div class="w-100" slot="footer">
 		{#if !isReading}
-			<div class="kjv-chapter-footer">
+			<div class="kjv-chapter-footer d-flex align-items-center p-4">
 				<MobileMenu></MobileMenu>
 			</div>
 		{/if}
