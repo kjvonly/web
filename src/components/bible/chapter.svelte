@@ -49,7 +49,7 @@
 		if (buffer.bag.currentChapterKey) {
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		} else {
-			buffer.bag.currentChapterKey = '1_1'
+			buffer.bag.currentChapterKey = '1_1';
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		}
 
@@ -68,11 +68,11 @@
 		kjvChapter?.addEventListener('scroll', function (event) {
 			// detects new state and compares it with the new one
 			if (kjvChapter.scrollTop < scrollPos) {
-				if (kjvChapter.scrollTop < 150) {	
+				if (kjvChapter.scrollTop == 0) {
 					isReading = false;
 				}
 			} else {
-				if (kjvChapter.scrollTop > 150) {
+				if (kjvChapter.scrollTop > 0) {
 					isReading = true;
 				}
 			}
@@ -102,9 +102,9 @@
 		}
 	}
 
-	function cache(){
-		bufferService.set(buffer)
-		paneService.saveRootPane()
+	function cache() {
+		bufferService.set(buffer);
+		paneService.saveRootPane();
 	}
 
 	/* search popup */
@@ -141,7 +141,7 @@
 		let bookChapterStr: string = event.detail.chapter;
 		await updateChapterFromShortName(bookChapterStr);
 		enableKeyBindings();
-		cache()
+		cache();
 	}
 
 	async function updateChapterFromShortName(shortName: string) {
@@ -209,7 +209,7 @@
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
 		clearSelectedVerses();
-		cache()
+		cache();
 	}
 
 	function updateChapter(c: any) {
@@ -270,7 +270,7 @@
 		}
 		selectedVerses = selectedVerses;
 		buffer.bag.selectedVerses = [...selectedVerses];
-		cache()
+		cache();
 		e.stopPropagation();
 	}
 
@@ -300,7 +300,7 @@
 		selectedVerses.clear();
 		selectedVerses = selectedVerses;
 		buffer.bag.selectedVerses = [];
-		cache()
+		cache();
 	}
 
 	function onClearSelectedVerses() {
