@@ -7,7 +7,6 @@
 	import { paneService } from '../../../services/pane.service';
 	import VerticalSplit from './vertical-split.svelte';
 	import HorizontalSplit from './horizontal-split.svelte';
-	import TestCard from '../../../components/card/test-card.svelte';
 	export let pane: Pane;
 
 	let id = uuidv4();
@@ -33,6 +32,7 @@
 
 	onMount(() => {
 		// Register EventListeners
+		
 		const retryPolicy = retry(handleAll, { maxAttempts: 500, backoff: new ConstantBackoff(500) });
 		(() => {
 			setTimeout(
@@ -45,10 +45,10 @@
 		})();
 	});
 
-	$: panePadding = _pane && _pane.split === PaneSplit.Null ? 'padding:1rem;' : '';
+	$: panePadding = _pane && _pane.split === PaneSplit.Null ? 'pane-pad' : '';
 </script>
 
-<div id="_{id}-pane" class="pane" style={panePadding}>
+<div id="_{id}-pane" class="pane {panePadding}">
 	{#if _pane && _pane.split === PaneSplit.Null}
 		<div id="_{id}-buffer-pane" class="w-100">
 			{#if !(_pane.buffer instanceof NullBuffer)}

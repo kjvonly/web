@@ -35,7 +35,7 @@
 		card.style.height = br.height + 'px';
 		card.style.maxHeight = br.height + 'px';
 		body.style.height = br.height - headerHeight - footerHeight + 'px';
-		body.style.maxHeight = br.height - 60 + 'px';
+		//body.style.maxHeight = br.height - 60 + 'px';
 		cardBodyMaxHeight = br.height - 60 + 'px';
 
 		cardBottom = br.bottom;
@@ -51,7 +51,7 @@
 
 			/* keeps footer pushed to the bottom */
 			body.style.height = br.height - 60 + 'px';
-			body.style.maxHeight = br.height - 60 + 'px';
+			//body.style.maxHeight = br.height - 60 + 'px';
 
 			cardBottom = br.bottom;
 			cardBottom = br.bottom;
@@ -71,7 +71,7 @@
 	</div>
 
 	<!-- card body -->
-	<div id="{cardId}-body" bind:clientHeight={bodyHeight} class="kjv-card-body">
+	<div id="{cardId}-body" bind:clientHeight={bodyHeight} class="kjv-card-body d-flex flex-fill">
 		<slot name="body" {bodyHeight} />
 	</div>
 
@@ -96,7 +96,8 @@
 	{/if}
 
 	<!-- card footer -->
-	<div id="_{cardId}-footer" class="kjv-card-footer {selected}">
-		<slot name="footer" />
+	<!-- <div id="_{cardId}-footer" class="kjv-card-footer {selected}"></div>  -->
+	<div id="_{cardId}-footer" class="kjv-card-footer">
+		<slot name="footer" />	
 	</div>
 </div>

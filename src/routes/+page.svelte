@@ -39,16 +39,22 @@
 		p = paneService.getRootPane();
 	});
 
-	// opens bible buffer
-	paneKeyBindingMap.set('shift+X b', () => {
+
+	function setBibleBuffer(){
 		let b = new Buffer();
 		b.componentName = 'Chapter';
 		b.component = Chapter;
+		b.bag = {
+			currentChapterKey: "1_1"
+		}
 		paneService.setBuffer(b);
 		currentBuffer.set(b);
 		paneService.saveRootPane();
 		p = paneService.getRootPane();
-	});
+	}
+
+	// opens bible buffer
+	paneKeyBindingMap.set('shift+X b', setBibleBuffer);
 
 	// opens memory buffer
 	paneKeyBindingMap.set('shift+X m', () => {
@@ -100,12 +106,16 @@
 		bibleDB.init();
 		paneStore.useLocalStorage();
 		paneStore.subscribe((pane) => {
+			if (pane.buffer.componentName === "NullBuffer"){
+				setBibleBuffer()
+				return
+			}
 			p = pane;
 		});
 	});
 </script>
 
-<div class="container-fluid">
+<div class="container-fluid p-0">
 	<div class="h-100">
 		<div id="_root-pane" class="h-100">
 			{#if p}
@@ -125,9 +135,18 @@
 	#_root-pane {
 		display: flex;
 	}
+
 	.container-fluid {
-		height: calc(100vh - 4.75rem);
-		/* height: 100vh; */
+		height: 100vh;
+	}
+
+	@include media-breakpoint-up(lg) {
+		.container-fluid {
+			height: calc(100vh - 4.75rem);
+		}
+	}
+
+	.container-fluid {
 		overflow: hidden;
 
 		@include themify($themes) {

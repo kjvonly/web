@@ -1,5 +1,32 @@
-.kjv-verse-list {
+@import '../../themes.scss';
+@import '../../common.scss';
+
+.kjv-memory-verse-list {
 	overflow-y: scroll;
 	width: 100%;
 	margin: none;
+}
+
+.kjv-memory-header {
+	@include themify($themes) {
+		border-bottom: thin solid themed('kjv-memory-header-border-bottom-color');
+	}
+	font-size: 1em;
+	height: 10vh !important;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.kjv-memory-header > audio {
+	height: 5vh;
+}
+
+
+.kjv-memory-footer {
+	@include themify($themes) {
+		border-top: thin solid themed('kjv-memory-header-border-bottom-color');
+	}
+	font-size: 1em;
+	height: 10vh !important;
 }

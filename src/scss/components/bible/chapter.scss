@@ -84,29 +84,27 @@ u.xref {
 
 .kjv-chapter-header {
 	@include themify($themes) {
-		background-color: themed('kjv-chapter-header-background-color');
-		color: themed('kjv-chapter-header-color');
+		border-bottom: thin solid themed('kjv-chapter-header-border-bottom-color');
 	}
-	padding: 2rem;
-	align-items: center;
-	display: flex;
-	height: 30px !important;
+	font-size: 1em;
+	height: 5vh !important;
+}
 
-	@extend %kjvonly-noselect;
+.kjv-chapter-header-shrunk {
+	@include themify($themes) {
+		border-bottom: thin solid themed('kjv-chapter-header-border-bottom-color');
+	}
+	font-size: 1em;
+	height: 2.5vh !important;
 }
 
 .kjv-chapter-footer {
 	@include themify($themes) {
-		background-color: themed('kjv-chapter-footer-background-color');
-		color: themed('kjv-chapter-footer-color');
+		border-top: thin solid themed('kjv-chapter-header-border-bottom-color');
 	}
-
-	padding: 2rem;
-	height: 30px !important;
-	align-items: center;
-	display: flex;
-
-	@extend %kjvonly-noselect;
+	font-size: 1em;
+	height: 10vh !important;
+	
 }
 
 .selected-buffer {

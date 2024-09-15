@@ -20,7 +20,7 @@ body {
 
 		//firefox
 		scrollbar-color: themed('kjv-scrollbar-background-color') transparent !important;
-		scrollbar-width: auto !important;
+		scrollbar-width: 0em !important;
 
 		/* Chrome/Brave */
 		::-webkit-scrollbar {

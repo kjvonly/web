@@ -15,8 +15,8 @@
 	import type { MenuItem } from './components/menu-item';
 	import { SwipeService } from '../../services/swipe.service';
 	import Icon from 'svelte-awesome';
-	import mapPin from 'svelte-awesome/icons/mapPin';
-	import { api } from '../../api/api';
+	import { volumeUp, font, search } from 'svelte-awesome/icons';
+	import MobileMenu from '../../menus/mobile-menu.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -27,11 +27,14 @@
 
 	$: selectedVerse = 0;
 
-	let loaded = false;
 	let chapter: any;
 	let verses: any[] = [];
 
 	let key: string;
+
+	// Initial state
+	let scrollPos = 0;
+	$: isReading = false;
 
 	afterUpdate(() => {
 		if (key !== buffer.key) {
@@ -41,7 +44,11 @@
 	});
 
 	onMount(() => {
+		console.log('chapter svelte');
 		if (buffer.bag.currentChapterKey) {
+			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
+		} else {
+			buffer.bag.currentChapterKey = '1_1'
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		}
 
@@ -50,11 +57,28 @@
 			selectedVerses = selectedVerses;
 		}
 
-		document.querySelector('div#' + chapterId + '-chapter')
-			?.addEventListener('touchstart', swipeService.handleTouchStart, false);
-		document
-			.querySelector('div#' + chapterId + '-chapter')
-			?.addEventListener('touchmove', swipeService.handleTouchMove, false);
+		let kjvChapter = document.querySelector('div#' + chapterId + '-chapter');
+
+		kjvChapter?.addEventListener('touchstart', swipeService.handleTouchStart, false);
+
+		kjvChapter?.addEventListener('touchmove', swipeService.handleTouchMove, false);
+
+		// adding scroll event
+		kjvChapter?.addEventListener('scroll', function (event) {
+			// detects new state and compares it with the new one
+			if (kjvChapter.scrollTop < scrollPos) {
+				if (kjvChapter.scrollTop < 150) {	
+					isReading = false;
+				}
+			} else {
+				if (kjvChapter.scrollTop > 150) {
+					isReading = true;
+				}
+			}
+
+			// saves the new position for iteration.
+			scrollPos = kjvChapter.scrollTop;
+		});
 	});
 
 	function enableKeyBindings() {
@@ -294,20 +318,44 @@
 </script>
 
 <Card bind:buffer bind:popup>
-	<div slot="header" class="w-100">
-		<div class="d-flex flex-row">
-			<p class="d-flex align-items-center m-0">
-				{#if chapter}
-					<strong class="font-semibold">{chapter.bookName} {chapter.number}</strong>
-				{/if}
-			</p>
-			<span class="flex-fill"></span>
+	<div slot="header" class="h-100 w-100">
+		{#if !isReading}
+			<div class="kjv-chapter-header h-100 w-100">
+				<div class="d-flex flex-row h-100">
+					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
+						{#if chapter}
+							<div on:click={() => _goto()}>
+								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+							</div>
+						{/if}
+					</div>
+					<span class="flex-fill"></span>
 
-			<div on:click={() => _goto()} class="p-3 d-flex flex-row align-items-center">
-				<Icon class="main-menu-item-icon" data={mapPin} scale={1}></Icon>
+					<div class="d-flex flex-row justify-content-between">
+						<div class="me-4 d-flex align-items-center">
+							<Icon data={volumeUp}></Icon>
+						</div>
+						<div class="me-4 d-flex align-items-center"><Icon data={font}></Icon></div>
+						<div class="me-2 d-flex align-items-center"><Icon data={search}></Icon></div>
+					</div>
+				</div>
 			</div>
-		</div>
+		{:else}
+			<div class="kjv-chapter-header-shrunk h-100 w-100">
+				<div class="d-flex flex-row h-100">
+					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
+						{#if chapter}
+							<div on:click={() => _goto()}>
+								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+							</div>
+						{/if}
+					</div>
+					<span class="flex-fill"></span>
+				</div>
+			</div>
+		{/if}
 	</div>
+
 	<div slot="body" let:bodyHeight>
 		<div id="{chapterId}-chapter" class="kjv-chapter" style="max-height: {bodyHeight}px;">
 			{#if verses.length > 0}
@@ -343,10 +391,12 @@
 			{/if}
 		</div>
 	</div>
-	<div slot="footer">
-		<p class="text-sm m-0">
-			<strong class="font-semibold">Bible Buffer</strong>
-		</p>
+	<div class="w-100" slot="footer">
+		{#if !isReading}
+			<div class="kjv-chapter-footer d-flex align-items-center p-4">
+				<MobileMenu></MobileMenu>
+			</div>
+		{/if}
 	</div>
 </Card>
 <Menu bind:parentId={chapterId} bind:menuData></Menu>
