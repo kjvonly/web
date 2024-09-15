@@ -6,6 +6,7 @@
 	import MobileMenu from '../../menus/mobile-menu.svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import { paneService } from '../../services/pane.service';
+	import { bufferService } from '../../services/buffer.service';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -152,6 +153,7 @@
 		searchVerses = searchVerses;
 
 		buffer.bag.selectedVerses = selectedVerses;
+		bufferService.set(buffer)
 		paneService.saveRootPane();
 	}
 

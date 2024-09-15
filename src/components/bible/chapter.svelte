@@ -17,6 +17,7 @@
 	import Icon from 'svelte-awesome';
 	import { volumeUp, font, search } from 'svelte-awesome/icons';
 	import MobileMenu from '../../menus/mobile-menu.svelte';
+	import { bufferService } from '../../services/buffer.service';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -101,6 +102,11 @@
 		}
 	}
 
+	function cache(){
+		bufferService.set(buffer)
+		paneService.saveRootPane()
+	}
+
 	/* search popup */
 
 	function _search() {
@@ -135,7 +141,7 @@
 		let bookChapterStr: string = event.detail.chapter;
 		await updateChapterFromShortName(bookChapterStr);
 		enableKeyBindings();
-		paneService.saveRootPane();
+		cache()
 	}
 
 	async function updateChapterFromShortName(shortName: string) {
@@ -203,7 +209,7 @@
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
 		clearSelectedVerses();
-		paneService.saveRootPane();
+		cache()
 	}
 
 	function updateChapter(c: any) {
@@ -264,7 +270,7 @@
 		}
 		selectedVerses = selectedVerses;
 		buffer.bag.selectedVerses = [...selectedVerses];
-		paneService.saveRootPane();
+		cache()
 		e.stopPropagation();
 	}
 
@@ -294,7 +300,7 @@
 		selectedVerses.clear();
 		selectedVerses = selectedVerses;
 		buffer.bag.selectedVerses = [];
-		paneService.saveRootPane();
+		cache()
 	}
 
 	function onClearSelectedVerses() {
