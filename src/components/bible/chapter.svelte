@@ -21,6 +21,7 @@
 
 	export let buffer: Buffer;
 	let popup: any;
+	let popupRatio: number;
 
 	let swipeService = new SwipeService(_previousChapter, _nextChapter);
 
@@ -131,6 +132,7 @@
 
 	function _search() {
 		disableKeybinding();
+		popupRatio = 1
 		popup = {
 			component: Search,
 			handler: searchHandler
@@ -148,7 +150,9 @@
 	/* goto popup */
 
 	function _goto() {
+		
 		disableKeybinding();
+		popupRatio = 1
 		popup = {
 			component: Goto,
 			handler: gotoHandler
@@ -196,6 +200,7 @@
 		}
 
 		disableKeybinding();
+		popupRatio = 5/10;
 		popup = {
 			component: Strongs,
 			handler: strongsHandler,
@@ -343,7 +348,7 @@
 	};
 </script>
 
-<Card bind:buffer bind:popup>
+<Card bind:buffer bind:popup bind:popupRatio>
 	<div slot="header" class="h-100 w-100">
 		{#if !isReading}
 			<div class="kjv-chapter-header h-100 w-100">

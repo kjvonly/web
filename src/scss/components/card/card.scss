@@ -2,7 +2,9 @@
 @import '../../common.scss';
 
 
-
+.popup-container {
+	height: var(--height);
+}
 
 .kjv-card-header {
 	@extend %kjvonly-noselect;

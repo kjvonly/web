@@ -2,7 +2,7 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import Icon from 'svelte-awesome';
-	import { search } from 'svelte-awesome/icons';
+	import { search, close } from 'svelte-awesome/icons';
 
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
@@ -15,9 +15,8 @@
 	const dispatch = createEventDispatcher();
 
 	let bookChapter: string = '';
+	$: popupHeight = parentHeight + 'px';
 
-	let gotoHeight: number;
-	$: gotoHeightStyle = gotoHeight + 'px';
 	onMount(() => {
 		let el = document.getElementById('goto-popup-' + gotoID);
 		let pel = el?.parentNode as HTMLElement;
@@ -29,46 +28,55 @@
 			bookChapter = '';
 		}
 
-		let footer = document.getElementById('_' + parentId + '-footer') as HTMLElement;
-		gotoHeight = footer.clientHeight;
-
 		setTimeout(() => {
 			input?.focus();
 		}, 1);
 
 		// Get the input field
-	
 
 		input?.addEventListener('keypress', function (event) {
 			if (event.key === 'Enter') {
-				onSearch(event)
+				onSearch(event);
 			}
 		});
 	});
 
-	function onSearch(event:any) {
-			event.preventDefault();
-				dispatch('popupHandler', {
-					chapter: bookChapter
-				});	
-		}
+	function onSearch(event: any) {
+		event.preventDefault();
+		dispatch('popupHandler', {
+			chapter: bookChapter
+		});
+	}
+
+	function onClose() {
+		dispatch('popupHandler', {
+			chapter: ''
+		});
+	}
 </script>
 
-<div id="goto-popup-{gotoID}" class="flex flex-fill w-100">
-	<div
-		class="d-flex flex-fill align-items-end kjv-chapter-goto-container w-100"
-		style:--height={gotoHeightStyle}
-	>
-		<div class="d-flex kjv-chapter-goto-input-container w-100">
-			<input
-				id="goto-input-{gotoID}"
-				class="kjv-chapter-goto-input w-100"
-				bind:value={bookChapter}
-				placeholder="search"
-			/>
+<div id="goto-popup-{gotoID}" style:--height={popupHeight} class="w-100 popup-container">
+	<div class="d-flex flex-column h-100 w-100">
+		<div class="d-flex flex-row w-100">
 			<span class="d-flex flex-fill"></span>
-			<div on:click={onSearch} class="d-flex align-items-center me-4">
-				<Icon data={search}></Icon>
+			<div class="me-2" on:click={onClose}>
+				<Icon data={close}></Icon>
+			</div>
+		</div>
+		<span class="d-flex flex-fill"></span>
+
+		<div class="d-flex w-100">
+			<div class="d-flex kjv-chapter-goto-input-container w-100">
+				<input
+					id="goto-input-{gotoID}"
+					class="kjv-chapter-goto-input w-100"
+					bind:value={bookChapter}
+					placeholder="search"
+				/>
+				<span class="d-flex flex-fill"></span>
+				<div on:click={onSearch} class="d-flex align-items-center me-4">
+					<Icon data={search}></Icon>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -7,18 +7,14 @@
 		color: themed('kjv-goto-color');
 	}
 
-	position: absolute;
 	bottom: 0;
-	height: var(--height);
 }
 
 .kjv-chapter-goto-input-container {
-	
 	margin: 1rem;
 	border-radius: 1rem;
 	border-width: 0.1rem;
 	border-style: solid;
-
 }
 
 .kjv-chapter-goto-input {
