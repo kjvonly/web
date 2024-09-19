@@ -69,13 +69,11 @@ u.xref {
 }
 
 .kjv-verse-inner {
-	margin-left: 2rem;
-	margin-right: 2rem;
-
 	@extend %kjvonly-noselect;
 }
 
 .kjv-words {
+	font-size: 1rem;
 	word-spacing: 0.5rem;
 	span {
 		display: inline-block;

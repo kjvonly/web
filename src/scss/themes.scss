@@ -78,8 +78,8 @@ $card-light: (
 	/* quadrant */
 	kjv-card-container-background-color: map-get($light, 'surface'),
 	/* popup */
-	kjv-card-popup-border-top-color: $secondary-800,
-	kjv-card-popup-background-color: map-get($light, 'background')
+	kjv-card-popup-background-color: map-get($light, 'background'),
+	kjv-card-popup-border-top-color: map-get($light, 'on-background'),
 );
 
 $chapter-light: (
@@ -121,11 +121,11 @@ $scrollbar-light: (
 );
 
 $goto-light: (
-	kjv-goto-background-color: map-get($light, 'primary-variant'),
-	kjv-goto-color: map-get($light, 'on-primary'),
-	kjv-goto-border-color: $primary-100,
-	kjv-goto-border-focus-color: map-get($light, 'on-primary'),
-	kjv-goto-border-focus-background-color: map-get($light, 'primary')
+	kjv-goto-background-color: map-get($light, 'background'),
+	kjv-goto-color: map-get($light, 'on-background'),
+	kjv-goto-border-color:  map-get($light, 'on-background'),
+	kjv-goto-border-focus-color: map-get($light, 'on-background'),
+	kjv-goto-border-focus-background-color: map-get($light, 'background')
 );
 
 $strongs-popup-light: (

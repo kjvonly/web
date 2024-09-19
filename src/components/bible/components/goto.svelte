@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
+	import Icon from 'svelte-awesome';
+	import { search } from 'svelte-awesome/icons';
 
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
@@ -35,16 +37,21 @@
 		}, 1);
 
 		// Get the input field
+	
 
 		input?.addEventListener('keypress', function (event) {
 			if (event.key === 'Enter') {
-				event.preventDefault();
-				dispatch('popupHandler', {
-					chapter: bookChapter
-				});
+				onSearch(event)
 			}
 		});
 	});
+
+	function onSearch(event:any) {
+			event.preventDefault();
+				dispatch('popupHandler', {
+					chapter: bookChapter
+				});	
+		}
 </script>
 
 <div id="goto-popup-{gotoID}" class="flex flex-fill w-100">
@@ -53,13 +60,16 @@
 		style:--height={gotoHeightStyle}
 	>
 		<div class="d-flex kjv-chapter-goto-input-container w-100">
-			<p class="pe-2 m-0">Go to:</p>
 			<input
 				id="goto-input-{gotoID}"
 				class="kjv-chapter-goto-input w-100"
 				bind:value={bookChapter}
-				placeholder="mat 1"
+				placeholder="search"
 			/>
+			<span class="d-flex flex-fill"></span>
+			<div on:click={onSearch} class="d-flex align-items-center me-4">
+				<Icon data={search}></Icon>
+			</div>
 		</div>
 	</div>
 </div>

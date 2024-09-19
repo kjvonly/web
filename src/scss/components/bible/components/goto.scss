@@ -2,7 +2,7 @@
 
 .kjv-chapter-goto-container {
 	@include themify($themes) {
-		border-radius: 0 0 1rem 1rem;
+		border-radius: 0 0 0 0;
 		background-color: themed('kjv-goto-background-color');
 		color: themed('kjv-goto-color');
 	}
@@ -13,17 +13,25 @@
 }
 
 .kjv-chapter-goto-input-container {
-	padding-left: 1rem;
+	
+	margin: 1rem;
+	border-radius: 1rem;
+	border-width: 0.1rem;
+	border-style: solid;
+
 }
 
 .kjv-chapter-goto-input {
+
+	border-width: 0rem;
+	border-radius: 1rem;
+	padding-left: 1rem;
+
 	@include themify($themes) {
 		background-color: themed('kjv-goto-background-color');
-		border-radius: 0 0 1rem 0rem;
 		color: themed('kjv-goto-color');
 		border-color: themed('kjv-goto-border-color');
-		border-width: 0.1rem;
-		border-style: solid;
+
 	}
 }
 
