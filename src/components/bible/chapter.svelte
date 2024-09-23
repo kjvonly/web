@@ -17,9 +17,11 @@
 	import Icon from 'svelte-awesome';
 	import { volumeUp, font, search } from 'svelte-awesome/icons';
 	import MobileMenu from '../../menus/mobile-menu.svelte';
+	import { bufferService } from '../../services/buffer.service';
 
 	export let buffer: Buffer;
 	let popup: any;
+	let popupRatio: number;
 
 	let swipeService = new SwipeService(_previousChapter, _nextChapter);
 
@@ -34,6 +36,7 @@
 
 	// Initial state
 	let scrollPos = 0;
+	let scrollBottom = 0;
 	$: isReading = false;
 
 	afterUpdate(() => {
@@ -43,12 +46,45 @@
 		}
 	});
 
+	function throttle(eventListener: any, delay: number) {
+		let lastCall = 0;
+		return function (event: any) {
+			const now = Date.now();
+			if (now - lastCall >= delay) {
+				eventListener(event);
+				lastCall = now;
+			}
+		};
+	}
+
+	function handleScroll() {
+		let kjvChapter = document.querySelector('div#' + chapterId + '-chapter');
+
+		
+		if (kjvChapter == null) {
+			return;
+		}
+		
+		// detects new state and compares it with the new one
+		if (kjvChapter.scrollTop < scrollPos) {
+			if (kjvChapter.scrollTop == 0) {
+				isReading = false;
+			}
+		} else {
+			if (kjvChapter.scrollTop > 0 && (kjvChapter.scrollHeight / kjvChapter.clientHeight) > 3) {
+				isReading = true;
+			}
+		}
+
+		// saves the new position for iteration.
+		scrollPos = kjvChapter.scrollTop;
+	}
 	onMount(() => {
 		console.log('chapter svelte');
 		if (buffer.bag.currentChapterKey) {
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		} else {
-			buffer.bag.currentChapterKey = '1_1'
+			buffer.bag.currentChapterKey = '1_1';
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		}
 
@@ -64,21 +100,7 @@
 		kjvChapter?.addEventListener('touchmove', swipeService.handleTouchMove, false);
 
 		// adding scroll event
-		kjvChapter?.addEventListener('scroll', function (event) {
-			// detects new state and compares it with the new one
-			if (kjvChapter.scrollTop < scrollPos) {
-				if (kjvChapter.scrollTop < 150) {	
-					isReading = false;
-				}
-			} else {
-				if (kjvChapter.scrollTop > 150) {
-					isReading = true;
-				}
-			}
-
-			// saves the new position for iteration.
-			scrollPos = kjvChapter.scrollTop;
-		});
+		kjvChapter?.addEventListener('scroll',handleScroll);
 	});
 
 	function enableKeyBindings() {
@@ -101,10 +123,16 @@
 		}
 	}
 
+	function cache() {
+		bufferService.set(buffer);
+		paneService.saveRootPane();
+	}
+
 	/* search popup */
 
 	function _search() {
 		disableKeybinding();
+		popupRatio = 1
 		popup = {
 			component: Search,
 			handler: searchHandler
@@ -122,7 +150,9 @@
 	/* goto popup */
 
 	function _goto() {
+		
 		disableKeybinding();
+		popupRatio = 1
 		popup = {
 			component: Goto,
 			handler: gotoHandler
@@ -135,7 +165,7 @@
 		let bookChapterStr: string = event.detail.chapter;
 		await updateChapterFromShortName(bookChapterStr);
 		enableKeyBindings();
-		paneService.saveRootPane();
+		cache();
 	}
 
 	async function updateChapterFromShortName(shortName: string) {
@@ -170,6 +200,7 @@
 		}
 
 		disableKeybinding();
+		popupRatio = 5/10;
 		popup = {
 			component: Strongs,
 			handler: strongsHandler,
@@ -203,7 +234,7 @@
 		buffer.bag.currentChapterKey = chapterKey;
 		updateChapter(chapter);
 		clearSelectedVerses();
-		paneService.saveRootPane();
+		cache();
 	}
 
 	function updateChapter(c: any) {
@@ -264,7 +295,7 @@
 		}
 		selectedVerses = selectedVerses;
 		buffer.bag.selectedVerses = [...selectedVerses];
-		paneService.saveRootPane();
+		cache();
 		e.stopPropagation();
 	}
 
@@ -294,7 +325,7 @@
 		selectedVerses.clear();
 		selectedVerses = selectedVerses;
 		buffer.bag.selectedVerses = [];
-		paneService.saveRootPane();
+		cache();
 	}
 
 	function onClearSelectedVerses() {
@@ -317,7 +348,7 @@
 	};
 </script>
 
-<Card bind:buffer bind:popup>
+<Card bind:buffer bind:popup bind:popupRatio>
 	<div slot="header" class="h-100 w-100">
 		{#if !isReading}
 			<div class="kjv-chapter-header h-100 w-100">
@@ -325,7 +356,9 @@
 					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
 						{#if chapter}
 							<div on:click={() => _goto()}>
-								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+								<span class="font-semibold"
+									>{chapter.bookName} {chapter.number}
+								</span>
 							</div>
 						{/if}
 					</div>
@@ -346,7 +379,9 @@
 					<div class="kjv-chapter-header-book-chapter d-flex align-items-center m-0 ps-2">
 						{#if chapter}
 							<div on:click={() => _goto()}>
-								<span class="font-semibold">{chapter.bookName} {chapter.number}</span>
+								<span class="font-semibold"
+									>{chapter.bookName} {chapter.number}</span
+								>
 							</div>
 						{/if}
 					</div>

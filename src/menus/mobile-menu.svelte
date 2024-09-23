@@ -3,35 +3,56 @@
 	import Icon from 'svelte-awesome';
 	import { paneService } from '../services/pane.service';
 	import type { MenuItem } from '../components/bible/components/menu-item';
-	import { Buffer } from '../models/buffer.model';
+	import { Buffer, NullBuffer } from '../models/buffer.model';
 	import Chapter from '../components/bible/chapter.svelte';
 	import { currentBuffer } from '../services/current-buffer.service';
 	import Memory from '../components/memory/memory.svelte';
+	import { bufferService } from '../services/buffer.service';
 
 	function onClick(m: any): void {
 		let b = new Buffer();
 		switch (m.name) {
 			case 'home':
-				b.componentName = 'home';
-				b.component = Chapter;
+				let hb = bufferService.get('hb');
+				if (hb instanceof NullBuffer) {
+					b.name = 'home';
+					b.componentName = 'home';
+					b.component = Chapter;
+				} else {
+					b = hb
+				}
+
 				paneService.setBuffer(b);
 				currentBuffer.set(b);
 				paneService.saveRootPane();
-				break
+				break;
 			case 'bible':
-				b.componentName = 'Chapter';
-				b.component = Chapter;
+				let cb = bufferService.get('chapter');
+				if (cb instanceof NullBuffer) {
+					b.name = 'chapter';
+					b.componentName = 'Chapter';
+					b.component = Chapter;
+				} else {
+					b = cb;
+				}
+
 				paneService.setBuffer(b);
 				currentBuffer.set(b);
 				paneService.saveRootPane();
-				break
+				break;
 			case 'memory':
-				b.componentName = 'Memory';
-				b.component = Memory;
+				let mb = bufferService.get('memory');
+				if (mb instanceof NullBuffer) {
+					b.name = 'memory';
+					b.componentName = 'Memory';
+					b.component = Memory;
+				} else {
+					b = mb;
+				}
 				paneService.setBuffer(b);
 				currentBuffer.set(b);
 				paneService.saveRootPane();
-				break
+				break;
 		}
 	}
 </script>

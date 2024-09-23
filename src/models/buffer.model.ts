@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class Buffer {
 	key: string = uuidv4();
+	name: string = '';
 	component: any;
 	componentName: string = '';
 	keyboardBindings: Map<string, Function> = new Map<string, Function>();

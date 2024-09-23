@@ -14,6 +14,7 @@
 	import Search from '../components/search/search.svelte';
 	import TestCard from '../components/card/test-card.svelte';
 	import Memory from '../components/memory/memory.svelte';
+	import { bufferService } from '../services/buffer.service';
 
 	let p: Pane;
 
@@ -39,14 +40,13 @@
 		p = paneService.getRootPane();
 	});
 
-
-	function setBibleBuffer(){
+	function setBibleBuffer() {
 		let b = new Buffer();
 		b.componentName = 'Chapter';
 		b.component = Chapter;
 		b.bag = {
-			currentChapterKey: "1_1"
-		}
+			currentChapterKey: '1_1'
+		};
 		paneService.setBuffer(b);
 		currentBuffer.set(b);
 		paneService.saveRootPane();
@@ -101,16 +101,41 @@
 		paneService.saveRootPane();
 	}
 
+	// Create a condition that targets viewports at least 768px wide
+	const mediaQuery = window.matchMedia('(max-width: 991.98px)');
+
+	function handleTabletChange(e: any) {
+		// Check if the media query is true
+		if (e.matches) {
+			if (p.buffer.componentName === 'NullBuffer') {
+				let b = new Buffer();
+				b.name = "chapter"
+				b.componentName = 'Chapter';
+				b.component = Chapter;
+				b.bag = {
+					currentChapterKey: '1_1'
+				};
+				paneService.setBuffer(b);
+				currentBuffer.set(b);
+				paneService.saveRootPane();
+				bufferService.set(b)
+				p = paneService.getRootPane();
+			}
+			// Then log the following message to the console
+			console.log('Media Query Matched!');
+		}
+	}
+
+	// Register event listener
+	mediaQuery.addListener(handleTabletChange);
+
 	onMount(() => {
-		/* This pulls the chatper and strongs data from api and stores in indexdb for offline use. */
+		/* This pulls the chapter and strongs data from api and stores in indexdb for offline use. */
 		bibleDB.init();
 		paneStore.useLocalStorage();
 		paneStore.subscribe((pane) => {
-			if (pane.buffer.componentName === "NullBuffer"){
-				setBibleBuffer()
-				return
-			}
 			p = pane;
+			handleTabletChange(mediaQuery);
 		});
 	});
 </script>

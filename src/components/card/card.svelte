@@ -6,6 +6,7 @@
 
 	export let buffer: Buffer;
 	export let popup: any;
+	export let popupRatio: number;
 
 	let cardId = '_kjv-card-' + uuidv4();
 
@@ -20,9 +21,9 @@
 	$: selected = buffer.selected ? 'selected-card' : '';
 
 	/* popup css */
-	$: popupHeight = cardHeight / 2;
-	$: popupHeightStyle = cardHeight / 2 + 'px';
-	$: popuptop = cardBottom - cardHeight / 2 + 'px';
+	$: popupHeight = cardHeight * popupRatio ;
+	$: popupHeightStyle = cardHeight * popupRatio + 'px';
+	$: popuptop = cardBottom - cardHeight * popupRatio + 'px';
 	var popupWidth: string;
 
 	onMount(() => {
