@@ -2,7 +2,8 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { v4 as uuidv4 } from 'uuid';
 	import Icon from 'svelte-awesome';
-	import { search, close } from 'svelte-awesome/icons';
+	import { search, close, angleDown, angleUp } from 'svelte-awesome/icons';
+	import { chapterService } from '../../../api/chapters.service';
 
 	export let parentHeight: number;
 	export let keyboardBindings: Map<string, Function>;
@@ -15,14 +16,39 @@
 	const dispatch = createEventDispatcher();
 
 	let bookChapter: string = '';
+	let bookListHeight: number = 0;
+
 	$: popupHeight = parentHeight + 'px';
+	$: booksOrdered = [];
+	$: BooksAlphabetical = [];
+
+	function compareNumbers(a: any, b: any) {
+		return a - b;
+	}
 
 	onMount(() => {
+		chapterService.getChapter('booknames').then((data: any) => {
+			let bookNames: any = data;
+
+			for (const k of Object.keys(bookNames['booknamesById']).sort(compareNumbers)) {
+				booksOrdered.push({ bookId: k, name: bookNames['booknamesById'][k], showChapters: false });
+			}
+
+			booksOrdered = booksOrdered;
+		});
+
 		let el = document.getElementById('goto-popup-' + gotoID);
 		let pel = el?.parentNode as HTMLElement;
 
-		containerHeight = pel.getBoundingClientRect().height;
+		//	containerHeight = pel.getBoundingClientRect().height;
 		let input = document.getElementById('goto-input-' + gotoID);
+
+		let inputHeight = document.getElementById('kjv-chapter-goto-input-container-' + gotoID);
+		console.log(inputHeight);
+		if (inputHeight != null) {
+			console.log(inputHeight.clientHeight + 'client height');
+			bookListHeight = parentHeight - inputHeight.clientHeight;
+		}
 
 		if (input) {
 			bookChapter = '';
@@ -59,14 +85,36 @@
 	<div class="d-flex flex-column h-100 w-100">
 		<div class="d-flex flex-row w-100">
 			<span class="d-flex flex-fill"></span>
+
 			<div class="me-2" on:click={onClose}>
 				<Icon data={close}></Icon>
 			</div>
 		</div>
+
+		<div class="kjv-goto-book-list" style:--height={bookListHeight - 20 + 'px'}>
+			{#each booksOrdered as v}
+				<div class="d-flex flex-row w-100 m-1">
+					{v['name']}
+					<span class="d-flex flex-fill"></span>
+					<div class="d-flex flex-row me-4">
+
+						{#if !v["showChapters"]}
+						<div  on:click={() => { v["showChapters"] = true}}><Icon data={angleDown}></Icon></div>
+						{/if}
+						{#if v["showChapters"]}
+						<div  on:click={() => { v["showChapters"] = false}}><Icon data={angleUp}></Icon></div>
+						{/if}
+					</div>
+				</div>
+			{/each}
+		</div>
 		<span class="d-flex flex-fill"></span>
 
 		<div class="d-flex w-100">
-			<div class="d-flex kjv-chapter-goto-input-container w-100">
+			<div
+				id="kjv-chapter-goto-input-container-{gotoID}"
+				class="d-flex kjv-chapter-goto-input-container w-100"
+			>
 				<input
 					id="goto-input-{gotoID}"
 					class="kjv-chapter-goto-input w-100"
@@ -83,6 +131,11 @@
 </div>
 
 <style>
+	.kjv-goto-book-list {
+		overflow-y: hidden;
+		display: flex;
+		flex-direction: column;
+	}
 	p {
 		display: flex;
 		align-items: center !important;
