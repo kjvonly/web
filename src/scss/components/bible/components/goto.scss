@@ -10,6 +10,14 @@
 	bottom: 0;
 }
 
+.kjv-goto-chapter-number {
+	
+	@include themify($themes) {
+		border: thin solid themed('kjv-goto-chapter-number');	
+	}
+	
+}
+
 .kjv-chapter-goto-input-container {
 	margin: 1rem;
 	border-radius: 1rem;

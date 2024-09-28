@@ -125,7 +125,8 @@ $goto-light: (
 	kjv-goto-color: map-get($light, 'on-background'),
 	kjv-goto-border-color:  map-get($light, 'on-background'),
 	kjv-goto-border-focus-color: map-get($light, 'on-background'),
-	kjv-goto-border-focus-background-color: map-get($light, 'background')
+	kjv-goto-border-focus-background-color: map-get($light, 'background'),
+	kjv-goto-chapter-number: map-get($light, 'on-background'),
 );
 
 $strongs-popup-light: (

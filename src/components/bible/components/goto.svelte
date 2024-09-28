@@ -31,7 +31,13 @@
 			let bookNames: any = data;
 
 			for (const k of Object.keys(bookNames['booknamesById']).sort(compareNumbers)) {
-				booksOrdered.push({ bookId: k, name: bookNames['booknamesById'][k], showChapters: false });
+				booksOrdered.push({
+					bookId: k,
+					name: bookNames['booknamesById'][k],
+					showChapters: false,
+					maxChapter: bookNames['maxChapterById'][k],
+					shortName: bookNames['shortNames'][k],
+				});
 			}
 
 			booksOrdered = booksOrdered;
@@ -97,15 +103,42 @@
 					{v['name']}
 					<span class="d-flex flex-fill"></span>
 					<div class="d-flex flex-row me-4">
-
-						{#if !v["showChapters"]}
-						<div  on:click={() => { v["showChapters"] = true}}><Icon data={angleDown}></Icon></div>
+						{#if !v['showChapters']}
+							<div
+								on:click={() => {
+									v['showChapters'] = true;
+								}}
+							>
+								<Icon data={angleDown}></Icon>
+							</div>
 						{/if}
-						{#if v["showChapters"]}
-						<div  on:click={() => { v["showChapters"] = false}}><Icon data={angleUp}></Icon></div>
+						{#if v['showChapters']}
+							<div
+								on:click={() => {
+									v['showChapters'] = false;
+								}}
+							>
+								<Icon data={angleUp}></Icon>
+							</div>
 						{/if}
 					</div>
 				</div>
+
+				{#if v['showChapters']}
+					<div class="row justify-content-center m-2">
+						{#each { length: v['maxChapter'] } as _, i}
+							<div
+								on:click={(e) => {
+									bookChapter = v['shortName'] + ' ' + (i + 1);
+									onSearch(e);
+								}}
+								class="kjv-goto-chapter-number text-center m-2 col-2"
+							>
+								<span class="">{i + 1}</span>
+							</div>
+						{/each}
+					</div>
+				{/if}
 			{/each}
 		</div>
 		<span class="d-flex flex-fill"></span>
@@ -119,7 +152,7 @@
 					id="goto-input-{gotoID}"
 					class="kjv-chapter-goto-input w-100"
 					bind:value={bookChapter}
-					placeholder="search"
+					placeholder="short book chapter: joh 3 or deu 28"
 				/>
 				<span class="d-flex flex-fill"></span>
 				<div on:click={onSearch} class="d-flex align-items-center me-4">
@@ -132,14 +165,8 @@
 
 <style>
 	.kjv-goto-book-list {
-		overflow-y: hidden;
+		overflow-y: scroll;
 		display: flex;
 		flex-direction: column;
-	}
-	p {
-		display: flex;
-		align-items: center !important;
-		justify-content: center !important;
-		white-space: nowrap;
 	}
 </style>
