@@ -1,3 +1,15 @@
 @import '../themes.scss';
 
-.mobile-menu-item {}
+.mobile-menu-item {
+    @include themify($themes) {
+        background-color: themed('background');    
+        color: themed('on-background');
+	}
+
+    > svg  {
+        @include themify($themes) {
+            fill: themed('on-background') !important;        
+        }    
+    }
+ 
+}

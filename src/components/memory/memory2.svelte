@@ -7,11 +7,9 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { paneService } from '../../services/pane.service';
 	import { bufferService } from '../../services/buffer.service';
-	import Myscore from './components/myscore.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
-	let popupRatio = 1;
 	$: memoryId = '_kjv-memory-' + uuidv4();
 	let verse = '';
 	let bookNames: any = {};
@@ -155,7 +153,7 @@
 		searchVerses = searchVerses;
 
 		buffer.bag.selectedVerses = selectedVerses;
-		bufferService.set(buffer);
+		bufferService.set(buffer)
 		paneService.saveRootPane();
 	}
 
@@ -171,10 +169,47 @@
 	}
 </script>
 
-<Card bind:buffer bind:popup bind:popupRatio>
-	<div slot="header" class="h-100 w-100"></div>
+<Card bind:buffer bind:popup>
+	<div slot="header" class="h-100 w-100">
+		<div class="kjv-memory-header h-100 w-100">
+			<audio controls autoplay src={verse}></audio>
+		</div>
+	</div>
 	<div slot="body" class="h-100 w-100" let:bodyHeight>
-		<Myscore></Myscore>
+		<div id="{memoryId}-search" bind:clientHeight={searchHeight}>
+			<div class="p-2">
+				<input bind:value={search} />
+				<button on:click={onChange}>Search</button>
+			</div>
+		</div>
+		<div class="kjv-memory-verse-list p-3" style="max-height: {bodyHeight - searchHeight}px">
+			<div class="row">
+				<div class="col-6">
+					{#each searchVerses as verseIdx}
+						<div class="d-flex flex-row">
+							<input
+								on:change={() => verseSelected(verseIdx)}
+								type="checkbox"
+								bind:value={verses[verseIdx]['checked']}
+								bind:checked={verses[verseIdx]['checked']}
+							/> <span class="ps-2">{verses[verseIdx]['bcv']}</span>
+						</div>
+					{/each}
+				</div>
+				<div class="col-6">
+					{#each selectedVerses as verseIdx, idx}
+						<div class="d-flex flex-row">
+							<input
+								on:click={() => playlistVerseSelected(verseIdx, idx)}
+								type="checkbox"
+								bind:checked={verses[verseIdx]['checked']}
+								bind:value={verses[verseIdx]['checked']}
+							/> <span class="ps-2">{verses[verseIdx]['bcv']}</span>
+						</div>
+					{/each}
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="w-100" slot="footer">
