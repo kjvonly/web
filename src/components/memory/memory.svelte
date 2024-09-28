@@ -8,6 +8,7 @@
 	import { paneService } from '../../services/pane.service';
 	import { bufferService } from '../../services/buffer.service';
 	import Myscore from './components/myscore.svelte';
+	import Level from './components/level.svelte';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -174,6 +175,7 @@
 <Card bind:buffer bind:popup bind:popupRatio>
 	<div slot="header" class="h-100 w-100"></div>
 	<div slot="body" class="h-100 w-100" let:bodyHeight>
+		<Level></Level>
 		<Myscore></Myscore>
 	</div>
 
