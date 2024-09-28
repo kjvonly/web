@@ -100,7 +100,5 @@
 		background-color: rgb(127, 127, 127, 0.25);
 	}
 
-	.popup-container {
-		height: var(--height);
-	}
+	
 </style>

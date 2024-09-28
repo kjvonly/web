@@ -79,8 +79,8 @@
 		// saves the new position for iteration.
 		scrollPos = kjvChapter.scrollTop;
 	}
+	
 	onMount(() => {
-		console.log('chapter svelte');
 		if (buffer.bag.currentChapterKey) {
 			updateChapterFromChapterKeyOnMount(buffer.bag.currentChapterKey);
 		} else {
@@ -129,7 +129,6 @@
 	}
 
 	/* search popup */
-
 	function _search() {
 		disableKeybinding();
 		popupRatio = 1
