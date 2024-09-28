@@ -1,0 +1,6 @@
+.kjv-memory-header {
+    @include themify($themes) {
+        border-bottom: thin solid themed("primary");    
+	}     
+	height: 5vh !important;
+}

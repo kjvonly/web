@@ -9,8 +9,13 @@
 	import { bufferService } from '../../services/buffer.service';
 	import Myscore from './components/myscore.svelte';
 	import Level from './components/level.svelte';
+	import Header from './components/header.svelte';
+	import LearnVerses from './components/learn-verses.svelte';
 
 	export let buffer: Buffer;
+	export let learnVersesSelected: any;
+	export let hearVersesSelected: any;
+
 	let popup: any;
 	let popupRatio = 1;
 	$: memoryId = '_kjv-memory-' + uuidv4();
@@ -173,10 +178,21 @@
 </script>
 
 <Card bind:buffer bind:popup bind:popupRatio>
-	<div slot="header" class="h-100 w-100"></div>
+	<div slot="header" class="h-100 w-100">
+		<Header></Header>
+	</div>
 	<div slot="body" class="h-100 w-100" let:bodyHeight>
-		<Level></Level>
-		<Myscore></Myscore>
+		<div class="d-flex flex-column h-100">
+			<Level></Level>
+			<Myscore bind:learnVersesSelected bind:hearVersesSelected></Myscore>
+			<span class="d-flex flex-fill"></span>
+			{#if learnVersesSelected}
+				<LearnVerses></LearnVerses>
+			{/if}
+			{#if hearVersesSelected}
+				<span>hear</span>
+			{/if}
+		</div>
 	</div>
 
 	<div class="w-100" slot="footer">
