@@ -6,7 +6,7 @@
 	import { Buffer, NullBuffer } from '../models/buffer.model';
 	import Chapter from '../components/bible/chapter.svelte';
 	import { currentBuffer } from '../services/current-buffer.service';
-	import Memory from '../components/memory/memory.svelte';
+	import Memory from '../components/memory/home/home.svelte';
 	import { bufferService } from '../services/buffer.service';
 
 	function onClick(m: any): void {
