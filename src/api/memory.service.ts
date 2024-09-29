@@ -23,7 +23,7 @@ const jsonData: string = `
         "name": "Topical Memory System",
         "series": [
             {
-                "name":"Series A: Live the New Life",
+                "name": "Series A: Live the New Life",
                 "topics": [
                     {
                         "name": "Christ the Center",
@@ -44,14 +44,14 @@ const jsonData: string = `
                         "name": "Obedience to Christ",
                         "bcvs": [
                             {
-                            "book": "rom",
-                            "chapter":"12" ,
-                            "verse": "1" 
+                                "book": "rom",
+                                "chapter": "12",
+                                "verse": "1"
                             },
                             {
-                            "book": "joh",
-                            "chapter":"14" ,
-                            "verse": "21" 
+                                "book": "joh",
+                                "chapter": "14",
+                                "verse": "21"
                             }
                         ]
                     },
@@ -59,14 +59,14 @@ const jsonData: string = `
                         "name": "God's Word",
                         "bcvs": [
                             {
-                            "book": "2ti",
-                            "chapter":"3" ,
-                            "verse": "16" 
+                                "book": "2ti",
+                                "chapter": "3",
+                                "verse": "16"
                             },
                             {
-                            "book": "jos",
-                            "chapter":"1" ,
-                            "verse": "8" 
+                                "book": "jos",
+                                "chapter": "1",
+                                "verse": "8"
                             }
                         ]
                     },
@@ -74,19 +74,19 @@ const jsonData: string = `
                         "name": "Prayer",
                         "bcvs": [
                             {
-                            "book": "joh",
-                            "chapter":"15" ,
-                            "verse": "7" 
+                                "book": "joh",
+                                "chapter": "15",
+                                "verse": "7"
                             },
                             {
-                            "book": "phi",
-                            "chapter":"4" ,
-                            "verse": "6" 
+                                "book": "phi",
+                                "chapter": "4",
+                                "verse": "6"
                             },
                             {
-                            "book": "phi",
-                            "chapter":"4" ,
-                            "verse": "7" 
+                                "book": "phi",
+                                "chapter": "4",
+                                "verse": "7"
                             }
                         ]
                     },
@@ -94,19 +94,19 @@ const jsonData: string = `
                         "name": "Fellowship",
                         "bcvs": [
                             {
-                            "book": "1jo",
-                            "chapter":"1" ,
-                            "verse": "3" 
+                                "book": "1jo",
+                                "chapter": "1",
+                                "verse": "3"
                             },
                             {
-                            "book": "heb",
-                            "chapter":"10" ,
-                            "verse": "24" 
+                                "book": "heb",
+                                "chapter": "10",
+                                "verse": "24"
                             },
                             {
-                            "book": "heb",
-                            "chapter":"10" ,
-                            "verse": "25" 
+                                "book": "heb",
+                                "chapter": "10",
+                                "verse": "25"
                             }
                         ]
                     },
@@ -114,22 +114,39 @@ const jsonData: string = `
                         "name": "Witnessing",
                         "bcvs": [
                             {
-                            "book": "mat",
-                            "chapter":"4" ,
-                            "verse": "19" 
+                                "book": "mat",
+                                "chapter": "4",
+                                "verse": "19"
                             },
                             {
-                            "book": "rom",
-                            "chapter":"1" ,
-                            "verse": "16" 
+                                "book": "rom",
+                                "chapter": "1",
+                                "verse": "16"
                             }
                         ]
                     }
                 ]
+            },
+            {
+                "name": "Series B: Proclaim Christ",
+                "series": []
+            },
+            {
+                "name": "Series C: Rely on God's Resources",
+                "series": []
+            },
+            {
+                "name": "Series D: Be Christ's Disciple",
+                "series": []
+            },
+            {
+                "name": "Series E: Grow in Christlikeness",
+                "series": []
             }
         ]
     }
-]`
+]
+`
 
 
 export class MemoryService {

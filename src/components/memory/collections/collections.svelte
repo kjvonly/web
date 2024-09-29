@@ -5,6 +5,7 @@
 	import Card from '../../card/card.svelte';
 	import { Icon } from 'svelte-awesome';
 	import { angleLeft } from 'svelte-awesome/icons';
+	import playCircle from 'svelte-awesome/icons/playCircle';
 
 	export let buffer: Buffer;
 	let popup: any;
@@ -34,6 +35,16 @@
 				<span class="kjv-collection-name">
 					{d.name}
 				</span>
+
+			{#each d.series as s}
+
+			<div class="d-flex flex-row kjv-series-container align-items-center">
+				<span class="kjv-series-name">{s.name}</span>
+				<span class="d-flex flex-fill"></span>
+				<Icon class="m-2" data={playCircle} scale={2}></Icon>
+			</div>
+
+			{/each}
 				
 			</div>
 		{/each}
