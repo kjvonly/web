@@ -9,8 +9,9 @@
 	let popup: any;
 	let popupRatio = 1;
 	let component = Collections;
-	
+
 
 	onMount(() => {});
 </script>
+
 <svelte:component this={component} bind:buffer={buffer} />
