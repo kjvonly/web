@@ -9,6 +9,9 @@
     }
 }
 
+.kjv-collections {
+    overflow-y: scroll;
+}
 .kjv-collection-container {
     @include themify($themes) {
         background-color: themed('background-raised');

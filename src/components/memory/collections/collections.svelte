@@ -29,23 +29,33 @@
 			</div>
 		</div>
 	</div>
-	<div slot="body" class="w-100 h-100">
+	<div slot="body"  class="kjv-collections w-100 h-100">
 		{#each collections as d}
 			<div class="kjv-collection-container">
 				<span class="kjv-collection-name">
 					{d.name}
 				</span>
 
-			{#each d.series as s}
-
-			<div class="d-flex flex-row kjv-series-container align-items-center">
-				<span class="kjv-series-name">{s.name}</span>
-				<span class="d-flex flex-fill"></span>
-				<Icon class="m-2" data={playCircle} scale={2}></Icon>
-			</div>
-
-			{/each}
-				
+				{#each d.series as s}
+					<div class="d-flex flex-column kjv-series-container">
+						<div class="d-flex flex-row  align-items-center">
+							<span class="kjv-series-name">{s.name}</span>
+							<span class="d-flex flex-fill"></span>
+							<Icon class="m-2" data={playCircle} scale={2}></Icon>
+						</div>
+						{#if s.topics && s.topics.length > 0}
+							{#each s.topics as t}
+								<div class="d-flex flex-column">
+									<div class="d-flex flex-row kjv-series-container align-items-center">
+										<span class="kjv-series-name">{t.name}</span>
+										<span class="d-flex flex-fill"></span>
+										<Icon class="m-2" data={playCircle} scale={2}></Icon>
+									</div>
+								</div>
+							{/each}
+						{/if}
+					</div>
+				{/each}
 			</div>
 		{/each}
 	</div>
