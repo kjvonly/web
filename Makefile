@@ -34,6 +34,16 @@ run-web:
 	--name kjvonly-web \
 	kjvonly/web:0.0.1
 
+run-dev:
+	docker rm -f kjvonly-web && \
+	docker run -d -p 5000:80 \
+	-v $(HOME)/bible:/media:z \
+	-v $(PWD)/../data:/data:z \
+	-v $(PWD)/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z \
+	-v $(PWD)/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z \
+	--name kjvonly-web \
+	kjvonly/web:0.0.1
+
 local_push:
 	docker tag $(SERVICE_IMAGE) $(LOCAL_SERVICE_IMAGE)
 	docker push $(LOCAL_SERVICE_IMAGE)

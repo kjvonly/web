@@ -9,12 +9,12 @@
                         "name": "Christ the Center",
                         "bcvs": [
                             {
-                                "book": "2co",
+                                "book": "2 Corinthians",
                                 "chapter": "5",
                                 "verse": "17"
                             },
                             {
-                                "book": "gal",
+                                "book": "Galatians",
                                 "chapter": "2",
                                 "verse": "20"
                             }
@@ -24,12 +24,12 @@
                         "name": "Obedience to Christ",
                         "bcvs": [
                             {
-                                "book": "rom",
+                                "book": "Romans",
                                 "chapter": "12",
                                 "verse": "1"
                             },
                             {
-                                "book": "joh",
+                                "book": "John",
                                 "chapter": "14",
                                 "verse": "21"
                             }
@@ -39,12 +39,12 @@
                         "name": "God's Word",
                         "bcvs": [
                             {
-                                "book": "2ti",
+                                "book": "2 Timothy",
                                 "chapter": "3",
                                 "verse": "16"
                             },
                             {
-                                "book": "jos",
+                                "book": "Joshua",
                                 "chapter": "1",
                                 "verse": "8"
                             }
@@ -54,17 +54,17 @@
                         "name": "Prayer",
                         "bcvs": [
                             {
-                                "book": "joh",
+                                "book": "John",
                                 "chapter": "15",
                                 "verse": "7"
                             },
                             {
-                                "book": "phi",
+                                "book": "Philippians",
                                 "chapter": "4",
                                 "verse": "6"
                             },
                             {
-                                "book": "phi",
+                                "book": "Philippians",
                                 "chapter": "4",
                                 "verse": "7"
                             }
@@ -74,17 +74,17 @@
                         "name": "Fellowship",
                         "bcvs": [
                             {
-                                "book": "1jo",
+                                "book": "1 John",
                                 "chapter": "1",
                                 "verse": "3"
                             },
                             {
-                                "book": "heb",
+                                "book": "Hebrew",
                                 "chapter": "10",
                                 "verse": "24"
                             },
                             {
-                                "book": "heb",
+                                "book": "Hebrew",
                                 "chapter": "10",
                                 "verse": "25"
                             }
@@ -94,12 +94,12 @@
                         "name": "Witnessing",
                         "bcvs": [
                             {
-                                "book": "mat",
+                                "book": "Matthew",
                                 "chapter": "4",
                                 "verse": "19"
                             },
                             {
-                                "book": "rom",
+                                "book": "Romans",
                                 "chapter": "1",
                                 "verse": "16"
                             }

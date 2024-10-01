@@ -7,9 +7,12 @@
 	import { paneService } from '../../../../services/pane.service';
 
 	export let bcvs: Array<BCV> = [];
-    export let buffer: Buffer;
-	let verse = '';
+	export let buffer: Buffer;
+	export let height: number;
+
+	let mp3Filepath = '';
 	let verses: any[] = [];
+	let verse: any = '';
 
 	let bookNames: any;
 
@@ -27,13 +30,13 @@
 			booknamesById[value] = i + 1;
 		}
 
-		bcvs.forEach((v,idx) => {
-			let bookId = bookNames['shortNames'][v.book];
-			let bookName = bookNames['booknamesById'][bookId];
+		bcvs.forEach((v, idx) => {
+			let bookID = bookNames['booknamesByName'][v.book];
+			let bookName = bookNames['booknamesById'][bookID];
 			let chapter = v.chapter;
 			let verseNumber = v.verse;
 
-			let audioBookId = booknamesById[bookId];
+			let audioBookId = booknamesById[bookID];
 			let audioBookIdFormatted = String(audioBookId).padStart(2, '0');
 			let bookNameFormatted = bookName;
 			let mp3BookNameFormatted = bookName;
@@ -42,12 +45,20 @@
 			mp3BookNameFormatted = mp3BookNameFormatted.replace('3 ', 'III_');
 
 			let chapterNumberFormatted = String(chapter).padStart(3, '0');
-			let verseNumberFormatted = String(verseNumber + 1).padStart(3, '0');
+			let verseNumberFormatted = String(verseNumber).padStart(3, '0');
 
 			let mp3FileName = `${audioBookIdFormatted}_${mp3BookNameFormatted}_${chapterNumberFormatted}_${verseNumberFormatted}`;
-			let displayBCV = `${bookNameFormatted} ${chapter}:${verseNumber + 1}`;
-			let verse = { filename: mp3FileName, bcv: displayBCV, checked: true };
+			let displayBCV = `${bookNameFormatted} ${chapter}:${verseNumber}`;
+			let verse = {
+				bookID: bookID,
+				bcv: v,
+				filename: mp3FileName,
+				displayBCV: displayBCV,
+				checked: true
+			};
 			verses.push(verse);
+			verses = verses;
+			buffer.bag.verses = verses;
 		});
 	}
 	onMount(() => {
@@ -56,60 +67,71 @@
 
 			renderBookChapterVerses();
 
-            if (buffer && buffer.bag && buffer.bag.selectedVerses) {
+			if (buffer && buffer.bag && buffer.bag.verses) {
 				playSelectedVerses();
 			}
 
-			
+			bufferService.set(buffer);
+			paneService.saveRootPane();
 		});
-        audioElement = document.querySelector('audio');
-			if (audioElement != null) {
-				audioElement.addEventListener('ended', () => {
-					setTimeout(() => {
-						playSelectedVerses();
-					}, 2000);
-				});
-			}
+
+		audioElement = document.querySelector('audio');
+		if (audioElement != null) {
+			audioElement.addEventListener('ended', () => {
+				setTimeout(() => {
+					playSelectedVerses();
+				}, 2000);
+			});
+		}
 	});
 
 	let audioElement: HTMLAudioElement | null;
 
-    function getAudioApiPath(filename: number) {
-		return '/api/media/verses/' + filename
+	function getAudioApiPath(filename: number) {
+		return '/api/media/verses/' + filename;
 	}
 
 	let currentAudioVerseIdx: number = 0;
 	function playSelectedVerses() {
-
 		let v = verses[currentAudioVerseIdx];
-		verse = getAudioApiPath(v["filename"]);
+		mp3Filepath = getAudioApiPath(v['filename']);
+		chapterService.getChapter(v['bookID'] + '_' + v['bcv']['chapter']).then((data) => {
+			verse = data['verseMap'][v['bcv']['verse']];
+		});
 		audioElement?.play();
-        currentAudioVerseIdx = currentAudioVerseIdx + 1;
+		currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
 	}
 
+	function playlistVerseSelected(idx: number) {
+		verses[idx]['checked'] = !verses[idx]['checked'];
 
-	function playlistVerseSelected(verseIdx: number, idx: number) {
-		verses[verseIdx]['checked'] = !verses[verseIdx]['checked']
-		paneService.saveRootPane();
+		verses = verses;
 	}
 </script>
 
-<div class="kjv-memory-header h-100 w-100">
-    <audio controls autoplay src={verse}></audio>
-</div>
-    <div class="kjv-memory-verse-list p-3" >
-        <div class="row">
-            <div class="col-6">
-                {#each verses as verseIdx, idx}
-                    <div class="d-flex flex-row">
-                        <input
-                            on:click={() => playlistVerseSelected(verseIdx, idx)}
-                            type="checkbox"
-                            bind:checked={verses[verseIdx]['checked']}
-                            bind:value={verses[verseIdx]['checked']}
-                        /> <span class="ps-2">{verses[verseIdx]['bcv']}</span>
-                    </div>
-                {/each}
-            </div>
-        </div>
+<div class="p-3 d-flex flex-column align-items-between w-100 h-100" style="maxHeight: {height}px">
+	<div>
+		{#each verses as verseIdx, idx}
+			<div class="d-flex flex-row">
+				<input
+					on:click={() => playlistVerseSelected(idx)}
+					type="checkbox"
+					bind:checked={verses[idx]['checked']}
+					bind:value={verses[idx]['checked']}
+				/> <span class="ps-2">{verses[idx]['displayBCV']}</span>
+			</div>
+		{/each}
+	</div>
+	<div class="d-flex flex-column">
+		<div>
+			{#if verses.length > 0}
+				<span>{verses[currentAudioVerseIdx]['displayBCV']}</span>
+				<span>{verse}</span>
+			{/if}
+		</div>
+	</div>
+
+	<span class="d-flex flex-fill justify-content-center w-100"></span>
+
+	<audio controls autoplay src={mp3Filepath}></audio>
 </div>
