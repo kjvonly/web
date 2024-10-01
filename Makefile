@@ -31,6 +31,7 @@ run-web:
 	-v $(PWD)/../data:/data:z \
 	-v $(PWD)/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z \
 	-v $(PWD)/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z \
+	-v $(HOME)/bible/verses:/media/verses:Z \
 	--name kjvonly-web \
 	kjvonly/web:0.0.1
 

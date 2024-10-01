@@ -17,7 +17,7 @@
 	let popup: any;
 	let popupRatio = 1;
 	$: memoryId = '_kjv-collections-' + uuidv4();
-	let height: number|undefined;
+	let height: number | undefined;
 	let title = 'collections';
 
 	enum State {
@@ -90,18 +90,18 @@
 
 	onMount(() => {
 		memoryService.getCollections().then((data: Collection[]) => {
-				for (let col = 0; col < data.length; col++) {
+			for (let col = 0; col < data.length; col++) {
 				for (let ser = 0; ser < data[col].series.length; ser++) {
-					let sn = data[col].series[ser].name
+					let sn = data[col].series[ser].name;
 					if (data[col].series[ser].topics)
-					for (let top = 0; top < data[col].series[ser].topics.length; top++) {
-						let tn =data[col].series[ser].topics[top].name
-						
-						for (let verse = 0; verse < data[col].series[ser].topics[top].bcvs.length; verse++) {
-							data[col].series[ser].topics[top].bcvs[verse].series = sn;
-							data[col].series[ser].topics[top].bcvs[verse].topic = tn;
+						for (let top = 0; top < data[col].series[ser].topics.length; top++) {
+							let tn = data[col].series[ser].topics[top].name;
+
+							for (let verse = 0; verse < data[col].series[ser].topics[top].bcvs.length; verse++) {
+								data[col].series[ser].topics[top].bcvs[verse].series = sn;
+								data[col].series[ser].topics[top].bcvs[verse].topic = tn;
+							}
 						}
-					}
 				}
 				let a = 2;
 			}
