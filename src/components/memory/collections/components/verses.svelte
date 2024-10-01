@@ -92,13 +92,27 @@
 	}
 
 	let currentAudioVerseIdx: number = 0;
+    let skipped = 0;
 	function playSelectedVerses() {
+
+        if (skipped > verses.length){
+            console.log("exiting playSelectedVerses recursion")
+            skipped = 0;
+            return
+        }
 		let v = verses[currentAudioVerseIdx];
-		mp3Filepath = getAudioApiPath(v['filename']);
-		chapterService.getChapter(v['bookID'] + '_' + v['bcv']['chapter']).then((data) => {
-			verse = data['verseMap'][v['bcv']['verse']];
-		});
-		audioElement?.play();
+		if (v['checked']) {
+			mp3Filepath = getAudioApiPath(v['filename']);
+			chapterService.getChapter(v['bookID'] + '_' + v['bcv']['chapter']).then((data) => {
+				verse = data['verseMap'][v['bcv']['verse']];
+			});
+			audioElement?.play();
+		} else {
+            skipped = skipped + 1
+            currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
+            playSelectedVerses()
+        }
+
 		currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
 	}
 
@@ -117,7 +131,7 @@
 					on:click={() => playlistVerseSelected(idx)}
 					type="checkbox"
 					bind:checked={verses[idx]['checked']}
-					bind:value={verses[idx]['checked']}
+					
 				/> <span class="ps-2">{verses[idx]['displayBCV']}</span>
 			</div>
 		{/each}
