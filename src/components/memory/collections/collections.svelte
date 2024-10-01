@@ -19,6 +19,7 @@
 	$: memoryId = '_kjv-collections-' + uuidv4();
 	let height: number | undefined;
 	let title = 'collections';
+	let audioElement: HTMLAudioElement | null;
 
 	enum State {
 		Collections,
@@ -75,6 +76,9 @@
 				title = 'series';
 				break;
 			case State.Verses:
+				audioElement = document.querySelector('audio');
+				audioElement?.pause()
+				console.log(audioElement)
 				if (buffer.bag.topics && buffer.bag.topics.length > 0) {
 					currentState = State.Topic;
 					title = 'topics';

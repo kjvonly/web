@@ -101,12 +101,12 @@ const jsonData: string = `
                                 "verse": "3"
                             },
                             {
-                                "book": "Hebrew",
+                                "book": "Hebrews",
                                 "chapter": "10",
                                 "verse": "24"
                             },
                             {
-                                "book": "Hebrew",
+                                "book": "Hebrews",
                                 "chapter": "10",
                                 "verse": "25"
                             }

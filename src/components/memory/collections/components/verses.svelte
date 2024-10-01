@@ -10,7 +10,7 @@
 	export let buffer: Buffer;
 	export let height: number | undefined;
 
-	let mp3Filepath = '';
+	let mp3Filepath: string | undefined = '';
 	let verses: any[] = [];
 	let verse: any = '';
 
@@ -91,7 +91,7 @@
 		return '/api/media/verses/' + filename;
 	}
 
-	let currentAudioVerseIdx: number = 0;
+	let currentAudioVerseIdx: number = -1;
     let skipped = 0;
 	function playSelectedVerses() {
         currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
@@ -107,7 +107,8 @@
 			chapterService.getChapter(v['bookID'] + '_' + v['bcv']['chapter']).then((data) => {
 				verse = data['verseMap'][v['bcv']['verse']];
 			});
-			audioElement?.play();
+            
+			
 		} else {
             skipped = skipped + 1
             currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
