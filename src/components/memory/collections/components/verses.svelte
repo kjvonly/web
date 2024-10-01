@@ -94,6 +94,7 @@
 	let currentAudioVerseIdx: number = 0;
     let skipped = 0;
 	function playSelectedVerses() {
+        currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
 
         if (skipped > verses.length){
             console.log("exiting playSelectedVerses recursion")
@@ -113,7 +114,7 @@
             playSelectedVerses()
         }
 
-		currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
+		
 	}
 
 	function playlistVerseSelected(idx: number) {
