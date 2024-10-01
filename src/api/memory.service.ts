@@ -15,6 +15,8 @@ export class BCV {
     book: string;
     chapter: string;
     verse: string;
+    topic: string
+    series: string;
 }
 
 const jsonData: string = `

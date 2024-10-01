@@ -8,7 +8,7 @@
 
 	export let bcvs: Array<BCV> = [];
 	export let buffer: Buffer;
-	export let height: number;
+	export let height: number | undefined;
 
 	let mp3Filepath = '';
 	let verses: any[] = [];
@@ -110,7 +110,7 @@
 </script>
 
 <div class="p-3 d-flex flex-column align-items-between w-100 h-100" style="maxHeight: {height}px">
-	<div>
+	<div class="kjv-verses-list h-25">
 		{#each verses as verseIdx, idx}
 			<div class="d-flex flex-row">
 				<input
@@ -123,15 +123,26 @@
 		{/each}
 	</div>
 	<div class="d-flex flex-column">
-		<div>
-			{#if verses.length > 0}
-				<span>{verses[currentAudioVerseIdx]['displayBCV']}</span>
-				<span>{verse}</span>
-			{/if}
-		</div>
+		{#if verses.length > 0}
+			<span class="kjv-verses-content">{verses[currentAudioVerseIdx]['bcv']['series']}</span>
+			<span class="kjv-verses-content">{verses[currentAudioVerseIdx]['bcv']['topic']}</span>
+			<span class="kjv-verses-content">{verses[currentAudioVerseIdx]['displayBCV']}</span>
+			<span>{verse}</span>
+		{/if}
 	</div>
 
 	<span class="d-flex flex-fill justify-content-center w-100"></span>
 
 	<audio controls autoplay src={mp3Filepath}></audio>
 </div>
+
+<style>
+	.kjv-verses-content {
+		margin-bottom: 0.5rem;
+	}
+
+	.kjv-verses-list {
+		overflow-y: scroll;
+		max-height: 25vh !important;
+	}
+</style>
