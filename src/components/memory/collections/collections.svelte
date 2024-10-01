@@ -44,6 +44,7 @@
 	}
 
 	function onTopic(bcv: BCV[]) {
+		title = 'verses'
 		currentState = State.Verses;
 		buffer.bag.currentState = State.Verses;
 		buffer.bag.bcvs = bcv;
