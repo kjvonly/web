@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import type { Buffer } from '../../../models/buffer.model';
 	import Card from '../../card/card.svelte';
 	import { chapterService } from '../../../api/chapters.service';
@@ -22,12 +22,20 @@
 	$: memoryId = '_kjv-memory-' + uuidv4();
 	let collection: Array<Collection> = new Array();
 
+		let dispatch = createEventDispatcher()
 	onMount(() => {
 		memoryService.getCollections().then((data) => {
 			collection = data;
 			console.log(collection);
 		});
 	});
+
+	function handler(event: any){
+		dispatch('handler', {
+			componentName: event.detail.componentName
+		})
+
+	}
 </script>
 
 <Card bind:buffer bind:popup bind:popupRatio>
@@ -40,7 +48,7 @@
 			<Myscore bind:learnVersesSelected bind:hearVersesSelected></Myscore>
 			<span class="d-flex flex-fill"></span>
 			{#if learnVersesSelected}
-				<LearnVerses></LearnVerses>
+				<LearnVerses on:handler={handler}></LearnVerses>
 			{/if}
 			{#if hearVersesSelected}
 				<span>hear</span>

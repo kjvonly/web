@@ -1,6 +1,15 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
 	import { Icon } from 'svelte-awesome';
 	import tree from 'svelte-awesome/icons/tree';
+
+    let dispatch = createEventDispatcher()
+    function toCollections() {
+        console.log('tocollections')
+        dispatch('handler', {
+            componentName: "collections"
+        })
+    }
 </script>
 
 <div class="row kjv-learn-verses-container">
@@ -19,7 +28,7 @@
 	</div>
 
     <div class="col-3 d-flex align-items-center">
-        <button type="button" class="btn kjv-learn-verses-button">Start</button>
+        <button on:click={() => toCollections()} type="button" class="btn kjv-learn-verses-button">Start</button>
     </div>
     
     

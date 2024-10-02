@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { BCV, Collection, memoryService, Series, Topic } from '../../../api/memory.service';
 	import { Buffer, NullBuffer } from '../../../models/buffer.model';
 	import Card from '../../card/card.svelte';
@@ -20,6 +20,8 @@
 	let height: number | undefined;
 	let title = 'collections';
 	let audioElement: HTMLAudioElement | null;
+	
+	const dispatch = createEventDispatcher();
 
 	enum State {
 		Collections,
@@ -54,20 +56,9 @@
 		switch (currentState) {
 			case State.Collections:
 				//TODO: push this to a service
-				let b: Buffer = new Buffer();
-				let cb = bufferService.get('chapter');
-				if (cb instanceof NullBuffer) {
-					b.name = 'chapter';
-					b.componentName = 'Chapter';
-					b.component = Chapter;
-				} else {
-					b = cb;
-				}
-
-				paneService.setBuffer(b);
-				currentBuffer.set(b);
-				paneService.saveRootPane();
-				break;
+				dispatch('handler', {
+					componentName: "home"
+				})
 			case State.Series:
 				currentState = State.Collections;
 				title = 'collections';
