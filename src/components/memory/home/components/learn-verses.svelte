@@ -5,7 +5,6 @@
 
     let dispatch = createEventDispatcher()
     function toCollections() {
-        console.log('tocollections')
         dispatch('handler', {
             componentName: "collections"
         })

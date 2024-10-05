@@ -20,7 +20,7 @@
 	let height: number | undefined;
 	let title = 'collections';
 	let audioElement: HTMLAudioElement | null;
-	
+
 	const dispatch = createEventDispatcher();
 
 	enum State {
@@ -29,59 +29,72 @@
 		Topic,
 		Verses
 	}
-	let currentState = State.Collections;
 
 	function onCollection(s: Array<Series>) {
 		title = 'series';
 		buffer.bag.series = s;
-		currentState = State.Series;
 		buffer.bag.currentState = State.Series;
+
+		bufferService.set(buffer);
+		paneService.saveRootPane();
 	}
 
 	function onSeries(t: Array<Topic>) {
 		title = 'topics';
 		buffer.bag.topics = t;
 		buffer.bag.currentState = State.Topic;
-		currentState = State.Topic;
+
+		bufferService.set(buffer);
+		paneService.saveRootPane();
 	}
 
-	function onTopic(bcv: BCV[]) {
-		title = 'verses'
-		currentState = State.Verses;
+	function onTopic(bcvs: BCV[]) {
+		title = 'verses';
 		buffer.bag.currentState = State.Verses;
-		buffer.bag.bcvs = bcv;
+		buffer.bag.bcvs = bcvs;
+
+		bufferService.set(buffer);
+		paneService.saveRootPane();
 	}
 
 	function onBack() {
-		switch (currentState) {
+		switch (buffer.bag.currentState) {
 			case State.Collections:
-				//TODO: push this to a service
+				bufferService.set(buffer);
+				paneService.saveRootPane();
 				dispatch('handler', {
-					componentName: "home"
-				})
+					componentName: 'home'
+				});
 			case State.Series:
-				currentState = State.Collections;
+				buffer.bag.series = [];
+				buffer.bag.currentState = State.Collections;
 				title = 'collections';
 				break;
 			case State.Topic:
-				currentState = State.Series;
+				buffer.bag.currentState = State.Series;
+				buffer.bag.topics = [];
 				title = 'series';
 				break;
 			case State.Verses:
 				audioElement = document.querySelector('audio');
-				audioElement?.pause()
-				console.log(audioElement)
+				audioElement?.pause();
 				if (buffer.bag.topics && buffer.bag.topics.length > 0) {
-					currentState = State.Topic;
+					buffer.bag.currentState = State.Topic;
+					buffer.bag.verses = [];
 					title = 'topics';
 				} else if (buffer.bag.series && buffer.bag.series.length > 0) {
-					currentState = State.Series;
+					buffer.bag.currentState = State.Series;
+					buffer.bag.topics = [];
 					title = 'series';
 				} else {
-					currentState = State.Collections;
+					buffer.bag.currentState = State.Collections;
+					buffer.bag.series = [];
 					title = 'collections';
 				}
 		}
+
+		bufferService.set(buffer);
+		paneService.saveRootPane();
 	}
 
 	onMount(() => {
@@ -99,7 +112,6 @@
 							}
 						}
 				}
-				let a = 2;
 			}
 			buffer.bag.collections = data;
 		});
@@ -109,6 +121,9 @@
 
 		if (buffer && buffer.bag && buffer.bag.currentState) {
 			switch (buffer.bag.currentState) {
+				case State.Collections:
+					title = 'collections';
+					break;
 				case State.Series:
 					title = 'series';
 					break;
@@ -119,14 +134,37 @@
 					title = 'verses';
 					break;
 			}
-			currentState = buffer.bag.currentState;
 		} else {
+			buffer.bag.currentState = State.Collections;
 			buffer.bag.collections = Array<Collection>();
 			buffer.bag.series = Array<Series>();
 			buffer.bag.topics = Array<Topic>();
 			buffer.bag.verses = Array<BCV>();
 		}
 	});
+
+	function playVerses(e: any): BCV[] {
+		let bcvs = [];
+		if (e.series) {
+			for (let si = 0; si < e.series.length; si++) {
+				const element = e.series[si];
+				let b = playVerses(element);
+				bcvs.push(...b);
+			}
+		}
+
+		if (e.topics) {
+			for (let ti = 0; ti < e.topics.length; ti++) {
+				const element = e.topics[ti] as Topic;
+				bcvs.push(...element.bcvs);
+			}
+		}
+		return bcvs;
+	}
+
+	function playAll(e: any) {
+		onTopic( playVerses(e));
+	}
 </script>
 
 <Card bind:buffer bind:popup bind:popupRatio>
@@ -146,7 +184,7 @@
 		let:bodyHeight
 		style="max-height: {bodyHeight}px"
 	>
-		{#if currentState == State.Collections && buffer.bag && buffer.bag.collections}
+		{#if buffer.bag.currentState == State.Collections && buffer.bag && buffer.bag.collections}
 			{#each buffer.bag.collections as c}
 				<div class="kjv-collection-container">
 					<div on:click={() => onCollection(c.series)} class="d-flex flex-row align-items-center">
@@ -160,23 +198,31 @@
 			{/each}
 		{/if}
 
-		{#if currentState == State.Series}
+		{#if buffer.bag.currentState == State.Series}
 			{#each buffer.bag.series as s}
 				<div class="d-flex flex-column kjv-series-container">
 					<div on:click={() => onSeries(s.topics)} class="d-flex flex-row align-items-center">
 						<span class="kjv-series-name">{s.name}</span>
 						<span class="d-flex flex-fill"></span>
-						<Icon class="m-2" data={playCircle} scale={2}></Icon>
+						<div on:click={() => playAll(s)}>
+							<Icon
+								style="z-index: 10"
+								
+								class="m-2"
+								data={playCircle}
+								scale={2}
+							></Icon>
+						</div>
 					</div>
 				</div>
 			{/each}
 		{/if}
 
-		{#if currentState == State.Topic}
+		{#if buffer.bag.currentState == State.Topic}
 			{#each buffer.bag.topics as t}
 				<div class="d-flex flex-column">
 					<div
-						on:click={() => onTopic(t.bcvs)}
+					on:click={() => onTopic(t.bcvs)}
 						class="d-flex flex-row kjv-series-container align-items-center"
 					>
 						<span class="kjv-series-name">{t.name}</span>
@@ -186,7 +232,7 @@
 				</div>
 			{/each}
 		{/if}
-		{#if currentState == State.Verses}
+		{#if buffer.bag.currentState == State.Verses}
 			<svelte:component this={Verses} bind:bcvs={buffer.bag.bcvs} bind:buffer bind:height
 			></svelte:component>
 		{/if}
