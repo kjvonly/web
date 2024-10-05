@@ -28,8 +28,18 @@
 
 .kjv-series-container {
     @include themify($themes) {
-        background-color: themed('background-raised-overlay');
-        color: themed('on-background-raised-overlay');
+        background-color: themed('background-raised');
+        color: themed('on-background-raised');
+    }
+
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.kjv-topic-container {
+    @include themify($themes) {
+        background-color: themed('background-raised');
+        color: themed('on-background-raised');
     }
 
     border-radius: 1rem;

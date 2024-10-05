@@ -1,10 +1,12 @@
-
-
 .kjv-verses-content-container {
+    @include themify($themes) {}
 
     @include themify($themes) {
-        border-top: thick solid  themed('primary');
-    }    
+        background-color: themed('background-raised');
+        color: themed('on-background-raised');
+        border-top: thick solid themed('primary');
+        border-bottom: thick solid themed('primary');
+    }
 }
 
 

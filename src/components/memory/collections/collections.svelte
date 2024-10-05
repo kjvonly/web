@@ -220,10 +220,10 @@
 
 		{#if buffer.bag.currentState == State.Topic}
 			{#each buffer.bag.topics as t}
-				<div class="d-flex flex-column">
+				<div class="d-flex flex-column kjv-topic-container ">
 					<div
 					on:click={() => onTopic(t.bcvs)}
-						class="d-flex flex-row kjv-series-container align-items-center"
+						class="d-flex flex-row align-items-center"
 					>
 						<span class="kjv-series-name">{t.name}</span>
 						<span class="d-flex flex-fill"></span>
