@@ -1,5 +1,5 @@
 .kjv-verses-content-container {
-    @include themify($themes) {}
+    
 
     @include themify($themes) {
         background-color: themed('background-raised');
@@ -9,7 +9,16 @@
     }
 }
 
-
+˘.kjv-verse-list-item-text {
+    font-size: 1rem;
+}
+.kjv-verse-list-item {
+    @include themify($themes) {
+        border-bottom: thin solid themed(on-background);    
+    }
+    padding-bottom: .25rem;
+    
+}
 .kjv-verses-content {
     margin-bottom: 0.5rem;
 }

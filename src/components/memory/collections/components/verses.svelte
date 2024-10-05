@@ -5,12 +5,14 @@
 	import type { Buffer } from '../../../../models/buffer.model';
 	import { bufferService } from '../../../../services/buffer.service';
 	import { paneService } from '../../../../services/pane.service';
+	import { Icon } from 'svelte-awesome';
+	import { check, remove } from 'svelte-awesome/icons';
 
 	export let bcvs: Array<BCV> = [];
 	export let buffer: Buffer;
 	export let height: number | undefined;
-    
-    let timeout: NodeJS.Timeout
+
+	let timeout: NodeJS.Timeout;
 
 	let mp3Filepath: string | undefined = '';
 	let verses: any[] = [];
@@ -87,9 +89,9 @@
 		}
 	});
 
-    onDestroy(() => {
-        clearTimeout(timeout)
-    })
+	onDestroy(() => {
+		clearTimeout(timeout);
+	});
 
 	let audioElement: HTMLAudioElement | null;
 
@@ -129,17 +131,32 @@
 
 		verses = verses;
 	}
+
+	function playSelectedVerse(idx: number) {
+		currentAudioVerseIdx = idx - 1;
+		playSelectedVerses();
+	}
 </script>
 
 <div class="d-flex flex-column align-items-between w-100 h-100" style="maxHeight: {height}px">
 	<div class="kjv-verses-list p-3 h-25">
 		{#each verses as verseIdx, idx}
-			<div class="d-flex flex-row">
-				<input
-					on:click={() => playlistVerseSelected(idx)}
-					type="checkbox"
-					bind:checked={verses[idx]['checked']}
-				/> <span class="ps-2">{verses[idx]['displayBCV']}</span>
+			<div class="d-flex flex-row kjv-verse-list-item">
+				<div on:click={() => playSelectedVerse(idx)} class="ms-2">
+					<span class="kjv-verse-list-item-text">{verses[idx]['displayBCV']}</span>
+				</div>
+				<span class="d-flex flex-fill"></span>
+
+				{#if verses[idx]['checked']}
+					<div on:click={() => playlistVerseSelected(idx)}>
+						<Icon data={check}></Icon>
+					</div>
+				{/if}
+				{#if !verses[idx]['checked']}
+					<div on:click={() => playlistVerseSelected(idx)}>
+						<Icon data={remove}></Icon>
+					</div>
+				{/if}
 			</div>
 		{/each}
 	</div>
