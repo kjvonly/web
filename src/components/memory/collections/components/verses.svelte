@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import type { BCV } from '../../../../api/memory.service';
 	import { chapterService } from '../../../../api/chapters.service';
 	import type { Buffer } from '../../../../models/buffer.model';
@@ -9,6 +9,8 @@
 	export let bcvs: Array<BCV> = [];
 	export let buffer: Buffer;
 	export let height: number | undefined;
+    
+    let timeout: NodeJS.Timeout
 
 	let mp3Filepath: string | undefined = '';
 	let verses: any[] = [];
@@ -78,12 +80,16 @@
 		audioElement = document.querySelector('audio');
 		if (audioElement != null) {
 			audioElement.addEventListener('ended', () => {
-				setTimeout(() => {
+				timeout = setTimeout(() => {
 					playSelectedVerses();
 				}, 2000);
 			});
 		}
 	});
+
+    onDestroy(() => {
+        clearTimeout(timeout)
+    })
 
 	let audioElement: HTMLAudioElement | null;
 
