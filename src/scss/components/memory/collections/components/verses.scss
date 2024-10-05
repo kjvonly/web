@@ -1,0 +1,43 @@
+.kjv-verses-content-container {
+    
+
+    @include themify($themes) {
+        background-color: themed('background-raised');
+        color: themed('on-background-raised');
+        border-top: thick solid themed('primary');
+        border-bottom: thick solid themed('primary');
+    }
+}
+
+˘.kjv-verse-list-item-text {
+    font-size: 1rem;
+}
+.kjv-verse-list-item {
+    @include themify($themes) {
+        border-bottom: thin solid themed(on-background);    
+    }
+    padding-bottom: .25rem;
+    
+}
+.kjv-verses-content {
+    margin-bottom: 0.5rem;
+}
+
+.kjv-verses-content-series {
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.kjv-verses-content-topic {
+    font-size: 1.5rem;
+
+}
+
+.kjv-verses-content-verse {
+    font-size: 1rem;
+}
+
+.kjv-verses-list {
+    overflow-y: scroll;
+    max-height: 25vh !important;
+}

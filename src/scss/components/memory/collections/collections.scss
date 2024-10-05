@@ -1,0 +1,51 @@
+// @import '../../../themes.scss';
+// @import '../../../common.scss';
+
+.kjv-memory-collections-header {
+    height: 5vh;
+
+    @include themify($themes) {
+        background-color: themed('primary');
+    }
+}
+
+.kjv-collections {
+    overflow-y: scroll;
+}
+.kjv-collection-container {
+    @include themify($themes) {
+        background-color: themed('background-raised');
+    }
+
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.kjv-collection-name {
+    padding: 1rem;
+}
+
+.kjv-series-container {
+    @include themify($themes) {
+        background-color: themed('background-raised');
+        color: themed('on-background-raised');
+    }
+
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.kjv-topic-container {
+    @include themify($themes) {
+        background-color: themed('background-raised');
+        color: themed('on-background-raised');
+    }
+
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.kjv-series-name {
+    padding-left: 1rem;
+}

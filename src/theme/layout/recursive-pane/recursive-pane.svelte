@@ -52,7 +52,7 @@
 	{#if _pane && _pane.split === PaneSplit.Null}
 		<div id="_{id}-buffer-pane" class="w-100">
 			{#if !(_pane.buffer instanceof NullBuffer)}
-				<svelte:component this={_pane.buffer.component} bind:buffer={pane.buffer} />
+			<svelte:component this={_pane.buffer.component} bind:buffer={pane.buffer} />
 			{/if}
 			{#if _pane.buffer instanceof NullBuffer && _pane.buffer.selected}
 				<span>selected</span>

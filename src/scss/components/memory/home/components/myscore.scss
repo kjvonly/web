@@ -1,0 +1,45 @@
+.kjv-myscore-header {
+    @include themify($themes) {
+        background-color: themed('primary');
+        color: themed('on-primary')
+	}
+    
+    
+    border-radius: 1rem 1rem 0 0;
+    padding: 1rem;
+}
+
+.kjv-myscore-container {
+    @include themify($themes) {
+        background-color: themed('background-raised');
+	}    
+    border-radius: 1rem;
+    text-transform: capitalize;
+    margin: 1rem;
+}
+
+.kjv-myscore-learn-verses-container {
+    text-transform: capitalize;
+    padding: 1rem;
+}
+
+.kjv-myscore-hear-my-verses-container {
+    border-radius: 1rem;
+    text-transform: capitalize;
+    padding: 1rem;
+}
+
+.kjv-myscore-selected-container {
+    @include themify($themes) {
+        background-color: themed('background-raised-overlay');
+        color: themed('on-background-raised-overlay');
+	}  
+    border-radius: 1rem;
+}
+
+.kjv-myscore-icon {
+    @include themify($themes) {
+        
+        color: themed('primary');
+	}
+}

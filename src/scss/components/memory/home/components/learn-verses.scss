@@ -1,0 +1,29 @@
+
+.kjv-learn-verses-icon {
+    @include themify($themes) {
+        
+        color: themed('primary');
+	}
+}
+
+.kjv-learn-verses-container{
+    @include themify($themes) {
+        border-top: thick solid themed('primary');
+        background-color: themed('background-raised');
+	}  
+}
+
+.kjv-learn-verses-series{
+    font-size: small;
+}
+
+.kjv-learn-verses-title {
+    text-align: left !important;
+}
+
+.kjv-learn-verses-button{
+    @include themify($themes) {
+        background-color: themed('primary');
+        color: themed('on-primary');
+	}  
+}

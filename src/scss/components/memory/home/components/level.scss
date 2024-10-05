@@ -1,0 +1,22 @@
+.kjv-level-container {
+    @include themify($themes) {
+        border-bottom: thick solid themed("primary");    
+	}      
+}
+.kjv-level, .kjv-level-name, .kjv-level-to-next-level{
+    text-transform: capitalize;
+}
+.kjv-level-badge {
+    text-transform: uppercase;
+}
+
+.kjv-level-progress-bar {    
+    @include themify($themes) {
+        background-color: themed("primary");    
+	}     
+}
+
+.kjv-level-progress-bar-container {
+    height: .5rem;
+    position: relative;
+}

@@ -13,7 +13,7 @@
 	import { bibleDB } from '../db/bible.db';
 	import Search from '../components/search/search.svelte';
 	import TestCard from '../components/card/test-card.svelte';
-	import Memory from '../components/memory/memory.svelte';
+	import Memory from '../components/memory/home/home.svelte';
 	import { bufferService } from '../services/buffer.service';
 
 	let p: Pane;
