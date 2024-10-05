@@ -1,0 +1,32 @@
+
+
+.kjv-verses-content-container {
+
+    @include themify($themes) {
+        border-top: thick solid  themed('primary');
+    }    
+}
+
+
+.kjv-verses-content {
+    margin-bottom: 0.5rem;
+}
+
+.kjv-verses-content-series {
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.kjv-verses-content-topic {
+    font-size: 1.5rem;
+
+}
+
+.kjv-verses-content-verse {
+    font-size: 1rem;
+}
+
+.kjv-verses-list {
+    overflow-y: scroll;
+    max-height: 25vh !important;
+}

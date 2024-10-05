@@ -92,30 +92,30 @@
 	}
 
 	let currentAudioVerseIdx: number = -1;
-    let skipped = 0;
+	let skipped = 0;
 	function playSelectedVerses() {
-        currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
+		currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
+		if (currentAudioVerseIdx == 0) {
+			skipped = 0;
+		}
 
-        if (skipped > verses.length){
-            console.log("exiting playSelectedVerses recursion")
-            skipped = 0;
-            return
-        }
+		if (skipped > verses.length) {
+			console.log('exiting playSelectedVerses recursion');
+			skipped = 0;
+			return;
+		}
 		let v = verses[currentAudioVerseIdx];
 		if (v['checked']) {
 			mp3Filepath = getAudioApiPath(v['filename']);
 			chapterService.getChapter(v['bookID'] + '_' + v['bcv']['chapter']).then((data) => {
 				verse = data['verseMap'][v['bcv']['verse']];
 			});
-            
-			
-		} else {
-            skipped = skipped + 1
-            currentAudioVerseIdx = (currentAudioVerseIdx + 1) % verses.length;
-            playSelectedVerses()
-        }
 
-		
+			audioElement?.play();
+		} else {
+			skipped = skipped + 1;
+			playSelectedVerses();
+		}
 	}
 
 	function playlistVerseSelected(idx: number) {
@@ -125,40 +125,45 @@
 	}
 </script>
 
-<div class="p-3 d-flex flex-column align-items-between w-100 h-100" style="maxHeight: {height}px">
-	<div class="kjv-verses-list h-25">
+<div class="d-flex flex-column align-items-between w-100 h-100" style="maxHeight: {height}px">
+	<div class="kjv-verses-list p-3 h-25">
 		{#each verses as verseIdx, idx}
 			<div class="d-flex flex-row">
 				<input
 					on:click={() => playlistVerseSelected(idx)}
 					type="checkbox"
 					bind:checked={verses[idx]['checked']}
-					
 				/> <span class="ps-2">{verses[idx]['displayBCV']}</span>
 			</div>
 		{/each}
 	</div>
-	<div class="d-flex flex-column">
-		{#if verses.length > 0}
-			<span class="kjv-verses-content">{verses[currentAudioVerseIdx]['bcv']['series']}</span>
-			<span class="kjv-verses-content">{verses[currentAudioVerseIdx]['bcv']['topic']}</span>
-			<span class="kjv-verses-content">{verses[currentAudioVerseIdx]['displayBCV']}</span>
-			<span>{verse}</span>
-		{/if}
+	<div class="kjv-verses-content-container d-flex">
+		<div class="p-3 d-flex flex-column">
+			{#if verses.length > 0}
+				<span class="kjv-verses-content-topic kjv-verses-content"
+					>{verses[currentAudioVerseIdx]['bcv']['topic']}</span
+				>
+				<span class="kjv-verses-content-verese kjv-verses-content"
+					>{verses[currentAudioVerseIdx]['displayBCV']}</span
+				>
+				<span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{verse}</span>
+				<div class="d-flex justify-content-end">
+					<span class="kjv-verses-content-verese kjv-verses-content"
+						>{verses[currentAudioVerseIdx]['displayBCV']}</span
+					>
+				</div>
+				<span class="kjv-verses-content-series kjv-verses-content"
+					>{verses[currentAudioVerseIdx]['bcv']['series']}</span
+				>
+			{/if}
+		</div>
 	</div>
 
 	<span class="d-flex flex-fill justify-content-center w-100"></span>
-
-	<audio controls autoplay src={mp3Filepath}></audio>
+	<div class="p-3 d-flex w-100">
+		<audio class="w-100" controls autoplay src={mp3Filepath}></audio>
+	</div>
 </div>
 
 <style>
-	.kjv-verses-content {
-		margin-bottom: 0.5rem;
-	}
-
-	.kjv-verses-list {
-		overflow-y: scroll;
-		max-height: 25vh !important;
-	}
 </style>

@@ -22,7 +22,8 @@
 				break;
 		}
 	}
-	onMount(() => {});
+	onMount(() => {
+	});
 </script>
 
 <svelte:component this={component} bind:buffer={buffer} on:handler={(event) => handler(event)} />
