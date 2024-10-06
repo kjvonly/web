@@ -25,7 +25,7 @@
 		let dispatch = createEventDispatcher()
 	onMount(() => {
 		memoryService.getCollections().then((data) => {
-			collection = data;
+			collection = data.collections;
 			console.log(collection);
 		});
 	});

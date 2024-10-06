@@ -98,7 +98,8 @@
 	}
 
 	onMount(() => {
-		memoryService.getCollections().then((data: Collection[]) => {
+		memoryService.getCollections().then((d: any) => {
+			let data: Collection[] = d.collections
 			for (let col = 0; col < data.length; col++) {
 				for (let ser = 0; ser < data[col].series.length; ser++) {
 					let sn = data[col].series[ser].name;
@@ -163,7 +164,7 @@
 	}
 
 	function playAll(e: any) {
-		onTopic( playVerses(e));
+		onTopic(playVerses(e));
 	}
 </script>
 
@@ -205,13 +206,7 @@
 						<span class="kjv-series-name">{s.name}</span>
 						<span class="d-flex flex-fill"></span>
 						<div on:click={() => playAll(s)}>
-							<Icon
-								style="z-index: 10"
-								
-								class="m-2"
-								data={playCircle}
-								scale={2}
-							></Icon>
+							<Icon style="z-index: 10" class="m-2" data={playCircle} scale={2}></Icon>
 						</div>
 					</div>
 				</div>
@@ -220,11 +215,8 @@
 
 		{#if buffer.bag.currentState == State.Topic}
 			{#each buffer.bag.topics as t}
-				<div class="d-flex flex-column kjv-topic-container ">
-					<div
-					on:click={() => onTopic(t.bcvs)}
-						class="d-flex flex-row align-items-center"
-					>
+				<div class="d-flex flex-column kjv-topic-container">
+					<div on:click={() => onTopic(t.bcvs)} class="d-flex flex-row align-items-center">
 						<span class="kjv-series-name">{t.name}</span>
 						<span class="d-flex flex-fill"></span>
 						<Icon class="m-2" data={playCircle} scale={2}></Icon>

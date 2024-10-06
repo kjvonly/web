@@ -1,3 +1,5 @@
+import { api } from "./api";
+
 export class Collection {
     name: string;
     series: Array<Series>;
@@ -153,7 +155,7 @@ const jsonData: string = `
 
 export class MemoryService {
     async getCollections(): Promise<any> {
-        return Object.assign(new Array<Collection>(), JSON.parse(jsonData))
+        return api.post("/v1/MemoryService.GetCollections", {})
     }
 }
 
