@@ -314,11 +314,238 @@
             },
             {
                 "name": "Series D: Be Christ's Disciple",
-                "topics": []
+                "topics": [
+                    {
+                        "name": "Put Christ First",
+                        "bcvs": [
+                            {
+                                "book": "Matthew",
+                                "chapter": "6",
+                                "verse": "33"
+                            },
+                            {
+                                "book": "Luke",
+                                "chapter": "9",
+                                "verse": "23"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Separate from the World",
+                        "bcvs": [
+                            {
+                                "book": "1 John",
+                                "chapter": "2",
+                                "verse": "15"
+                            },
+                            {
+                                "book": "1 John",
+                                "chapter": "2",
+                                "verse": "16"
+                            },
+                            {
+                                "book": "Romans",
+                                "chapter": "12",
+                                "verse": "2"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Be Steadfast",
+                        "bcvs": [
+                            {
+                                "book": "1 Corinthians",
+                                "chapter": "15",
+                                "verse": "58"
+                            },
+                            {
+                                "book": "Hebrews",
+                                "chapter": "12",
+                                "verse": "3"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Serve Others",
+                        "bcvs": [
+                            {
+                                "book": "Mark",
+                                "chapter": "10",
+                                "verse": "45"
+                            },
+                            {
+                                "book": "2 Corinthians",
+                                "chapter": "4",
+                                "verse": "5"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Give Generously",
+                        "bcvs": [
+                            {
+                                "book": "Proverbs",
+                                "chapter": "3",
+                                "verse": "9"
+                            },
+                            {
+                                "book": "Proverbs",
+                                "chapter": "3",
+                                "verse": "10"
+                            },
+                            {
+                                "book": "2 Corinthians",
+                                "chapter": "9",
+                                "verse": "6"
+                            },
+                            {
+                                "book": "2 Corinthians",
+                                "chapter": "9",
+                                "verse": "7"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Develop World Vision",
+                        "bcvs": [
+                            {
+                                "book": "Acts",
+                                "chapter": "1",
+                                "verse": "8"
+                            },
+                            {
+                                "book": "Matthew",
+                                "chapter": "28",
+                                "verse": "19"
+                            },
+                            {
+                                "book": "Matthew",
+                                "chapter": "28",
+                                "verse": "20"
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 "name": "Series E: Grow in Christlikeness",
-                "topics": []
+                "topics": [
+                    {
+                        "name": "Love",
+                        "bcvs": [
+                            {
+                                "book": "John",
+                                "chapter": "13",
+                                "verse": "34"
+                            },
+                            {
+                                "book": "John",
+                                "chapter": "13",
+                                "verse": "35"
+                            },
+                            {
+                                "book": "1 John",
+                                "chapter": "3",
+                                "verse": "18"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Humility",
+                        "bcvs": [
+                            {
+                                "book": "Philippians",
+                                "chapter": "2",
+                                "verse": "3"
+                            },
+                            {
+                                "book": "Philippians",
+                                "chapter": "2",
+                                "verse": "4"
+                            },
+                            {
+                                "book": "1 Peter",
+                                "chapter": "5",
+                                "verse": "5"
+                            },
+                            {
+                                "book": "1 Peter",
+                                "chapter": "5",
+                                "verse": "6"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Purity",
+                        "bcvs": [
+                            {
+                                "book": "Ephesians",
+                                "chapter": "5",
+                                "verse": "3"
+                            },
+                            {
+                                "book": "1 Peter",
+                                "chapter": "2",
+                                "verse": "11"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Honesty",
+                        "bcvs": [
+                            {
+                                "book": "Leviticus",
+                                "chapter": "19",
+                                "verse": "11"
+                            },
+                            {
+                                "book": "Acts",
+                                "chapter": "24",
+                                "verse": "16"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Faith",
+                        "bcvs": [
+                            {
+                                "book": "Hebrews",
+                                "chapter": "11",
+                                "verse": "6"
+                            },
+                            {
+                                "book": "Romans",
+                                "chapter": "4",
+                                "verse": "20"
+                            },
+                            {
+                                "book": "Romans",
+                                "chapter": "4",
+                                "verse": "21"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Good Works",
+                        "bcvs": [
+                            {
+                                "book": "Galatians",
+                                "chapter": "6",
+                                "verse": "9"
+                            },
+                            {
+                                "book": "Galatians",
+                                "chapter": "6",
+                                "verse": "10"
+                            },
+                            {
+                                "book": "Matthew",
+                                "chapter": "5",
+                                "verse": "16"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }
