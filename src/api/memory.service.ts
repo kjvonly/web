@@ -21,9 +21,9 @@ export class BCV {
     series: string;
 }
 
-const jsonData: string = `
-[
-    {
+const jsonData: string = `{
+"collections": [
+     {
         "name": "Topical Memory System",
         "series": [
             {
@@ -574,6 +574,7 @@ const jsonData: string = `
         ]
     }
 ]
+}
 `
 
 
