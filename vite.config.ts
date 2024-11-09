@@ -21,6 +21,11 @@ export default defineConfig({
 				target: 'http://kjvonly-nginx:5000',
 				changeOrigin: true,
 				proxyTimeout: 6000 * 60 * 1000
+			},
+			'^/v1/.*': {
+				target: 'http://kjvonly-nginx:8080',
+				changeOrigin: true,
+				proxyTimeout: 6000 * 60 * 1000
 			}
 		}
 	},

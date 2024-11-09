@@ -27,7 +27,8 @@ web:
 		.
 run-web:
 	docker rm -f kjvonly-web && \
-	docker run -d -p 5000:80 \
+	docker run  -p 5000:80 \
+	-d \
 	-v $(PWD)/../data:/data:z \
 	-v $(PWD)/zarf/containers/nginx/nginx.conf:/etc/nginx/nginx.conf:Z \
 	-v $(PWD)/zarf/containers/nginx/conf.d:/etc/nginx/conf.d:Z \
