@@ -580,9 +580,9 @@ const jsonData: string = `{
 
 export class MemoryService {
     async getCollections(): Promise<any> {
-        return Object.assign(new Array<Collection>(), JSON.parse(jsonData))
+//        return Object.assign(new Array<Collection>(), JSON.parse(jsonData))
 
-//        return api.post("/v1/MemoryService.GetCollections", {})
+        return api.post("/v1/MemoryService.GetCollections", {})
     }
 }
 
